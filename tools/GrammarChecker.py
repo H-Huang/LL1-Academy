@@ -108,7 +108,8 @@ class GrammarChecker:
             return False
         for node in graph[start]:
             if node not in path:
-                return GrammarChecker.path_exists(self, graph, node, end, path)
+                if GrammarChecker.path_exists(self, graph, node, end, path):
+                    return True
         return False
 
     def buildFirstSets(self):
