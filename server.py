@@ -22,6 +22,7 @@ def generate_questions():
 	global questions
 	global currentQ
 	questions = []
+	currentQ = 0
 
 	# first set questions
 	questions.append(('first','A'))
@@ -31,7 +32,7 @@ def generate_questions():
 	questions.append(('follow','B'))
 	# is ll1?
 	questions.append(('LL1', None))
-	currentQ = 0
+	
 
 
 @app.route('/')
@@ -51,7 +52,7 @@ def learn():
 	# instead of being hardcoded
 	return render_template('learn.html')
 
-@app.route('/get_question', methods=['POST'])
+@app.route('/get_question', methods=['GET'])
 def get_question():
 	global questions
 	global currentQ
@@ -68,6 +69,16 @@ def get_question():
 		"symbol": symbol
 	})
 
+@app.route('/check_answer', methods=['POST'])
+def check_answer():
+	global questions
+	global currentQ
+
+	# TODO: actually check if answer is right
+	return jsonify({
+		"valid": True,
+		"correct": True
+	});
 
 @app.errorhandler(404)
 def page_not_found(error):
