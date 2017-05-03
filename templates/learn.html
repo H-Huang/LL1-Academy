@@ -1,4 +1,55 @@
 {% extends "base.html" %}
+
+{% block title %}Learning{% endblock %}
+
+{% block templates %}
+{% raw %}
+
+<script id="question-template" type="text/x-handlebars-template">
+  <div class="question">
+    <p class="question-title">What is the {{category}} set of symbol {{symbol}}?</p>
+    <form id="question-input">
+    	<input type="text" name="question-answer" placeholder="Answer as comma separated e.g. x,y" required>
+    	<button type="submit" id="question-submit-button" class="button">Submit</button>
+    </form>
+  </div>
+</script>
+
+{% endraw %}
+{% endblock %}
+
 {% block content %}
-	<p>A grammar</p>
+	<h2>learn to grammar</h2>
+
+	<div class="row">
+	<!-- grammar here -->
+		<div class="small-12 medium-6 columns" id="grammar-container">
+			<h3>grammar</h3>
+			<div id="grammar">
+				<div class="productions">
+					<p class="nt">A</p>
+					<p>:==</p>
+					<p class="t">xA</p>
+					<p>|</p>
+					<p class="t">Bz</p>
+				</div>
+				<div class="productions">
+					<p class="nt">B</p>
+					<p>:==</p>
+					<p class="t">yB</p>
+					<p>|</p>
+					<p class="t">y</p>
+				</div>
+			</div>
+		</div>
+
+	<!-- questions here -->
+		<div class="small-12 medium-6 columns" id="questions-container">
+			<h3>questions</h3>
+		</div>
+	</div>
+{% endblock %}
+
+{% block pagescripts %}
+	<script src="static/learn.js"></script>
 {% endblock %}

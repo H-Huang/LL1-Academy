@@ -1,10 +1,28 @@
 <html>
   <head>
-    <title>LL(1) - Tester</title>
+    <title>LL(1) - {% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.1/css/foundation.min.css" />
+    <link rel="stylesheet" href="static/main.css" />
   </head>
+
+{% block templates %}
+{% endblock %}
+
   <body>
-      <h1>LL(1) - Tester</h1>
+
       {% block content %}
       {% endblock %}
+      
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.1/js/foundation.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.8/handlebars.min.js"></script>
+      <script>
+      	$(document).foundation();
+      </script>
+
+      {% block pagescripts %}
+      {% endblock %}
+
   </body>
 </html>
