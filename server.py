@@ -75,8 +75,11 @@ def check_answer():
 	global currentQ
 
 	# TODO: actually check if answer is right
+	# think about where validations should take place - probably on client
+	print(request.form)
+
 	return jsonify({
-		"valid": True,
+		# "valid": True,
 		"correct": True
 	});
 

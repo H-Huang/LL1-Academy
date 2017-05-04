@@ -34,22 +34,24 @@ function draw_question() {
 		var input_value = $('#question-answer').val();
 
 		$.ajax({
-		type: "POST",
-		url: "/check_answer",
-		data : { 
-			'question_data': question_data,
-			'answer': $('#question-answer').val()
-		},
-		success: function(results) {
-			console.log(results)
-			if (results.correct) {
-				$('#question-input').remove()
-				query_for_question()
+			type: "POST",
+			url: "/check_answer",
+			data : { 
+				// 'question_data': question_data,
+				'category': question_data.category,
+				'symbol': question_data.symbol,
+				'answer': $('#question-answer').val()
+			},
+			success: function(results) {
+				console.log(results)
+				if (results.correct) {
+					$('#question-input').remove()
+					query_for_question()
+				}
+			},
+			error: function(error) {
+				console.log(error)
 			}
-		},
-		error: function(error) {
-			console.log(error)
-		}
 		});
 	});
 }
