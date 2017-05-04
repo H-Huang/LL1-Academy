@@ -4,3 +4,5 @@ Vagrantfile
 *pycache*
 */txt
 *.pyc
+*.DS_Store
+
