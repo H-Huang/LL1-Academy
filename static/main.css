@@ -1,3 +1,11 @@
 .productions > p {
 	display: inline;
 }
+
+.answer {
+	float: left;
+}
+
+.answercheck {
+	float: right;
+}

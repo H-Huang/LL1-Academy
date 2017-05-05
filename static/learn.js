@@ -51,18 +51,21 @@ function draw_question() {
 					console.log(results)
 					if (results.correct) {
 						$('#question-input').remove()
-
+						$('#active > .answerbox').html('<p class="answer">' + input_trimmed + '</p><i class="im im-check-mark answercheck" style="color:#33cc33"></i><div style="clear:both;"></div>')
+						$('#active').removeAttr('id')
 						query_for_question()
-					} else {
-
+					} else { // valid syntax, incorrect result
+						$('#question-input > .feedback').html("<p>Incorrect answer</p>")
+						$('#question-answer').css('border','1px solid red')
 					}
 				},
 				error: function(error) {
 					console.log(error)
 				}
 			});
-		} else {
-
+		} else { // invalid syntax
+			$('#question-input > .feedback').html("<p>Invalid syntax</p>")
+			$('#question-answer').css('border','1px solid red')
 		}
 	});
 }
