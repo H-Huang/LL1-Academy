@@ -5,7 +5,6 @@
 /* General styling */
 
 
-
 /* Grammar styling */
 #grammar {
 	border: 3px solid;
@@ -28,3 +27,18 @@
 .answercheck {
 	float: right;
 }
+
+
+/* Questions styling */
+.question {
+	color: grey;
+}
+
+#active {
+	color: black;
+}
+
+#active > .question-title {
+	font-weight: bold;
+}
+
