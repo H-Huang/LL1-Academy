@@ -51,7 +51,9 @@ function draw_question() {
 					console.log(results)
 					if (results.correct) {
 						$('#question-input').remove()
-						$('#active > .answerbox').html('<p class="answer">' + input_trimmed + '</p><i class="im im-check-mark answercheck" style="color:#33cc33"></i><div style="clear:both;"></div>')
+						// $('#active > .answerbox').html('<p class="answer">' + input_trimmed + '</p><i class="im im-check-mark answercheck" style="color:#33cc33;"></i><div style="clear:both;"></div>')
+						$('#active > .question-title').after('<div id="answer-panel"><p class="answer">' + input_trimmed + '</p><i class="im im-check-mark answercheck"></i></div><div style="clear:both;">')
+						
 						$('#active').removeAttr('id')
 						query_for_question()
 					} else { // valid syntax, incorrect result

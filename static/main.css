@@ -20,18 +20,26 @@
 		font-size: 24px;
 	}
 
+/* Questions styling */
+#answer-panel {
+	display:inline;
+	float:right;
+}
+
 .answer {
-	float: left;
+	display: inline;
+	margin-right:20px;
 }
 
 .answercheck {
-	float: right;
+	display: inline;
+	color: #33cc33;
+	font-size: 12px !important;
 }
 
-
-/* Questions styling */
 .question {
 	color: grey;
+	margin-top:24px;
 }
 
 #active {
@@ -40,5 +48,10 @@
 
 #active > .question-title {
 	font-weight: bold;
+	display:block;
+}
+
+.question-title {
+	display: inline;
 }
 
