@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, jsonify
+from tools.GrammarChecker import *
 app = Flask(__name__)
 
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
@@ -9,21 +10,27 @@ startsymbol = 'A'
 grammar = {
     'A': ['xA', 'Bz'],
     'B': ['yB', 'y'],
-	'C': ['zA', 'y']
+	# 'C': ['zA', 'y']
 }
 #
+
+grammarChecker = GrammarChecker()
 
 # single session question tracking here
 questions = []
 currentQ = -1
+answers = {}
 # 
 
 def generate_questions():
 	# start over
 	global questions
 	global currentQ
+	global answers
+
 	questions = []
 	currentQ = 0
+	answers = {}
 
 	# first set questions
 	questions.append(('first','A'))
@@ -33,6 +40,14 @@ def generate_questions():
 	questions.append(('follow','B'))
 	# is ll1?
 	questions.append(('LL1', None))
+
+	first,follow,_,status,_ = grammarChecker.solve(grammar,startsymbol)
+	answers['first'] = first
+	answers['follow'] = follow
+	answers['LL1'] = (True if status == 0 else False)
+	print(answers)
+	print()
+
 	
 
 @app.route('/')
@@ -49,27 +64,14 @@ def learn():
 	generate_questions()
 
 	grammar_object = []
-	terminals = []
-	non_terminals = []
-	for key, value in grammar.items():
-		grammar_object.append({"nt": key, "t_list": value})
-		terminals.append(key)
-		for non_terminal in value:
-			non_terminals.append(non_terminal)
-
-	#remove terminal letters in non_terminal
-	print(non_terminals)
-	for i in range(len(non_terminals)):
-		for j in range(len(terminals)):
-			non_terminals[i] = non_terminals[i].replace(terminals[j], "")
+	non_terminals, terminals = grammarChecker.getSymbols(grammar)
 	
-	#get all unique non_terminals
-	non_terminals = list(set(non_terminals))
-	non_terminals = sorted(non_terminals)
+	for nt in non_terminals:
+		grammar_object.append({"nt": nt, "productions": grammar[nt]})
 
 	#stringify terminals + non_terminals
 	terminals = "{" + ", ".join(terminals) + "}"
-	start_symbol = non_terminal[0]
+	# start_symbol = non_terminal[0]
 	non_terminals = "{" + ", ".join(non_terminals) + "}"
 
 	#prepare all items to be passed into the template
@@ -77,7 +79,7 @@ def learn():
 		"grammar_object": grammar_object,
 		"terminals": terminals,
 		"non_terminals": non_terminals,
-		"start_symbol": start_symbol
+		"start_symbol": startsymbol
 	}
 	
 	return render_template('learn.html', **context)

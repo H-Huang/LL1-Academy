@@ -31,8 +31,8 @@
 						<div class="productions">
 							<p class="nt">{{ grammar.nt }}</p>
 							<p>:==</p>
-							{% for t in grammar.t_list %}
-								{% if t != grammar.t_list[-1] %}
+							{% for t in grammar.productions %}
+								{% if t != grammar.productions[-1] %}
 									<p class="t">{{ t }}</p>
 									<p>|</p>
 								{% else %}
@@ -44,7 +44,7 @@
 				</div>
 				<div id="explainer">
 					<p>
-						where {{ terminals }} is the set of nonterminal symbols, {{ start_symbol }} is the start symbol, {{ non_terminals }} 
+						where {{ non_terminals }} is the set of nonterminal symbols, {{ start_symbol }} is the start symbol, {{ terminals }} 
 						is the set of terminal symbols, and &epsilon; denotes the empty string.
 					<p>
 				</div>

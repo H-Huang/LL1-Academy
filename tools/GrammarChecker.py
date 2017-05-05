@@ -83,7 +83,7 @@ class GrammarChecker:
                 for symbol in prod.replace(" ",""):
                     if symbol not in self.nonterminals and symbol != self.epsilon:
                         self.terminals.add(symbol)
-        return (self.nonterminals,list(self.terminals))
+        return (sorted(self.nonterminals),sorted(list(self.terminals)))
 
     def reachability(self):
         canreach = {}
