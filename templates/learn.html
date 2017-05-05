@@ -19,33 +19,39 @@
 {% endblock %}
 
 {% block content %}
-	<h2>learn to grammar</h2>
-
-	<div class="row">
-	<!-- grammar here -->
-		<div class="small-12 medium-6 columns" id="grammar-container">
-			<h3>grammar</h3>
-			<div id="grammar">
-				<div class="productions">
-					<p class="nt">A</p>
-					<p>:==</p>
-					<p class="t">xA</p>
-					<p>|</p>
-					<p class="t">Bz</p>
+	<div class="container">
+		<div class="row">
+			<!-- grammar here -->
+			<div class="small-12 medium-6 columns" id="grammar-container">
+				<h3>Consider the grammar</h3>
+				<div id="grammar">
+					{% for grammar in grammar_object %}
+						<div class="productions">
+							<p class="nt">{{ grammar.nt }}</p>
+							<p>:==</p>
+							{% for t in grammar.t_list %}
+								{% if t != grammar.t_list[-1] %}
+									<p class="t">{{ t }}</p>
+									<p>|</p>
+								{% else %}
+									<p class="t">{{ t }}</p>
+								{% endif %}
+							{% endfor %}
+						</div>
+					{% endfor %}
 				</div>
-				<div class="productions">
-					<p class="nt">B</p>
-					<p>:==</p>
-					<p class="t">yB</p>
-					<p>|</p>
-					<p class="t">y</p>
+				<div id="explainer">
+					<p>
+						where {{ terminals }} is the set of nonterminal symbols, {{ start_symbol }} is the start symbol, {{ non_terminals }} 
+						is the set of terminal symbols, and &epsilon; denotes the empty string.
+					<p>
 				</div>
 			</div>
-		</div>
 
-	<!-- questions here -->
-		<div class="small-12 medium-6 columns" id="questions-container">
-			<h3>questions</h3>
+			<!-- questions here -->
+			<div class="small-12 medium-6 columns" id="questions-container">
+				<h3>Questions</h3>
+			</div>
 		</div>
 	</div>
 {% endblock %}

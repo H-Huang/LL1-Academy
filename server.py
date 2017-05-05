@@ -8,7 +8,8 @@ app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 startsymbol = 'A'
 grammar = {
     'A': ['xA', 'Bz'],
-    'B': ['yB', 'y']
+    'B': ['yB', 'y'],
+	'C': ['zA', 'y']
 }
 #
 
@@ -34,7 +35,6 @@ def generate_questions():
 	questions.append(('LL1', None))
 	
 
-
 @app.route('/')
 @app.route('/index')
 def index():
@@ -48,9 +48,39 @@ def learn():
 	# 
 	generate_questions()
 
-	# TODO: this template should render the grammar using Jinja2
-	# instead of being hardcoded
-	return render_template('learn.html')
+	grammar_object = []
+	terminals = []
+	non_terminals = []
+	for key, value in grammar.items():
+		grammar_object.append({"nt": key, "t_list": value})
+		terminals.append(key)
+		for non_terminal in value:
+			non_terminals.append(non_terminal)
+
+	#remove terminal letters in non_terminal
+	print(non_terminals)
+	for i in range(len(non_terminals)):
+		for j in range(len(terminals)):
+			non_terminals[i] = non_terminals[i].replace(terminals[j], "")
+	
+	#get all unique non_terminals
+	non_terminals = list(set(non_terminals))
+	non_terminals = sorted(non_terminals)
+
+	#stringify terminals + non_terminals
+	terminals = "{" + ", ".join(terminals) + "}"
+	start_symbol = non_terminal[0]
+	non_terminals = "{" + ", ".join(non_terminals) + "}"
+
+	#prepare all items to be passed into the template
+	context = {
+		"grammar_object": grammar_object,
+		"terminals": terminals,
+		"non_terminals": non_terminals,
+		"start_symbol": start_symbol
+	}
+	
+	return render_template('learn.html', **context)
 
 @app.route('/get_question', methods=['GET'])
 def get_question():
@@ -81,7 +111,7 @@ def check_answer():
 	return jsonify({
 		# "valid": True,
 		"correct": True
-	});
+	})
 
 @app.errorhandler(404)
 def page_not_found(error):

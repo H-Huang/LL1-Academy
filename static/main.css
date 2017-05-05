@@ -1,3 +1,22 @@
 .productions > p {
 	display: inline;
 }
+
+/* General styling */
+
+
+
+/* Grammar styling */
+#grammar {
+	border: 3px solid;
+	padding: 15px;
+	margin: 10px 0px;
+}
+
+	#grammar h3{
+		font-size: 42px;
+	}
+
+	#grammar .productions {
+		font-size: 24px;
+	}
