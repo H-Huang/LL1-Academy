@@ -105,14 +105,22 @@ def get_question():
 def check_answer():
 	global questions
 	global currentQ
+	global answers
 
 	# TODO: actually check if answer is right
 	# think about where validations should take place - probably on client
-	print(request.form)
+	answer = request.form.get('answer').rstrip(',')
+	answer_set = set(answer.split(','))
+	category = request.form.get('category')
+	symbol = request.form.get('symbol')
+
+	# print(answers[category][symbol])
+	# print(answer_set)
+	# print(answer_set == answers[category][symbol])
 
 	return jsonify({
 		# "valid": True,
-		"correct": True
+		"correct": answer_set == answers[category][symbol]
 	})
 
 @app.errorhandler(404)
