@@ -11,6 +11,6 @@ Vagrant.configure("2") do |config|
 
   
   config.vm.network "forwarded_port", guest: 8000, host: 8000, host_ip: "127.0.0.1", auto_correct: true
-  config.vm.provision :shell, privileged: false, path: "_dev_setup/initial.sh"
+  config.vm.provision :shell, privileged: false, path: "dev_setup/initial.sh"
 
 end
