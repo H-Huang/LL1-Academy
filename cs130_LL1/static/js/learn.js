@@ -35,7 +35,7 @@ function draw_question() {
 		var input_value = $('#question-answer').val();
 		var input_trimmed = input_value.replace(/\s/g,'')
 		var valid = input_trimmed.match('^([a-z$],)*[a-z$],?$') != null;
-		// console.log(valid)
+		console.log(valid)
 
 		if (valid) {
 			$.ajax({
@@ -43,6 +43,7 @@ function draw_question() {
 				url: "/check_answer",
 				data : { 
 					// 'question_data': question_data,
+					'csrfmiddlewaretoken': csrfmiddlewaretoken,
 					'category': question_data.category,
 					'symbol': question_data.symbol,
 					'answer': $('#question-answer').val()

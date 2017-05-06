@@ -1,8 +1,7 @@
-from flask import Flask, render_template, request, jsonify
-from tools.GrammarChecker import *
-app = Flask(__name__)
+from django.shortcuts import render
 
-app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+from django.http import JsonResponse
+from LL1_Academy.tools.GrammarChecker import *
 
 # TODO: this should NOT be hardcoded
 # single session grammar here
@@ -10,17 +9,14 @@ startsymbol = 'A'
 grammar = {
     'A': ['xA', 'Bz'],
     'B': ['yB', 'y'],
-	# 'C': ['zA', 'y']
 }
-#
 
 grammarChecker = GrammarChecker()
 
 # single session question tracking here
 questions = []
 currentQ = -1
-answers = {}
-# 
+answers = {} 
 
 def generate_questions():
 	# start over
@@ -48,16 +44,10 @@ def generate_questions():
 	print(answers)
 	print()
 
-	
+def index(request):
+	return render(request, 'LL1_Academy/index.html')
 
-@app.route('/')
-@app.route('/index')
-def index():
-	return render_template('index.html')
-
-
-@app.route('/learn', methods=['GET'])
-def learn():
+def learn(request):
 	# on page load we start the session over
 	# TODO: this should eventually use the session object probably
 	# 
@@ -71,7 +61,6 @@ def learn():
 
 	#stringify terminals + non_terminals
 	terminals = "{" + ", ".join(terminals) + "}"
-	# start_symbol = non_terminal[0]
 	non_terminals = "{" + ", ".join(non_terminals) + "}"
 
 	#prepare all items to be passed into the template
@@ -82,10 +71,9 @@ def learn():
 		"start_symbol": startsymbol
 	}
 	
-	return render_template('learn.html', **context)
+	return render(request, 'LL1_Academy/learn.html', context)
 
-@app.route('/get_question', methods=['GET'])
-def get_question():
+def get_question(request):
 	global questions
 	global currentQ
 
@@ -96,29 +84,23 @@ def get_question():
 	symbol = questions[currentQ][1]
 
 	currentQ += 1
-	return jsonify({
+	return JsonResponse({
 		"category": category,
 		"symbol": symbol
 	})
 
-@app.route('/check_answer', methods=['POST'])
-def check_answer():
+def check_answer(request):
 	global questions
 	global currentQ
 
 	# TODO: actually check if answer is right
 	# think about where validations should take place - probably on client
-	print(request.form)
 
-	return jsonify({
+	return JsonResponse({
 		# "valid": True,
 		"correct": True
 	})
 
-@app.errorhandler(404)
-def page_not_found(error):
-    return render_template('page_not_found.html'), 404
-
-if __name__ == '__main__':
-	app.debug = True
-	app.run(host='0.0.0.0', port=80)
+# @app.errorhandler(404)
+# def page_not_found(request):
+#     return render_template('page_not_found.html'), 404
