@@ -1,5 +1,4 @@
 .vagrant
-Vagrantfile
 .DS_Store
 *pycache*
 */txt
