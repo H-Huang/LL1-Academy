@@ -35,7 +35,7 @@ function draw_question() {
 		var input_value = $('#question-answer').val();
 		var input_trimmed = input_value.replace(/\s/g,'')
 		var valid = input_trimmed.match('^([a-z$],)*[a-z$],?$') != null;
-		console.log(valid)
+		// console.log(valid)
 
 		if (valid) {
 			$.ajax({
@@ -43,7 +43,6 @@ function draw_question() {
 				url: "/check_answer",
 				data : { 
 					// 'question_data': question_data,
-					'csrfmiddlewaretoken': csrfmiddlewaretoken,
 					'category': question_data.category,
 					'symbol': question_data.symbol,
 					'answer': $('#question-answer').val()
@@ -52,7 +51,9 @@ function draw_question() {
 					console.log(results)
 					if (results.correct) {
 						$('#question-input').remove()
-						$('#active > .answerbox').html('<p class="answer">' + input_trimmed + '</p><i class="im im-check-mark answercheck" style="color:#33cc33"></i><div style="clear:both;"></div>')
+						// $('#active > .answerbox').html('<p class="answer">' + input_trimmed + '</p><i class="im im-check-mark answercheck" style="color:#33cc33;"></i><div style="clear:both;"></div>')
+						$('#active > .question-title').after('<div id="answer-panel"><p class="answer">' + input_trimmed + '</p><i class="im im-check-mark answercheck"></i></div><div style="clear:both;">')
+						
 						$('#active').removeAttr('id')
 						query_for_question()
 					} else { // valid syntax, incorrect result

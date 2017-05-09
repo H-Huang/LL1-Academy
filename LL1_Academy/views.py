@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpRequest
 from LL1_Academy.tools.GrammarChecker import *
 
 # TODO: this should NOT be hardcoded
@@ -92,13 +92,22 @@ def get_question(request):
 def check_answer(request):
 	global questions
 	global currentQ
+	global answers
 
 	# TODO: actually check if answer is right
 	# think about where validations should take place - probably on client
+	answer = request.POST.get('answer').rstrip(',')
+	answer_set = set(answer.split(','))
+	category = request.POST.get('category')
+	symbol = request.POST.get('symbol')
+
+	# print(answers[category][symbol])
+	# print(answer_set)
+	# print(answer_set == answers[category][symbol])
 
 	return JsonResponse({
 		# "valid": True,
-		"correct": True
+		"correct": answer_set == answers[category][symbol]
 	})
 
 # @app.errorhandler(404)
