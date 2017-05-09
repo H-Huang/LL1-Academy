@@ -43,6 +43,7 @@ function draw_question() {
 				url: "/check_answer",
 				data : { 
 					// 'question_data': question_data,
+					'csrfmiddlewaretoken': csrfmiddlewaretoken,
 					'category': question_data.category,
 					'symbol': question_data.symbol,
 					'answer': $('#question-answer').val()
