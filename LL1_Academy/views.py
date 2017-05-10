@@ -18,14 +18,14 @@ questions = []
 currentQ = -1
 answers = {} 
 
-def generate_questions():
+def generate_questions(q=0):
 	# start over
 	global questions
 	global currentQ
 	global answers
 
 	questions = []
-	currentQ = 0
+	currentQ = q
 	answers = {}
 
 	# first set questions
@@ -51,7 +51,12 @@ def learn(request):
 	# on page load we start the session over
 	# TODO: this should eventually use the session object probably
 	# 
-	generate_questions()
+
+	try:
+		curQ = request.session['currentQuestion']
+		generate_questions(curQ)
+	except KeyError:
+		generate_questions();
 
 	grammar_object = []
 	non_terminals, terminals = grammarChecker.getSymbols(grammar)
@@ -83,7 +88,6 @@ def get_question(request):
 	category = questions[currentQ][0]
 	symbol = questions[currentQ][1]
 
-	currentQ += 1
 	return JsonResponse({
 		"category": category,
 		"symbol": symbol
@@ -105,9 +109,16 @@ def check_answer(request):
 	# print(answer_set)
 	# print(answer_set == answers[category][symbol])
 
+	isCorrect = answer_set == answers[category][symbol]
+
+	if (isCorrect):
+		currentQ += 1
+		request.session['currentQuestion'] = currentQ
+		request.session.set_expiry(60)
+
 	return JsonResponse({
 		# "valid": True,
-		"correct": answer_set == answers[category][symbol]
+		"correct": isCorrect
 	})
 
 # @app.errorhandler(404)
