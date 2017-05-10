@@ -11,12 +11,11 @@ def main(num):
 	nonTerminals = ['A','B','C','D']
 	terminals = ['x','y','z','w']
 	for n in range(2,5):
-		for t in range (2,5):
 			start_time = time.time()
 			mg = MassGrammarGenerator.MassGrammarGenerator()
-			mg.run(num,nonTerminals[:n],terminals[:t],True)
-			print("{}-{}: {} seconds---".format(n, t,(time.time() - start_time)))
+			mg.run(num,nonTerminals[:n],terminals,True)
+			print("{}Variables: {} seconds---".format(n,(time.time() - start_time)))
 
 if __name__ == '__main__':
 	#This number can be changed to however many grammars you want to generate 
-    main(1000)
+    main(5000)

@@ -24,30 +24,31 @@ class MassGrammarGenerator:
     def __init__(self):
         self.statusSummary = {-1:0,
                        0:0,
-                       1:0}
+                       1:0,
+                       2:0}
         
     def run(self,num, nonTerminals, terminals, writeToTxt = False):
         #TODO: make it write to DB instead of text files
         gc = GrammarChecker.GrammarChecker()
         g = SingleGrammarGenerator.SingleGrammarGenerator()
         n = len(nonTerminals)
-        t = len(terminals)
         if writeToTxt:
-            f = open(os.path.join(script_dir, 'txt/'+str(n)+'-'+str(t)), 'w')
+            f = open(os.path.join(script_dir, 'data/'+str(n)+'Variables'), 'w')
 
         #generate num grammars and check them, discard the left hand recursion ones
         for i in range(0,num):
             grammar = g.generate(nonTerminals, terminals)
-            result = gc.solve(grammar,'A',False)
-            status = result[3]
+            firstSets, followSets, parsingTable, status, reachable = gc.solve(grammar,'A',False)
             self.statusSummary[status] += 1
-            if writeToTxt:
-                if not status == -1:
-                    f.write(str(grammar)+'\n')
-            else:
-                print(grammar)
+            if (not status == -1) and reachable:
+                self.statusSummary[2] += 1
+                if writeToTxt:
+                    f.write(str(grammar)+'\n \tFirst Set: '+str(firstSets)+'\n \tFollow Set: '+str(followSets)+'\n \tReachable: '+ str(reachable) +'\n\n')
+                else:
+                    print(grammar)
 
         #print a small summary 
-        print(str(n)+"-"+str(t)+":\nleft recursion: "+str(self.statusSummary[-1])
+        print(str(n)+"Variables:\nleft recursion: "+str(self.statusSummary[-1])
                 +"; LL(1): " + str(self.statusSummary[0])
-                + "; not LL(1): " + str(self.statusSummary[1]))
+                +"; not LL(1): " + str(self.statusSummary[1])
+                + "; Reachable: " + str(self.statusSummary[2]))
