@@ -65,7 +65,6 @@ function draw_question() {
 						else 
 							$('#active > .question-title').after('<div id="answer-panel"><p class="answer">' + input_trimmed + '</p><i class="im im-check-mark answercheck"></i></div><div style="clear:both;">')
 						$('#active').removeAttr('id')
-						// // TODO: query for question vs query for new grammar
 						if (!ll1radioActive)
 							query_for_question()
 						else {
@@ -76,7 +75,6 @@ function draw_question() {
 							}, function(){
 								 location.reload();
 							})
-							// query for new grammar
 						}
 						
 					} else { // valid syntax, incorrect result
