@@ -118,7 +118,7 @@ def check_answer(request):
 
 	return JsonResponse({
 		# "valid": True,
-		"correct": isCorrect
+		"correct": answer_set == answers[category][symbol]
 	})
 
 # @app.errorhandler(404)
