@@ -109,7 +109,7 @@ def check_answer(request):
 		answer_set = set(answer.split(','))
 		isCorrect = answer_set == answers[category][symbol]
 	else:
-		answer = request.POST.get('ll1answer') == "true"
+		answer = request.POST.get('ll1answer') == "True"
 		isCorrect = answer == answers[category]
 
 

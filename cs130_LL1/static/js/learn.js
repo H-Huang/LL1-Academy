@@ -39,9 +39,9 @@ function draw_question() {
 			valid = input_trimmed.match('^([a-z$],)*[a-z$],?$') != null;
 		}
 
-		var ll1radio = $('input[name=ll1]').length
-		if (ll1radio != 0) {
-			ll1radio = $('input[name=ll1]:checked')[0].value
+		var ll1radioActive = $('input[name=ll1]').length
+		if (ll1radioActive) {
+			var ll1radio = $('input[name=ll1]:checked')[0].value
 		}
 
 		if (valid) {
@@ -60,18 +60,24 @@ function draw_question() {
 					console.log(results)
 					if (results.correct) {
 						$('#question-input').remove()
-						$('#active > .question-title').after('<div id="answer-panel"><p class="answer">' + input_trimmed + '</p><i class="im im-check-mark answercheck"></i></div><div style="clear:both;">')
+						if (ll1radioActive)
+							$('#active > .question-title').after('<div id="answer-panel"><p class="answer">' + ll1radio + '</p><i class="im im-check-mark answercheck"></i></div><div style="clear:both;">')
+						else 
+							$('#active > .question-title').after('<div id="answer-panel"><p class="answer">' + input_trimmed + '</p><i class="im im-check-mark answercheck"></i></div><div style="clear:both;">')
 						$('#active').removeAttr('id')
 						// // TODO: query for question vs query for new grammar
-						// // if question not complete
-						query_for_question()
-						// // else 
-						// swal({
-						// 	title: "Good Job!",
-						// 	type: "success",
-						// 	confirmButtonText: "Next Question"
-						// })
-						// // query for new grammar
+						if (!ll1radioActive)
+							query_for_question()
+						else {
+							swal({
+								title: "Good Job!",
+								type: "success",
+								confirmButtonText: "Next Question"
+							}, function(){
+								 location.reload();
+							})
+							// query for new grammar
+						}
 						
 					} else { // valid syntax, incorrect result
 						$('#question-input > .feedback').html("<p>Incorrect answer</p>")
