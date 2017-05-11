@@ -4,18 +4,17 @@
 # Usage: python3 populate.py
 
 import time
-import MassGrammarGenerator
+from LL1_Academy.tools import MassGrammarGenerator
 
+num = 100
+nonTerminals = ['A','B','C','D']
+terminals = ['x','y','z','w']
+for n in range(2,5):
+	start_time = time.time()
+	mg = MassGrammarGenerator.MassGrammarGenerator()
+	mg.run(num,nonTerminals[:n],terminals,False)
+	print("{}Variables: {} seconds---".format(n,(time.time() - start_time)))
 
-def main(num):
-	nonTerminals = ['A','B','C','D']
-	terminals = ['x','y','z','w']
-	for n in range(2,5):
-			start_time = time.time()
-			mg = MassGrammarGenerator.MassGrammarGenerator()
-			mg.run(num,nonTerminals[:n],terminals,True)
-			print("{}Variables: {} seconds---".format(n,(time.time() - start_time)))
-
-if __name__ == '__main__':
-	#This number can be changed to however many grammars you want to generate 
-    main(5000)
+#if __name__ == '__main__':
+ 	#This number can be changed to however many grammars you want to generate 
+ 	#main(5000)

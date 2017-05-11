@@ -1,4 +1,5 @@
-import GrammarChecker,SingleGrammarGenerator
+from LL1_Academy.tools import GrammarChecker,SingleGrammarGenerator
+from LL1_Academy.models import Grammar, Question
 import os
 
 #
@@ -28,7 +29,6 @@ class MassGrammarGenerator:
                        2:0}
         
     def run(self,num, nonTerminals, terminals, writeToTxt = False):
-        #TODO: make it write to DB instead of text files
         gc = GrammarChecker.GrammarChecker()
         g = SingleGrammarGenerator.SingleGrammarGenerator()
         n = len(nonTerminals)
@@ -45,7 +45,28 @@ class MassGrammarGenerator:
                 if writeToTxt:
                     f.write(str(grammar)+'\n \tFirst Set: '+str(firstSets)+'\n \tFollow Set: '+str(followSets)+'\n \tReachable: '+ str(reachable) +'\n\n')
                 else:
-                    print(grammar)
+                    #write to DB if not to TXT
+                    newG = Grammar(prods=str(grammar), nonTerminals=''.join(nonTerminals), terminals=''.join(terminals), startSymbol='A')
+                    newG.save()
+
+                    #LL1 Question
+                    ans = 'True' if status==0 else 'False'
+                    qLL = Question(gid=newG,qnum=0,category='LL',answer=ans)
+                    qLL.save()
+
+                    #ParseTable Question
+                    qPT = Question(gid=newG,qnum=1,category='PT',answer=str(parsingTable))
+                    qPT.save()
+
+                    #First and Follow Set
+                    qnum = 2
+                    for v in nonTerminals:
+                        qFirst = Question(gid=newG,qnum=qnum,category='FI',symbol=v,answer=''.join(firstSets[v]))
+                        qFirst.save()
+                        qnum +=1
+                        qFollow = Question(gid=newG,qnum=qnum,category='FO',symbol=v,answer=''.join(followSets[v]))
+                        qFollow.save()
+                        qnum +=1 
 
         #print a small summary 
         print(str(n)+"Variables:\nleft recursion: "+str(self.statusSummary[-1])

@@ -6,8 +6,8 @@ script_dir = os.path.dirname(__file__)
 def main():
 
 	#filename of the training data
-	fI = os.path.join(script_dir, 'txt/interesting')
-	fN = os.path.join(script_dir, 'txt/notInteresting')
+	fI = os.path.join(script_dir, 'data/interesting')
+	fN = os.path.join(script_dir, 'data/notInteresting')
 	
 	#build the model
 	model = SvmLearn.SvmLearn(fI,fN)
