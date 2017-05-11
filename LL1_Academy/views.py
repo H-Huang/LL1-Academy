@@ -114,7 +114,7 @@ def check_answer(request):
 	if (isCorrect):
 		currentQ += 1
 		request.session['currentQuestion'] = currentQ
-		request.session.set_expiry(60)
+		request.session.set_expiry(1)
 
 	return JsonResponse({
 		# "valid": True,
