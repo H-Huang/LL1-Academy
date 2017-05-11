@@ -56,7 +56,17 @@ function draw_question() {
 						$('#active > .question-title').after('<div id="answer-panel"><p class="answer">' + input_trimmed + '</p><i class="im im-check-mark answercheck"></i></div><div style="clear:both;">')
 						
 						$('#active').removeAttr('id')
+						// // TODO: query for question vs query for new grammar
+						// // if question not complete
 						query_for_question()
+						// // else 
+						// swal({
+						// 	title: "Good Job!",
+						// 	type: "success",
+						// 	confirmButtonText: "Next Question"
+						// })
+						// // query for new grammar
+						
 					} else { // valid syntax, incorrect result
 						$('#question-input > .feedback').html("<p>Incorrect answer</p>")
 						$('#question-answer').css('border','1px solid red')
@@ -64,6 +74,11 @@ function draw_question() {
 				},
 				error: function(error) {
 					console.log(error)
+					swal({
+						title: "Oops...",
+						text: "Something went wrong!",
+						type: "error"
+					})
 				}
 			});
 		} else { // invalid syntax
