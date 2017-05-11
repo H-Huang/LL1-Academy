@@ -1,0 +1,56 @@
+.productions > p {
+	display: inline;
+}
+
+/* General styling */
+
+
+/* Grammar styling */
+#grammar {
+	border: 3px solid;
+	padding: 15px;
+	margin: 10px 0px;
+}
+
+	#grammar h3{
+		font-size: 42px;
+	}
+
+	#grammar .productions {
+		font-size: 24px;
+	}
+
+/* Questions styling */
+#answer-panel {
+	display:inline;
+	float:right;
+}
+
+.answer {
+	display: inline;
+	margin-right:20px;
+}
+
+.answercheck {
+	display: inline;
+	color: #33cc33;
+	font-size: 12px !important;
+}
+
+.question {
+	color: grey;
+	margin-top:24px;
+}
+
+#active {
+	color: black;
+}
+
+#active > .question-title {
+	font-weight: bold;
+	display:block;
+}
+
+.question-title {
+	display: inline;
+}

@@ -2,22 +2,38 @@
 #   GrammarChecker usage:
 #   Finds the LL(1) First, Follow, Parse Table of a grammar.
 # 
-#   use the solve function:
-#   solve(grammar, startsymbol, [verbose])
+
+
 #   
+#   solve(grammar, startsymbol, [verbose])
+#   PARAMS:
+#       REQUIRED:
 #       grammar = {
 #           'S': ['F', '(S + F)'],
 #           'F': ['a']
 #       }
 # 
-#       startsymbol is the starting nonterminal of grammar
+#       REQUIRED: startsymbol is the starting nonterminal of grammar
 # 
-#       verbose is an optional boolean (default is False) which if True
+#       OPTIONAL: verbose is an optional boolean (default is False) which if True
 #       the solve function will pretty print its outputs
 # 
-#   solve return value:
-#   (firstSets, followSets, parsingTable, status)
-#       status is 0 if LL(1), 1 if not LL(1), and -1 if left recursion was found
+#   RETURNS:
+#       (firstSets, followSets, parsingTable, status, reachable)
+#           status:     0 if LL(1), 1 if not LL(1), and -1 if left recursion was found
+#           reachable:  True if every nonterminal is reachable, else False
+# 
+
+
+# 
+#   getSymbols(grammar)
+#   PARAMS:
+#       REQUIRED: grammar is in same format as above
+# 
+#   RETURNS:
+#       (nonterminals, terminals)
+#           both are lists, neither are ordered
+# 
 # 
 
 epsilon = 'ε'
@@ -36,13 +52,8 @@ class GrammarChecker:
         self.grammar = grammar
         self.startsymbol = startsymbol
         self.verbose = verbose
-        self.nonterminals = [x for x,_ in self.grammar.items()]
-        self.terminals = set()
-        for _,prods in self.grammar.items():
-            for prod in prods:
-                for symbol in prod.replace(" ",""):
-                    if symbol not in self.nonterminals and symbol != self.epsilon:
-                        self.terminals.add(symbol)
+        
+        GrammarChecker.getSymbols(self,grammar)
         
         GrammarChecker.buildFirstSets(self)
         GrammarChecker.buildFollowSets(self)
@@ -61,8 +72,46 @@ class GrammarChecker:
                     print("grammar is LL(1)") 
                 else:
                     print("grammar is NOT LL(1)")
-        return((returnFirstSets,self.followSets,self.parsingTable,status))
+        return((returnFirstSets,self.followSets,self.parsingTable,status,GrammarChecker.reachability(self)))
     
+    def getSymbols(self, grammar):
+        self.grammar = grammar
+        self.nonterminals = [x for x,_ in self.grammar.items()]
+        self.terminals = set()
+        for _,prods in self.grammar.items():
+            for prod in prods:
+                for symbol in prod.replace(" ",""):
+                    if symbol not in self.nonterminals and symbol != self.epsilon:
+                        self.terminals.add(symbol)
+        return (sorted(self.nonterminals),sorted(list(self.terminals)))
+
+    def reachability(self):
+        canreach = {}
+        for LHS,RHS in self.grammar.items():
+            reachability = set()
+            for prod in RHS:
+                for letter in prod:
+                    if letter in self.nonterminals:
+                        reachability.add(letter)
+            canreach[LHS] = reachability
+        for nt in self.nonterminals:
+            if nt != self.startsymbol:
+                if not GrammarChecker.path_exists(self, canreach, self.startsymbol, nt):
+                    return False
+        return True
+
+    def path_exists(self, graph, start, end, path=[]):
+        path = path + [start]
+        if start == end:
+            return True
+        if start not in graph:
+            return False
+        for node in graph[start]:
+            if node not in path:
+                if GrammarChecker.path_exists(self, graph, node, end, path):
+                    return True
+        return False
+
     def buildFirstSets(self):
         self.firstSets = {}
         if self.verbose: print ("first:")
