@@ -54,7 +54,7 @@ function draw_question() {
 					'category': question_data.category,
 					'symbol': question_data.symbol,
 					'answer': $('#question-answer').val(),
-					'll1radio': ll1radio
+					'll1answer': ll1radio
 				},
 				success: function(results) {
 					console.log(results)
