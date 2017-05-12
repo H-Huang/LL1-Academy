@@ -25,7 +25,7 @@ def learn(request):
 	if 'gid1' not in request.session:
 		random_grammar = get_random_grammar()
 		request.session['gid'] = random_grammar.gid
-		request.session['curQ'] = 2
+		request.session['curQ'] = 0
 
 	grammar_obj = Grammar.objects.filter(gid=request.session['gid']).first()
 	non_terminals = list(grammar_obj.nonTerminals)
@@ -67,24 +67,20 @@ def check_answer(request):
 	gid = request.session['gid']
 	currentQ = request.session['curQ']
 	question = Question.objects.filter(gid__gid__contains=gid, qnum=currentQ).first()
+	category = question.get_category_display()
 
 	# TODO: actually check if answer is right
 	# think about where validations should take place - probably on client
 
-
-	# answer = request.POST.get('answer').rstrip(',')
-	# answer_set = set(answer.split(','))
-	# true_answers = set(list(question.answer))
-	# isCorrect = answer_set == true_answers
-
-	category = request.POST.get('category')
-	symbol = request.POST.get('symbol')
+	# category = request.POST.get('category')
+	# symbol = request.POST.get('symbol')
 	isCorrect = False
 
-	if (category != 'LL1'):
+	if (category != 'isLL1'):
 		answer = request.POST.get('answer').rstrip(',')
 		answer_set = set(answer.split(','))
-		isCorrect = answer_set == answers[category][symbol]
+		true_answers = set(list(question.answer))
+		isCorrect = answer_set == true_answers
 	else:
 		answer = request.POST.get('ll1answer') == "True"
 		isCorrect = answer == answers[category]

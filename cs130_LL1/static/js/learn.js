@@ -46,7 +46,7 @@ function draw_question() {
 		var valid = true
 		if (input_value != null){
 			var input_trimmed = input_value.replace(/\s/g,'')
-			valid = input_trimmed.match('^([a-z$],)*[a-z$],?$') != null;
+			valid = input_trimmed.match('^([a-zε$],)*[a-zε$],?$') != null;
 		}
 
 		var ll1radioActive = $('input[name=ll1]').length

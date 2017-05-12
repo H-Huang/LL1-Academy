@@ -74,6 +74,8 @@ class MassGrammarGenerator:
                     symbol=v,answer=''.join(firstSets[v]))
             qFirst.save()
             qnum +=1
+        
+        for v in self.nonTerminals:
             qFollow = Question(gid=newG,qnum=qnum,category='FO',
                     symbol=v,answer=''.join(followSets[v]))
             qFollow.save()
