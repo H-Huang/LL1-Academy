@@ -5,28 +5,23 @@ from LL1_Academy.models import Grammar, Question
 
 class UrlTest(TestCase):
     def test_index1(self):
-        client = Client()
-        response = client.get('/')
+        response = self.client.get('/')
         self.assertEqual(response.status_code, 200)
 
     def test_index2(self):
-        client = Client()
-        response = client.get('/index')
+        response = self.client.get('/index')
         self.assertEqual(response.status_code, 200)
 
     def test_learn(self):
-        client = Client()
-        response = client.get('/learn')
+        response = self.client.get('/learn')
         self.assertEqual(response.status_code, 200)
     
     def test_get_question(self):
-        client = Client()
-        response = client.get('/get_question')
+        response = self.client.get('/get_question')
         self.assertEqual(response.status_code, 200)
     
     def test_check_answer(self):
-        client = Client()
-        response = client.get('/check_answer')
+        response = self.client.get('/check_answer')
         self.assertEqual(response.status_code, 404)
 
 class RenderingTest(TestCase):
@@ -37,3 +32,4 @@ class RenderingTest(TestCase):
     def test_index1(self):
         response = self.client.get('/learn')
         self.assertTemplateUsed(response, 'LL1_Academy/learn.html')
+
