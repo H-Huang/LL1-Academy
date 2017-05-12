@@ -83,7 +83,8 @@ def check_answer(request):
 		isCorrect = answer_set == true_answers
 	else:
 		answer = request.POST.get('ll1answer') == "True"
-		isCorrect = answer == answers[category]
+		true_answers = question.answer == "True"
+		isCorrect = answer == true_answers
 
 
 
