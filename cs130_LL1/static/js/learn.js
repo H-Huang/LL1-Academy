@@ -89,7 +89,7 @@ function draw_question() {
 						
 					} else { // valid syntax, incorrect result
 						$('#question-input > .feedback').html("<p>Incorrect answer</p>")
-						$('#question-answer').css('border','1px solid red')
+						$('#question-answer').css('border','1px solid #F6781D')
 					}
 				},
 				error: function(error) {
@@ -103,7 +103,7 @@ function draw_question() {
 			});
 		} else { // invalid syntax
 			$('#question-input > .feedback').html("<p>Invalid syntax</p>")
-			$('#question-answer').css('border','1px solid red')
+			$('#question-answer').css('border','1px solid #F6781D')
 		}
 	});
 }
