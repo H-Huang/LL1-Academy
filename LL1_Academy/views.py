@@ -54,7 +54,7 @@ def get_question(request):
 	gid = request.session['gid']
 	currentQ = request.session['curQ']
 	question = Question.objects.filter(gid__gid__contains=gid, qnum=currentQ).first()
-	category = question.category
+	category = question.get_category_display()
 	symbol = question.symbol
 	print(question.answer)
 
