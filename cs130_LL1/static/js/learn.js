@@ -26,7 +26,17 @@ function query_for_question() {
 }
 
 function draw_question() {
+	if (question_data.category == "first") {
+		question_data.opt = "ε"
+	} else {
+		question_data.opt = "$"
+	}
+
 	$('#questions-container').append(question_template(question_data));
+
+	$('#opt-char').click(function() {
+		$('#question-answer').val($('#question-answer').val() + question_data.opt);
+	});
 
 	// bind form submit handler: check if answer is correct
 	$('#question-input').on('submit', function() {
