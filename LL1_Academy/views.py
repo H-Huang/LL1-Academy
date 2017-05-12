@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from django.http import JsonResponse, HttpRequest
+from django.http import JsonResponse, HttpRequest, HttpResponseNotFound
 from LL1_Academy.tools.GrammarChecker import *
 
 # TODO: this should NOT be hardcoded
@@ -94,32 +94,35 @@ def get_question(request):
 	})
 
 def check_answer(request):
-	global questions
-	global currentQ
-	global answers
+	if request.method == 'POST':
+		global questions
+		global currentQ
+		global answers
 
-	# TODO: actually check if answer is right
-	# think about where validations should take place - probably on client
-	answer = request.POST.get('answer').rstrip(',')
-	answer_set = set(answer.split(','))
-	category = request.POST.get('category')
-	symbol = request.POST.get('symbol')
+		# TODO: actually check if answer is right
+		# think about where validations should take place - probably on client
+		answer = request.POST.get('answer').rstrip(',')
+		answer_set = set(answer.split(','))
+		category = request.POST.get('category')
+		symbol = request.POST.get('symbol')
 
-	# print(answers[category][symbol])
-	# print(answer_set)
-	# print(answer_set == answers[category][symbol])
+		# print(answers[category][symbol])
+		# print(answer_set)
+		# print(answer_set == answers[category][symbol])
 
-	isCorrect = answer_set == answers[category][symbol]
+		isCorrect = answer_set == answers[category][symbol]
 
-	if (isCorrect):
-		currentQ += 1
-		request.session['currentQuestion'] = currentQ
-		request.session.set_expiry(60)
+		if (isCorrect):
+			currentQ += 1
+			request.session['currentQuestion'] = currentQ
+			request.session.set_expiry(60)
 
-	return JsonResponse({
-		# "valid": True,
-		"correct": answer_set == answers[category][symbol]
-	})
+		return JsonResponse({
+			# "valid": True,
+			"correct": answer_set == answers[category][symbol]
+		})
+	else:
+		return HttpResponseNotFound('<h1>Page not found</h1>')
 
 # @app.errorhandler(404)
 # def page_not_found(request):
