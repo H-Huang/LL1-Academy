@@ -1,0 +1,154 @@
+{'A': ['xwB'], 'B': ['ε', 'C'], 'C': ['z']}
+First Set: {'A': {'x'}, 'B': {'ε', 'z'}, 'C': {'z'}}
+Follow Set: {'A': {'$'}, 'B': {'$'}, 'C': {'$'}}
+Reachable: True
+
+{'A': ['zCBA'], 'B': ['AABB', 'ε'], 'C': ['ABAx']}
+First Set: {'A': {'z'}, 'B': {'ε', 'z'}, 'C': {'z'}}
+Follow Set: {'A': {'$', 'z'}, 'B': {'z'}, 'C': {'z'}}
+Reachable: True
+
+{'A': ['CA'], 'B': ['xBw'], 'C': ['B', 'BzCx']}
+First Set: {'A': {'x'}, 'B': {'x'}, 'C': {'x'}}
+Follow Set: {'A': {'$'}, 'B': {'x', 'w', 'z'}, 'C': {'x'}}
+Reachable: True
+
+{'A': ['BCzC'], 'B': ['z', 'CC', 'ε'], 'C': ['z']}
+First Set: {'A': {'z'}, 'B': {'ε', 'z'}, 'C': {'z'}}
+Follow Set: {'A': {'$'}, 'B': {'z'}, 'C': {'z'}}
+Reachable: True
+
+{'A': ['xC'], 'B': ['yx'], 'C': ['BAy']}
+First Set: {'A': {'x'}, 'B': {'y'}, 'C': {'y'}}
+Follow Set: {'A': {'$', 'y'}, 'B': {'x'}, 'C': {'$', 'y'}}
+Reachable: True
+
+{'A': ['zxC'], 'B': ['wA'], 'C': ['xABx']}
+First Set: {'A': {'z'}, 'B': {'w'}, 'C': {'x'}}
+Follow Set: {'A': {'x', '$', 'w'}, 'B': {'x'}, 'C': {'x', '$', 'w'}}
+Reachable: True
+
+{'A': ['zBCC'], 'B': ['C'], 'C': ['wzBy']}
+First Set: {'A': {'z'}, 'B': {'w'}, 'C': {'w'}}
+Follow Set: {'A': {'$'}, 'B': {'w', 'y'}, 'C': {'w', 'y'}}
+Reachable: True
+
+{'A': ['zC'], 'B': ['zyy', 'AzA'], 'C': ['zzB', 'BwwC']}
+First Set: {'A': {'z'}, 'B': {'z'}, 'C': {'z'}}
+Follow Set: {'A': {'$', 'z'}, 'B': {'$', 'w', 'z'}, 'C': {'$', 'z'}}
+Reachable: True
+
+{'A': ['ywAB'], 'B': ['CCwy'], 'C': ['wx']}
+First Set: {'A': {'y'}, 'B': {'w'}, 'C': {'w'}}
+Follow Set: {'A': {'$', 'w'}, 'B': {'$', 'w'}, 'C': {'w'}}
+Reachable: True
+
+{'A': ['BxCy'], 'B': ['y'], 'C': ['yxz', 'ε']}
+First Set: {'A': {'y'}, 'B': {'y'}, 'C': {'ε', 'y'}}
+Follow Set: {'A': {'$'}, 'B': {'x'}, 'C': {'y'}}
+Reachable: True
+
+{'A': ['zBy'], 'B': ['Cx'], 'C': ['zA']}
+First Set: {'A': {'z'}, 'B': {'z'}, 'C': {'z'}}
+Follow Set: {'A': {'x', '$'}, 'C': {'x'}, 'B': {'y'}}
+Reachable: True
+
+{'A': ['wwB'], 'B': ['Cwwy'], 'C': ['zBx']}
+First Set: {'A': {'w'}, 'B': {'z'}, 'C': {'z'}}
+Follow Set: {'A': {'$'}, 'B': {'x', '$'}, 'C': {'w'}}
+Reachable: True
+
+{'A': ['CC'], 'B': ['CwwB'], 'C': ['wCB', 'wzz']}
+First Set: {'A': {'w'}, 'B': {'w'}, 'C': {'w'}}
+Follow Set: {'A': {'$'}, 'B': {'w'}, 'C': {'w'}}
+Reachable: True
+
+{'A': ['ywwB', 'ε'], 'B': ['CxCB'], 'C': ['zwzz', 'y']}
+First Set: {'A': {'ε', 'y'}, 'B': {'y', 'z'}, 'C': {'y', 'z'}}
+Follow Set: {'A': {'$'}, 'B': {'$'}, 'C': {'x'}}
+Reachable: True
+
+{'A': ['wCCB', 'CC'], 'B': ['Cxx'], 'C': ['w']}
+First Set: {'A': {'w'}, 'B': {'w'}, 'C': {'w'}}
+Follow Set: {'A': {'$'}, 'B': {'$'}, 'C': {'x', 'w'}}
+Reachable: True
+
+{'A': ['wCBz'], 'B': ['xyB', 'yx'], 'C': ['xBx']}
+First Set: {'A': {'w'}, 'B': {'x', 'y'}, 'C': {'x'}}
+Follow Set: {'A': {'$'}, 'B': {'x', 'z'}, 'C': {'x', 'y'}}
+Reachable: True
+
+{'A': ['B', 'Cw'], 'B': ['wy'], 'C': ['xz', 'z']}
+First Set: {'A': {'x', 'w', 'z'}, 'B': {'w'}, 'C': {'x', 'z'}}
+Follow Set: {'A': {'$'}, 'B': {'$'}, 'C': {'w'}}
+Reachable: True
+
+{'A': ['C'], 'B': ['wzC'], 'C': ['BwBB']}
+First Set: {'A': {'w'}, 'B': {'w'}, 'C': {'w'}}
+Follow Set: {'A': {'$'}, 'B': {'w'}, 'C': {'$', 'w'}}
+Reachable: True
+
+{'A': ['ByB'], 'B': ['CB'], 'C': ['xCy']}
+First Set: {'A': {'x'}, 'B': {'x'}, 'C': {'x'}}
+Follow Set: {'A': {'$'}, 'B': {'y'}, 'C': {'x', 'y'}}
+Reachable: True
+
+{'A': ['CCxB'], 'B': ['ywxw'], 'C': ['xx']}
+First Set: {'A': {'x'}, 'B': {'y'}, 'C': {'x'}}
+Follow Set: {'A': {'$'}, 'B': {'$'}, 'C': {'x'}}
+Reachable: True
+
+{'A': ['zB'], 'B': ['C'], 'C': ['y']}
+First Set: {'A': {'z'}, 'B': {'y'}, 'C': {'y'}}
+Follow Set: {'A': {'$'}, 'B': {'$'}, 'C': {'$'}}
+Reachable: True
+
+{'A': ['wC'], 'B': ['z'], 'C': ['ByyC']}
+First Set: {'A': {'w'}, 'B': {'z'}, 'C': {'z'}}
+Follow Set: {'A': {'$'}, 'B': {'y'}, 'C': {'$'}}
+Reachable: True
+
+{'A': ['wC'], 'B': ['ε', 'wx'], 'C': ['Bw']}
+First Set: {'A': {'w'}, 'B': {'ε', 'w'}, 'C': {'w'}}
+Follow Set: {'A': {'$'}, 'B': {'w'}, 'C': {'$'}}
+Reachable: True
+
+{'A': ['wACB', 'w'], 'B': ['yBw'], 'C': ['y']}
+First Set: {'A': {'w'}, 'B': {'y'}, 'C': {'y'}}
+Follow Set: {'A': {'$', 'y'}, 'B': {'$', 'w', 'y'}, 'C': {'y'}}
+Reachable: True
+
+{'A': ['BC'], 'B': ['y'], 'C': ['A']}
+First Set: {'A': {'y'}, 'B': {'y'}, 'C': {'y'}}
+Follow Set: {'A': {'$'}, 'C': {'$'}, 'B': {'y'}}
+Reachable: True
+
+{'A': ['CzCy'], 'B': ['C', 'yxA'], 'C': ['zBy']}
+First Set: {'A': {'z'}, 'B': {'y', 'z'}, 'C': {'z'}}
+Follow Set: {'A': {'$', 'y'}, 'B': {'y'}, 'C': {'y', 'z'}}
+Reachable: True
+
+{'A': ['yB'], 'B': ['C'], 'C': ['ε', 'w']}
+First Set: {'A': {'y'}, 'B': {'ε', 'w'}, 'C': {'ε', 'w'}}
+Follow Set: {'A': {'$'}, 'B': {'$'}, 'C': {'$'}}
+Reachable: True
+
+{'A': ['Bx'], 'B': ['CCyz'], 'C': ['z']}
+First Set: {'A': {'z'}, 'B': {'z'}, 'C': {'z'}}
+Follow Set: {'A': {'$'}, 'B': {'x'}, 'C': {'z'}}
+Reachable: True
+
+{'A': ['yzwC'], 'B': ['yz'], 'C': ['Bx']}
+First Set: {'A': {'y'}, 'B': {'y'}, 'C': {'y'}}
+Follow Set: {'A': {'$'}, 'B': {'x'}, 'C': {'$'}}
+Reachable: True
+
+{'A': ['zCB'], 'B': ['zzx'], 'C': ['y']}
+First Set: {'A': {'z'}, 'B': {'z'}, 'C': {'y'}}
+Follow Set: {'A': {'$'}, 'B': {'$'}, 'C': {'z'}}
+Reachable: True
+
+{'A': ['B', 'C'], 'B': ['xwC'], 'C': ['BA']}
+First Set: {'A': {'x'}, 'B': {'x'}, 'C': {'x'}}
+Follow Set: {'A': {'x', '$'}, 'C': {'x', '$'}, 'B': {'x', '$'}}
+Reachable: True

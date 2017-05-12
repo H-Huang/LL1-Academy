@@ -1,75 +1,99 @@
-from LL1_Academy.tools import GrammarChecker,SingleGrammarGenerator
+from LL1_Academy.tools import GrammarChecker,SingleGrammarGenerator, SvmLearn
 from LL1_Academy.models import Grammar, Question
 import os
 
-#
-#Description: The MassGrammarGenerator class outputs a specified number of 
-#   random grammars based on the given list of terminals and non-terminals 
-#
-#Input: num: the number of grammars to be generated
-#   nonTerminals: a list of characters representing the nonterminals of length 2-4
-#   Terminals: a list of characters representing the terminals of length 2-4
-#
-#Output: a specified number of grammars written to some plaintext files under ./txt. 
-#   You may need to create this directory first before running this script in order 
-#   for it to work.
-#
-#Usage:
-# mg = MassGrammarGenerator()
-# mg.run(1000，['S','F'],['a','(','+',')'])
-#
+#Description: The MassGrammarGenerator class randomly generates grammar and filter
+#out the interesting ones to store in the database. 
 
 script_dir = os.path.dirname(__file__) #<-- absolute dir the script is in
 
+
 class MassGrammarGenerator:
-    def __init__(self):
-        self.statusSummary = {-1:0,
-                       0:0,
-                       1:0,
-                       2:0}
+
+    def __init__(self, n):
+        self.statusSummary = {"LL1":0, "non-LL1":0}
+        self.gc = GrammarChecker.GrammarChecker()
+        self.g = SingleGrammarGenerator.SingleGrammarGenerator()
+
+        #builds the ML model using our trainingData
+        fI = os.path.join(script_dir, 'trainingData/'+str(n)+'var-interesting')
+        fN = os.path.join(script_dir, 'trainingData/'+str(n)+'var-not-interesting')
+        self.learnModel = SvmLearn.SvmLearn(n,fI,fN)
         
-    def run(self,num, nonTerminals, terminals, writeToTxt = False):
-        gc = GrammarChecker.GrammarChecker()
-        g = SingleGrammarGenerator.SingleGrammarGenerator()
-        n = len(nonTerminals)
-        if writeToTxt:
-            f = open(os.path.join(script_dir, 'data/'+str(n)+'Variables'), 'w')
+    def run(self,num, nonTerminals, terminals):
+        self.nonTerminals = nonTerminals
+        self.terminals =terminals
 
-        #generate num grammars and check them, discard the left hand recursion ones
+        #generate num grammars, filter them and write the good ones to DB
         for i in range(0,num):
-            grammar = g.generate(nonTerminals, terminals)
-            firstSets, followSets, parsingTable, status, reachable = gc.solve(grammar,'A',False)
-            self.statusSummary[status] += 1
-            if (not status == -1) and reachable:
-                self.statusSummary[2] += 1
-                if writeToTxt:
-                    f.write(str(grammar)+'\n \tFirst Set: '+str(firstSets)+'\n \tFollow Set: '+str(followSets)+'\n \tReachable: '+ str(reachable) +'\n\n')
-                else:
-                    #write to DB if not to TXT
-                    newG = Grammar(prods=str(grammar), nonTerminals=''.join(nonTerminals), terminals=''.join(terminals), startSymbol='A')
-                    newG.save()
+            self.createOneGrammar()
 
-                    #LL1 Question
-                    ans = 'True' if status==0 else 'False'
-                    qLL = Question(gid=newG,qnum=0,category='LL',answer=ans)
-                    qLL.save()
+        #prints a small report
+        print(str(len(self.nonTerminals)) + " Variables: "
+            + str(self.statusSummary["LL1"] + self.statusSummary["non-LL1"])
+            + " interesting grammars picked out of "+str(num)+"\n\tLL1: " + str(self.statusSummary["LL1"])
+            + "\n\tnot LL(1): " + str(self.statusSummary["non-LL1"]))
 
-                    #ParseTable Question
-                    qPT = Question(gid=newG,qnum=1,category='PT',answer=str(parsingTable))
-                    qPT.save()
+    def createOneGrammar(self):
+        #This function randomly generates a single grammar, and saves it to the DB if 
+        #it is not left-recursion and interesting
 
-                    #First and Follow Set
-                    qnum = 2
-                    for v in nonTerminals:
-                        qFirst = Question(gid=newG,qnum=qnum,category='FI',symbol=v,answer=''.join(firstSets[v]))
-                        qFirst.save()
-                        qnum +=1
-                        qFollow = Question(gid=newG,qnum=qnum,category='FO',symbol=v,answer=''.join(followSets[v]))
-                        qFollow.save()
-                        qnum +=1 
+        #generate a single grammar randomly
+        grammar = self.g.generate(self.nonTerminals, self.terminals)
 
-        #print a small summary 
-        print(str(n)+"Variables:\nleft recursion: "+str(self.statusSummary[-1])
-                +"; LL(1): " + str(self.statusSummary[0])
-                +"; not LL(1): " + str(self.statusSummary[1])
-                + "; Reachable: " + str(self.statusSummary[2]))
+        #get answers using the checker
+        #result = firstSets, followSets, parsingTable, status, reachable 
+        result = self.gc.solve(grammar,'A',False)
+
+        #Abandon left recursive grammars and grammars with non-reachable variables
+        if (result[3] == -1) or (not result[4]):
+            return
+        
+        #If the ML model decidese it's interesting, save to DB
+        prediction = self.learnModel.predictGrammar(grammar,result[0],result[1])
+        if prediction[0]==1:
+            self.saveToDB(grammar,result)
+            print("YES: "+str(grammar)+"\n\tFirst: "+str(result[0])+"\n\tFollow: "+str(result[1]))
+        else:
+            print("NO: "+str(grammar)+"\n\tFirst: "+str(result[0])+"\n\tFollow: "+str(result[1]))
+
+                
+    def saveToDB(self,grammar,result):
+        #This function takes the grammar and the result returned by gc.solve. It
+        #populates the Grammar and Question table in DB with the correct fields
+
+        firstSets, followSets, parsingTable, status, reachable = result
+        newG = Grammar(prods=str(grammar), nonTerminals=''.join(self.nonTerminals), 
+                terminals=''.join(self.terminals), startSymbol='A')
+        newG.save()
+
+        #First and Follow Set
+        qnum = 0
+        for v in self.nonTerminals:
+            qFirst = Question(gid=newG,qnum=qnum,category='FI',
+                    symbol=v,answer=''.join(firstSets[v]))
+            qFirst.save()
+            qnum +=1
+            qFollow = Question(gid=newG,qnum=qnum,category='FO',
+                    symbol=v,answer=''.join(followSets[v]))
+            qFollow.save()
+            qnum +=1 
+
+        #LL1 Question
+        if status == 0:
+            ans = 'True'
+            self.statusSummary["LL1"]+=1
+        else:
+            ans = 'False'
+            self.statusSummary["non-LL1"]+=1
+        qLL = Question(gid=newG,qnum=qnum,category='LL',answer=ans)
+        qLL.save()
+        qnum+=1
+
+        #Parse Table Question
+        qPT = Question(gid=newG,qnum=qnum,category='PT',answer=str(parsingTable))
+        qPT.save()
+
+        
+
+        
