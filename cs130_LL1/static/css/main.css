@@ -3,13 +3,39 @@
 }
 
 /* General styling */
+#siteTitle {
+	text-align: center;
+	font-family: 'Lato', sans-serif;
+	text-transform: uppercase;
+	font-weight:400;
+	padding-top:20px;
+	padding-bottom:20px;
+	background-color: #37BCDA;
+	color: white;
+}
 
+button {
+	background-color: #37BCDA !important;
+}
+
+button:hover {
+	background-color: #30A7C1 !important;
+}
+
+.container {
+	margin-top:20px;
+}
+
+#startButton {
+	text-align:center;
+}
 
 /* Grammar styling */
 #grammar {
 	border: 3px solid;
 	padding: 15px;
 	margin: 10px 0px;
+	border-color: #2A5E71;
 }
 
 	#grammar h3{
@@ -61,7 +87,7 @@
 
 .question {
 	color: grey;
-	margin-top:24px;
+	margin-top:12px;
 }
 
 #active {
