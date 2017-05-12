@@ -4,6 +4,12 @@ from LL1_Academy.models import Grammar, Question
 
 
 class UrlTest(TestCase):
+    def setup(self):
+        g = Grammar(prods="{'A': ['xA', 'Bz'],'B': ['yB']}", nonTerminals="AB", terminals="xyz", startsymbol="A")
+        g.save()
+        q = Question(gid=g, qnum=0, category="FI", symbol="A", answer="xy")
+        q.save()
+
     def test_index1(self):
         client = Client()
         response = client.get('/')

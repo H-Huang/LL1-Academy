@@ -75,6 +75,13 @@ h3 {
 }
 
 /* Grammar styling */
+
+@media only screen and (max-width: 40em) { 
+	#questions-container {
+		margin-top: 1rem;
+	}
+}
+
 #grammar {
 	border: 3px solid;
 	padding: 15px;
@@ -83,15 +90,18 @@ h3 {
 	border-color: #F6781D;
 }
 
-	#grammar h3{
-		font-size: 42px;
-	}
+#grammar h3 {
+	font-size: 42px;
+}
 
-	#grammar .productions {
-		font-size: 24px;
-		font-family: 'Lato', sans-serif;
-	}
+#grammar .productions {
+	font-size: 24px;
+	font-family: 'Lato', sans-serif;
+}
 
+#explainer > p {
+	margin-bottom: 0.3rem;
+}
 /* Questions styling */
 #question-answer {
 	width: 82%;
