@@ -101,25 +101,32 @@ def check_answer(request):
 
 		# TODO: actually check if answer is right
 		# think about where validations should take place - probably on client
-		answer = request.POST.get('answer').rstrip(',')
-		answer_set = set(answer.split(','))
 		category = request.POST.get('category')
 		symbol = request.POST.get('symbol')
+		isCorrect = False
+
+		if (category != 'LL1'):
+			answer = request.POST.get('answer').rstrip(',')
+			answer_set = set(answer.split(','))
+			isCorrect = answer_set == answers[category][symbol]
+		else:
+			answer = request.POST.get('ll1answer') == "True"
+			isCorrect = answer == answers[category]
+
+
 
 		# print(answers[category][symbol])
 		# print(answer_set)
 		# print(answer_set == answers[category][symbol])
 
-		isCorrect = answer_set == answers[category][symbol]
-
 		if (isCorrect):
 			currentQ += 1
 			request.session['currentQuestion'] = currentQ
-			request.session.set_expiry(60)
+			request.session.set_expiry(1)
 
 		return JsonResponse({
 			# "valid": True,
-			"correct": answer_set == answers[category][symbol]
+			"correct": isCorrect
 		})
 	else:
 		return HttpResponseNotFound('<h1>Page not found</h1>')

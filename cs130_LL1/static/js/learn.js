@@ -26,16 +26,33 @@ function query_for_question() {
 }
 
 function draw_question() {
+	if (question_data.category == "first") {
+		question_data.opt = "ε"
+	} else {
+		question_data.opt = "$"
+	}
+
 	$('#questions-container').append(question_template(question_data));
+
+	$('#opt-char').click(function() {
+		$('#question-answer').val($('#question-answer').val() + question_data.opt);
+	});
 
 	// bind form submit handler: check if answer is correct
 	$('#question-input').on('submit', function() {
 		
 		// validate input before moving into the ajax request
 		var input_value = $('#question-answer').val();
-		var input_trimmed = input_value.replace(/\s/g,'')
-		var valid = input_trimmed.match('^([a-z$],)*[a-z$],?$') != null;
-		// console.log(valid)
+		var valid = true
+		if (input_value != null){
+			var input_trimmed = input_value.replace(/\s/g,'')
+			valid = input_trimmed.match('^([a-z$],)*[a-z$],?$') != null;
+		}
+
+		var ll1radioActive = $('input[name=ll1]').length
+		if (ll1radioActive) {
+			var ll1radio = $('input[name=ll1]:checked')[0].value
+		}
 
 		if (valid) {
 			$.ajax({
@@ -46,17 +63,30 @@ function draw_question() {
 					'csrfmiddlewaretoken': csrfmiddlewaretoken,
 					'category': question_data.category,
 					'symbol': question_data.symbol,
-					'answer': $('#question-answer').val()
+					'answer': $('#question-answer').val(),
+					'll1answer': ll1radio
 				},
 				success: function(results) {
 					console.log(results)
 					if (results.correct) {
 						$('#question-input').remove()
-						// $('#active > .answerbox').html('<p class="answer">' + input_trimmed + '</p><i class="im im-check-mark answercheck" style="color:#33cc33;"></i><div style="clear:both;"></div>')
-						$('#active > .question-title').after('<div id="answer-panel"><p class="answer">' + input_trimmed + '</p><i class="im im-check-mark answercheck"></i></div><div style="clear:both;">')
-						
+						if (ll1radioActive)
+							$('#active > .question-title').after('<div id="answer-panel"><p class="answer">' + ll1radio + '</p><i class="im im-check-mark answercheck"></i></div><div style="clear:both;">')
+						else 
+							$('#active > .question-title').after('<div id="answer-panel"><p class="answer">' + input_trimmed + '</p><i class="im im-check-mark answercheck"></i></div><div style="clear:both;">')
 						$('#active').removeAttr('id')
-						query_for_question()
+						if (!ll1radioActive)
+							query_for_question()
+						else {
+							swal({
+								title: "Good Job!",
+								type: "success",
+								confirmButtonText: "Next Question"
+							}, function(){
+								 location.reload();
+							})
+						}
+						
 					} else { // valid syntax, incorrect result
 						$('#question-input > .feedback').html("<p>Incorrect answer</p>")
 						$('#question-answer').css('border','1px solid red')
@@ -64,6 +94,11 @@ function draw_question() {
 				},
 				error: function(error) {
 					console.log(error)
+					swal({
+						title: "Oops...",
+						text: "Something went wrong!",
+						type: "error"
+					})
 				}
 			});
 		} else { // invalid syntax

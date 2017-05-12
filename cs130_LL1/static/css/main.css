@@ -21,6 +21,28 @@
 	}
 
 /* Questions styling */
+#question-answer {
+	width: 82%;
+	display: inline;
+	margin-right: 5%;
+
+}
+
+
+
+#opt-char {
+    margin: 0 0 0.16em 0;
+    padding: 0.785em 0.8em 0.785em 0.8em;
+}
+
+/*#optional-char-box {
+	display: inline;
+}
+
+#optional-char-box > p,input {
+	display: inherit;
+}*/
+
 #answer-panel {
 	display:inline;
 	float:right;
