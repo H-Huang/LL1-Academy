@@ -36,6 +36,7 @@ function draw_question() {
 
 	$('#opt-char').click(function() {
 		$('#question-answer').val($('#question-answer').val() + question_data.opt);
+		$('#question-answer').focus();
 	});
 
 	// bind form submit handler: check if answer is correct
