@@ -23,6 +23,8 @@ urlpatterns = [
     url(r'^$', views.index),
     url(r'^index', views.index),
     url(r'^learn', views.learn),
+    url(r'^login$', views.login),
+    url(r'^register$', views.register),
     url(r'^get_question', views.get_question),
     url(r'^check_answer', views.check_answer)
 

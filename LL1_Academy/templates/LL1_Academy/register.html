@@ -1,0 +1,25 @@
+{% extends "LL1_Academy/_base.html" %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="small-6 small-offset-3 columns">
+            <form action="">
+                <label><b>Username</b></label>
+                <input type="text" placeholder="Enter Username" name="uname" required>
+
+                <label><b>Password</b></label>
+                <input type="password" placeholder="Enter Password" name="psw" required>
+
+                <label><b>Confirm Password</b></label>
+                <input type="password" placeholder="Confirm Password" name="confirm_psw" required>
+
+                <button type="submit">Register</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

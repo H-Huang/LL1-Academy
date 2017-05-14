@@ -45,6 +45,19 @@ def learn(request):
 	
 	return render(request, 'LL1_Academy/learn.html', context)
 
+def login(request):
+	if request.method == 'POST':
+		return Http404("login")
+	else:
+		return render(request, 'LL1_Academy/login.html')
+
+def register(request):
+	if request.method == 'POST':
+		return Http404("register")
+	else:
+		return render(request, 'LL1_Academy/register.html')
+
+
 def get_question(request):
 	gid = request.session['gid']
 	currentQ = request.session['curQ']
