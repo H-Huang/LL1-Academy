@@ -1,7 +1,9 @@
 import random
 import ast
+
 from django.shortcuts import render
-from django.http import JsonResponse, HttpRequest, HttpResponseNotFound
+from django.http import JsonResponse, HttpRequest, Http404
+
 from LL1_Academy.models import *
 from LL1_Academy.tools.GrammarChecker import *
 
@@ -94,8 +96,4 @@ def check_answer(request):
 			"correct": isCorrect
 		})
 	else:
-		return HttpResponseNotFound('<h1>Page not found</h1>')
-
-# @app.errorhandler(404)
-# def page_not_found(request):
-#     return render_template('page_not_found.html'), 404
+		raise Http404("Cannot use GET method for check_answer")

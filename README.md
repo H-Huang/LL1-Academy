@@ -9,7 +9,8 @@
 ### Otherwise download Vagrant and VirtualBox 5.1.18
 
     vagrant up
-    vagrant ssh
+    vagrant ssh (or use "ssh -p 2222 vagrant@localhost" with password vagrant)
+    cd /vagrant
     docker-compose up
 
 The commands above will use Docker Compose to run the Django/PostgreSQL app. You will be able to view the application on your local computer on localhost:8000/.
