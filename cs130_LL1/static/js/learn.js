@@ -33,6 +33,7 @@ function draw_question() {
 	}
 
 	$('#questions-container').append(question_template(question_data));
+	$('#active').slideDown();
 
 	$('#opt-char').click(function() {
 		$('#question-answer').val($('#question-answer').val() + question_data.opt);
