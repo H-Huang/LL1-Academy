@@ -1,2 +1,5 @@
 Django
 psycopg2
+sklearn
+numpy
+scipy

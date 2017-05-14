@@ -1,68 +1,33 @@
+import random
+import ast
 from django.shortcuts import render
-
-from django.http import JsonResponse, HttpRequest
+from django.http import JsonResponse, HttpRequest, HttpResponseNotFound
+from LL1_Academy.models import *
 from LL1_Academy.tools.GrammarChecker import *
 
-# TODO: this should NOT be hardcoded
-# single session grammar here
-startsymbol = 'A'
-grammar = {
-    'A': ['xA', 'Bz'],
-    'B': ['yB', 'y'],
-}
-
-grammarChecker = GrammarChecker()
-
-# single session question tracking here
-questions = []
-currentQ = -1
-answers = {} 
-
-def generate_questions(q=0):
-	# start over
-	global questions
-	global currentQ
-	global answers
-
-	questions = []
-	currentQ = q
-	answers = {}
-
-	# first set questions
-	questions.append(('first','A'))
-	questions.append(('first','B'))
-	# follow set questions
-	questions.append(('follow','A'))
-	questions.append(('follow','B'))
-	# is ll1?
-	questions.append(('LL1', None))
-
-	first,follow,_,status,_ = grammarChecker.solve(grammar,startsymbol)
-	answers['first'] = first
-	answers['follow'] = follow
-	answers['LL1'] = (True if status == 0 else False)
-	print(answers)
-	print()
+def get_random_grammar(max_id=None):
+    randid = random.randint(0,Grammar.objects.count()-1)
+    return Grammar.objects.all()[randid]
 
 def index(request):
 	return render(request, 'LL1_Academy/index.html')
 
 def learn(request):
 	# on page load we start the session over
-	# TODO: this should eventually use the session object probably
-	# 
 
-	try:
-		curQ = request.session['currentQuestion']
-		generate_questions(curQ)
-	except KeyError:
-		generate_questions();
+	if 'gid1' not in request.session:
+		random_grammar = get_random_grammar()
+		request.session['gid'] = random_grammar.gid
+		request.session['curQ'] = 0
 
-	grammar_object = []
-	non_terminals, terminals = grammarChecker.getSymbols(grammar)
+	grammar_obj = Grammar.objects.filter(gid=request.session['gid']).first()
+	non_terminals = list(grammar_obj.nonTerminals)
+	terminals = list(grammar_obj.terminals)
+	prods = ast.literal_eval(grammar_obj.prods)
 	
+	grammar_object = []
 	for nt in non_terminals:
-		grammar_object.append({"nt": nt, "productions": grammar[nt]})
+		grammar_object.append({"nt": nt, "productions": prods[nt]})
 
 	#stringify terminals + non_terminals
 	terminals = "{" + ", ".join(terminals) + "}"
@@ -73,20 +38,18 @@ def learn(request):
 		"grammar_object": grammar_object,
 		"terminals": terminals,
 		"non_terminals": non_terminals,
-		"start_symbol": startsymbol
+		"start_symbol": 'A'
 	}
 	
 	return render(request, 'LL1_Academy/learn.html', context)
 
 def get_question(request):
-	global questions
-	global currentQ
-
-	if currentQ >= len(questions):
-		currentQ = 0
-
-	category = questions[currentQ][0]
-	symbol = questions[currentQ][1]
+	gid = request.session['gid']
+	currentQ = request.session['curQ']
+	question = Question.objects.filter(gid__gid__contains=gid, qnum=currentQ).first()
+	category = question.get_category_display()
+	symbol = question.symbol
+	print(question.answer)
 
 	return JsonResponse({
 		"category": category,
@@ -94,32 +57,44 @@ def get_question(request):
 	})
 
 def check_answer(request):
-	global questions
-	global currentQ
-	global answers
+	if request.method == 'POST':
+		gid = request.session['gid']
+		currentQ = request.session['curQ']
+		question = Question.objects.filter(gid__gid__contains=gid, qnum=currentQ).first()
+		category = question.get_category_display()
 
-	# TODO: actually check if answer is right
-	# think about where validations should take place - probably on client
-	answer = request.POST.get('answer').rstrip(',')
-	answer_set = set(answer.split(','))
-	category = request.POST.get('category')
-	symbol = request.POST.get('symbol')
+		# TODO: actually check if answer is right
+		# think about where validations should take place - probably on client
 
-	# print(answers[category][symbol])
-	# print(answer_set)
-	# print(answer_set == answers[category][symbol])
+		# category = request.POST.get('category')
+		# symbol = request.POST.get('symbol')
+		isCorrect = False
 
-	isCorrect = answer_set == answers[category][symbol]
+		if (category != 'isLL1'):
+			answer = request.POST.get('answer').rstrip(',')
+			answer_set = set(answer.split(','))
+			true_answers = set(list(question.answer))
+			isCorrect = answer_set == true_answers
+		else:
+			answer = request.POST.get('ll1answer') == "True"
+			true_answers = question.answer == "True"
+			isCorrect = answer == true_answers
 
-	if (isCorrect):
-		currentQ += 1
-		request.session['currentQuestion'] = currentQ
-		request.session.set_expiry(1)
 
-	return JsonResponse({
-		# "valid": True,
-		"correct": answer_set == answers[category][symbol]
-	})
+
+		# print(answers[category][symbol])
+		# print(answer_set)
+		# print(answer_set == answers[category][symbol])
+
+		if (isCorrect):
+			request.session['curQ'] = currentQ + 1
+
+		return JsonResponse({
+			# "valid": True,
+			"correct": isCorrect
+		})
+	else:
+		return HttpResponseNotFound('<h1>Page not found</h1>')
 
 # @app.errorhandler(404)
 # def page_not_found(request):

@@ -3,24 +3,126 @@
 }
 
 /* General styling */
+body {
+	font-family: 'Lato', sans-serif;
+}
 
+button {
+	background-color: #37BCDA !important;
+	font-size: 20px;
+	font-weight:bold;
+	font-family: 'Lato', sans-serif;
+}
+
+button:hover {
+	background-color: #30A7C1 !important;
+}
+
+/* Landing Page styling */
+#siteTitle {
+	text-align: center;
+	font-family: 'Lato', sans-serif;
+	text-transform: uppercase;
+	font-weight:400;
+	color: white;
+	font-size: 80px;
+}
+
+#startLearning {
+	margin-top:20px;
+	background-color:white !important;
+	color: #37BCDA !important;
+	font-size: 20px;
+}
+
+#startLearning:hover {
+	/*background-color:#30A7C1 !important;*/
+	background-color:#F6781D !important;
+	color: white !important;
+}
+
+#landingPage {
+	height:100%;
+	background-color: #37BCDA;
+	display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#startButton {
+	text-align:center;
+}
+
+/* Learning Page Styling */
+#siteBanner {
+	text-align: center;
+	font-family: 'Lato', sans-serif;
+	text-transform: uppercase;
+	font-weight:400;
+	padding-top:20px;
+	padding-bottom:20px;
+	background-color: #37BCDA;
+	color: white;
+}
+
+.container {
+	margin-top:20px;
+}
+
+h3 {
+	font-family: 'Lato', sans-serif;
+}
 
 /* Grammar styling */
+
+@media only screen and (max-width: 40em) { 
+	#questions-container {
+		margin-top: 1rem;
+	}
+}
+
 #grammar {
 	border: 3px solid;
 	padding: 15px;
 	margin: 10px 0px;
+	/*border-color: #2A5E71;*/
+	border-color: #F6781D;
 }
 
-	#grammar h3{
-		font-size: 42px;
-	}
+#grammar h3 {
+	font-size: 42px;
+}
 
-	#grammar .productions {
-		font-size: 24px;
-	}
+#grammar .productions {
+	font-size: 24px;
+	font-family: 'Lato', sans-serif;
+}
 
+#explainer > p {
+	margin-bottom: 0.3rem;
+}
 /* Questions styling */
+#question-answer {
+	width: 82%;
+	display: inline;
+	margin-right: 5%;
+
+}
+
+#opt-char {
+    margin: 0 0 0.16em 0;
+    padding: 0.785em 0.8em 0.785em 0.8em;
+}
+
+/*#optional-char-box {
+	display: inline;
+}
+
+#optional-char-box > p,input {
+	display: inherit;
+}*/
+
 #answer-panel {
 	display:inline;
 	float:right;
@@ -39,7 +141,7 @@
 
 .question {
 	color: grey;
-	margin-top:24px;
+	margin-top:12px;
 }
 
 #active {

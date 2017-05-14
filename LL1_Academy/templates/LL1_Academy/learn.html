@@ -9,13 +9,24 @@
 
 <script id="question-template" type="text/x-handlebars-template">
   <div class="question" id="active">
-    <p class="question-title">What is the {{category}} set of symbol {{symbol}}?</p>
+	{{#if symbol}}
+    	<p class="question-title">What is the {{category}} set of symbol {{symbol}}?</p>
+	{{else}}
+		<p class="question-title">Is the grammar LL(1)?</p>
+	{{/if}}
     <form id="question-input" onsubmit="return false;">
-    	<input type="text" id="question-answer" placeholder="Answer as comma separated e.g. x,y" required>
-    	<div class="feedback"></div>
+		{{#if symbol}}
+    		<input type="text" id="question-answer" placeholder="example: x,y,z" required>
+    		{{#if opt}}
+    		<button class="button" type="button" id="opt-char">{{opt}}</button>
+	    	{{/if}}
+    	{{else}}
+			<input type="radio" name="ll1" value="True" id="input1" style="display:inline;" required> True
+  			<input type="radio" name="ll1" value="False" id="input2" style="display:inline;margin-left:10px;"> False
+		{{/if}}
+		<div class="feedback"></div>
     	<button type="submit" class="button">Submit</button>
     </form>
-    <div class="answerbox"></div>
   </div>  
 </script>
 
@@ -23,11 +34,13 @@
 {% endblock %}
 
 {% block content %}
+
+	<h1 id="siteBanner">LL(1) Academy</h1>
 	<div class="container">
 		<div class="row">
 			<!-- grammar here -->
 			<div class="small-12 medium-6 columns" id="grammar-container">
-				<h3>Consider the grammar</h3>
+				<h3 id="grammarHeader">Consider the grammar</h3>
 				<div id="grammar">
 					{% for grammar in grammar_object %}
 						<div class="productions">
@@ -45,10 +58,11 @@
 					{% endfor %}
 				</div>
 				<div id="explainer">
-					<p>
-						where {{ non_terminals }} is the set of nonterminal symbols, {{ start_symbol }} is the start symbol, {{ terminals }} 
-						is the set of terminal symbols, and &epsilon; denotes the empty string.
-					<p>
+					<p>{{ non_terminals }} is the set of nonterminal symbols</p>
+					<p>{{ start_symbol }} is the start symbol</p>
+					<p>{{ terminals }} is the set of terminal symbols</p>
+					<p>&epsilon; denotes the empty string</p>
+					<p>$ denotes end of string</p>
 				</div>
 			</div>
 
