@@ -117,15 +117,18 @@ def compare_parse_table_answer(gid, true_answer, answer):
 	terminals.append('$')
 
 	feedback = {}
+	isCorrect = True
 	for nt in non_terminals:
 		feedback[nt] = []
 		for t in terminals:
 			# case 1: t in true_answer, not in answer
 			if t in true_answer[nt] and t not in answer[nt]:
 				feedback[nt].append(1)
+				isCorrect = False
 			# case 2: t not in true_answer, in answer
 			elif t not in true_answer[nt] and t in answer[nt]:
 				feedback[nt].append(1)
+				isCorrect = False
 			else:
 				# case 3: t in neither
 				if t not in answer[nt]:
@@ -136,7 +139,8 @@ def compare_parse_table_answer(gid, true_answer, answer):
 						feedback[nt].append(0)
 					else:
 						feedback[nt].append(1)
-	return feedback
+						isCorrect = False
+	return isCorrect, feedback
 
 def check_answer(request):
 	if request.method == 'POST':
@@ -160,7 +164,7 @@ def check_answer(request):
 			answer = request.POST.get('answer')
 			answer_dict = ast.literal_eval(answer)
 			true_answer = ast.literal_eval(question.answer)
-			feedback = compare_parse_table_answer(gid,true_answer,answer_dict)
+			isCorrect, feedback = compare_parse_table_answer(gid,true_answer,answer_dict)
 			
 			# print(answer_dict)
 			# print(true_answer)
@@ -169,7 +173,7 @@ def check_answer(request):
 			return JsonResponse({
 				# "valid": True,
 				"feedback": feedback,
-				"correct": answer_dict == true_answer
+				"correct": isCorrect
 			})
 
 		else:
