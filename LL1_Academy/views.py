@@ -2,7 +2,9 @@ import random
 import ast
 
 from django.shortcuts import render
-from django.http import JsonResponse, HttpRequest, Http404
+from django.http import JsonResponse, HttpRequest, HttpResponseRedirect, Http404
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 
 from LL1_Academy.models import *
 from LL1_Academy.tools.GrammarChecker import *
@@ -45,13 +47,27 @@ def learn(request):
 	
 	return render(request, 'LL1_Academy/learn.html', context)
 
-def login(request):
+def login_page(request):
 	if request.method == 'POST':
-		return Http404("login")
+		username = request.POST['username']
+		password = request.POST['password']
+		user = authenticate(username=username, password=password)
+		if user is not None:
+			login(request, user)
+			messages.success(request, 'Logged in')
+			return HttpResponseRedirect('/learn')
+		else:
+			# Return an 'invalid login' error message.
+			messages.error(request, 'invalid credentials')
+			return HttpResponseRedirect('/login')
 	else:
 		return render(request, 'LL1_Academy/login.html')
 
-def register(request):
+def logout_page(request):
+	logout(request)
+	return HttpResponseRedirect('/learn')
+
+def register_page(request):
 	if request.method == 'POST':
 		return Http404("register")
 	else:

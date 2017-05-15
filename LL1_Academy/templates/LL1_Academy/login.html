@@ -6,12 +6,13 @@
 <div class="container">
     <div class="row">
         <div class="small-6 small-offset-3 columns">
-            <form action="">
+            <form method="POST" action="">
+                {% csrf_token %}
                 <label><b>Username</b></label>
-                <input type="text" placeholder="Enter Username" name="uname" required>
+                <input type="text" placeholder="Enter Username" name="username" required>
 
                 <label><b>Password</b></label>
-                <input type="password" placeholder="Enter Password" name="psw" required>
+                <input type="password" placeholder="Enter Password" name="password" required>
 
                 <button type="submit">Login</button>
             </form>

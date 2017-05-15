@@ -6,7 +6,8 @@
 <div class="container">
     <div class="row">
         <div class="small-6 small-offset-3 columns">
-            <form action="">
+            <form method="POST" action="">
+                {% csrf_token %}
                 <label><b>Username</b></label>
                 <input type="text" placeholder="Enter Username" name="uname" required>
 

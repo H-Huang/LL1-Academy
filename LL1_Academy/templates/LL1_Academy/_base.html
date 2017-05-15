@@ -13,10 +13,19 @@
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
   </head>
 
-{% block templates %}
-{% endblock %}
+  {% block templates %}
+  {% endblock %}
 
   <body style="font-family: 'Lato', sans-serif;">
+
+      {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+      {% endif %}
+
       {% block content %}
       {% endblock %}
       
