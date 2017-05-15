@@ -51,6 +51,17 @@ def get_question(request):
 	symbol = question.symbol
 	print(question.answer)
 
+	if category == 'parseTable':
+		grammar_obj = Grammar.objects.filter(gid=gid).first()
+		non_terminals = list(grammar_obj.nonTerminals)
+		terminals = list(grammar_obj.terminals)
+		return JsonResponse({
+			"category": category,
+			"symbol": symbol,
+			"non_terminals": non_terminals,
+			"terminals": terminals
+		})
+
 	return JsonResponse({
 		"category": category,
 		"symbol": symbol
