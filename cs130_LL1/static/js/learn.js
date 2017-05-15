@@ -132,7 +132,7 @@ function draw_question() {
 		$('#opt-char-pt').click(function() {
 				var field = prevFocus;
 				field.html(field.html() + question_data.opt);
-				field.focus();
+				placeCaretAtEnd(field.get(0));
 		});
 	} else {
 		$('#opt-char').click(function() {
@@ -254,3 +254,21 @@ function draw_question() {
 
 // Focus tracking helper for opt-char in parse table input
 var prevFocus = $();
+
+function placeCaretAtEnd(el) {
+    el.focus();
+    if (typeof window.getSelection != "undefined"
+            && typeof document.createRange != "undefined") {
+        var range = document.createRange();
+        range.selectNodeContents(el);
+        range.collapse(false);
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+    } else if (typeof document.body.createTextRange != "undefined") {
+        var textRange = document.body.createTextRange();
+        textRange.moveToElementText(el);
+        textRange.collapse(false);
+        textRange.select();
+    }
+}
