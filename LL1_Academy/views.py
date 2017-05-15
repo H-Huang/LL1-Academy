@@ -81,15 +81,28 @@ def check_answer(request):
 		# symbol = request.POST.get('symbol')
 		isCorrect = False
 
-		if (category != 'isLL1'):
+		if (category == 'isLL1'):
+			answer = request.POST.get('ll1answer') == "True"
+			true_answers = question.answer == "True"
+			isCorrect = answer == true_answers
+		elif (category == 'parseTable'):
+			answer = request.POST.get('answer')
+			answer_dict = ast.literal_eval(answer)
+			true_answer = ast.literal_eval(question.answer)
+			
+			# print(answer_dict)
+			# print(true_answer)
+
+			return JsonResponse({
+				# "valid": True,
+				"correct": answer_dict == true_answer
+			})
+
+		else:
 			answer = request.POST.get('answer').rstrip(',')
 			answer_set = set(answer.split(','))
 			true_answers = set(list(question.answer))
 			isCorrect = answer_set == true_answers
-		else:
-			answer = request.POST.get('ll1answer') == "True"
-			true_answers = question.answer == "True"
-			isCorrect = answer == true_answers
 
 
 

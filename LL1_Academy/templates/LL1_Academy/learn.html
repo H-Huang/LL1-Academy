@@ -18,7 +18,7 @@
 		{{#if symbol}}
     		<input type="text" id="question-answer" placeholder="example: x,y,z" required>
     		{{#if opt}}
-    		<button class="button" type="button" id="opt-char">{{opt}}</button>
+    			<button class="button" type="button" id="opt-char">{{opt}}</button>
 	    	{{/if}}
     	{{else}}
 			<input type="radio" name="ll1" value="True" id="input1" style="display:inline;" required> True
@@ -34,7 +34,7 @@
 	<div class="question" id="active" style="display: none">
 	<p class="question-title">What is the LL(1) parsing table of this grammar?</p>
 
-	<table class="table">
+	<table class="table" id="pt">
 		<tr>
 			<th></th>
 			{{#each terminals}}
@@ -50,19 +50,13 @@
 		{{/each}}
 	</table>
 
-    <!--<form id="question-input" onsubmit="return false;">
-		{{#if symbol}}
-    		<input type="text" id="question-answer" placeholder="example: x,y,z" required>
-    		{{#if opt}}
-    		<button class="button" type="button" id="opt-char">{{opt}}</button>
-	    	{{/if}}
-    	{{else}}
-			<input type="radio" name="ll1" value="True" id="input1" style="display:inline;" required> True
-  			<input type="radio" name="ll1" value="False" id="input2" style="display:inline;margin-left:10px;"> False
-		{{/if}}
+    <form id="question-input" onsubmit="return false;">
 		<div class="feedback"></div>
+		{{#if opt}}
+			<button class="button" type="button" id="opt-char-pt">{{opt}}</button>
+		{{/if}}
     	<button type="submit" class="button">Submit</button>
-    </form>-->
+    </form>
   </div>  
 </script>
 
