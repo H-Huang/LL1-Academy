@@ -36,7 +36,7 @@
 {% block content %}
 
     {% if user.is_authenticated %}
-        <p>Welcome back {{ user.username }}</p>
+        <p>Welcome back {{ user.email }}</p>
 		<p><a href="logout">logout here</a></p>
 	{% else %}
 		<p><a href="login">please login to your account</a></p>  

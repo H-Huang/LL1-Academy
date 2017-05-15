@@ -4,6 +4,7 @@ import ast
 from django.shortcuts import render
 from django.http import JsonResponse, HttpRequest, HttpResponseRedirect, Http404
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from django.contrib import messages
 
 from LL1_Academy.models import *
@@ -54,7 +55,7 @@ def login_page(request):
 		user = authenticate(username=username, password=password)
 		if user is not None:
 			login(request, user)
-			messages.success(request, 'Logged in')
+			messages.success(request, 'Successfully logged in')
 			return HttpResponseRedirect('/learn')
 		else:
 			# Return an 'invalid login' error message.
@@ -69,7 +70,18 @@ def logout_page(request):
 
 def register_page(request):
 	if request.method == 'POST':
-		return Http404("register")
+		email = request.POST['email']
+		username = request.POST['username']
+		password = request.POST['password']
+		#TODO: this confirm password should be down on client side so we dont refresh the page
+		confirm_password = request.POST['confirm_password']
+		if password != confirm_password:
+			messages.error(request, "passwords do not match")
+			return HttpResponseRedirect('/register')
+		user = User.objects.create_user(username=username, email=email, password=password)
+		login(request, user)
+		messages.success(request, 'Successfully resgister and logged in')
+		return HttpResponseRedirect('/learn')
 	else:
 		return render(request, 'LL1_Academy/register.html')
 
