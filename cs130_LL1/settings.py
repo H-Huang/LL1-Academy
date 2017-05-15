@@ -25,7 +25,7 @@ SECRET_KEY = 'sc**kkwq+#zb)s-0duj-k-j^92l-cj6x^7*-*eyba#6+obwftf'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = ['localhost',"127.0.0.1", "ll1academy.com"]
 
 
 # Application definition
@@ -37,6 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.facebook',
     'LL1_Academy'
 ]
 
@@ -104,6 +110,14 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+AUTHENTICATION_BACKENDS = (
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
@@ -124,3 +138,4 @@ USE_TZ = True
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "cs130_LL1/static"),)
 STATIC_ROOT = ""
 STATIC_URL = '/static/'
+SITE_ID=1

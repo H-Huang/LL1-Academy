@@ -18,5 +18,8 @@
         {% endif %}
         <a href="learn"><button class="button indexButtons">Start Learning</button></a>
     </div>
+    {% load socialaccount %}
+{% providers_media_js %}
+<a href="{% provider_login_url "facebook" method="js_sdk" %}">Facebook Connect</a>
 </div>
 {% endblock %}
