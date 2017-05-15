@@ -110,6 +110,34 @@ def get_question(request):
 		"symbol": symbol
 	})
 
+def compare_parse_table_answer(gid, true_answer, answer):
+	grammar_obj = Grammar.objects.filter(gid=gid).first()
+	non_terminals = list(grammar_obj.nonTerminals)
+	terminals = list(grammar_obj.terminals)
+	terminals.append('$')
+
+	feedback = {}
+	for nt in non_terminals:
+		feedback[nt] = []
+		for t in terminals:
+			# case 1: t in true_answer, not in answer
+			if t in true_answer[nt] and t not in answer[nt]:
+				feedback[nt].append(1)
+			# case 2: t not in true_answer, in answer
+			elif t not in true_answer[nt] and t in answer[nt]:
+				feedback[nt].append(1)
+			else:
+				# case 3: t in neither
+				if t not in answer[nt]:
+					feedback[nt].append(0)
+				# case 4: t in both -- check if same
+				else:
+					if set(answer[nt][t]) == set(true_answer[nt][t]):
+						feedback[nt].append(0)
+					else:
+						feedback[nt].append(1)
+	return feedback
+
 def check_answer(request):
 	if request.method == 'POST':
 		gid = request.session['gid']
@@ -132,12 +160,15 @@ def check_answer(request):
 			answer = request.POST.get('answer')
 			answer_dict = ast.literal_eval(answer)
 			true_answer = ast.literal_eval(question.answer)
+			feedback = compare_parse_table_answer(gid,true_answer,answer_dict)
 			
 			# print(answer_dict)
 			# print(true_answer)
+			# print(feedback)
 
 			return JsonResponse({
 				# "valid": True,
+				"feedback": feedback,
 				"correct": answer_dict == true_answer
 			})
 

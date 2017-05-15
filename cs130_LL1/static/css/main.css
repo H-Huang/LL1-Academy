@@ -103,6 +103,10 @@ h3 {
 	margin-bottom: 0.3rem;
 }
 /* Questions styling */
+.pt-incorrect {
+	border: 1px solid #F6781D; 
+}
+
 #question-answer {
 	width: 82%;
 	display: inline;

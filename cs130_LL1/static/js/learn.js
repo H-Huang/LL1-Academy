@@ -51,6 +51,35 @@ function get_data_from_table() {
 	return JSON.stringify(ret);
 }
 
+function display_parse_table_feedback(feedback) {
+	var $ROWS = $("#pt").find('tr');
+	var non_terminals = question_data.non_terminals
+	var terminals = question_data.terminals
+
+	// Iterate through rows of parse table (nonterminals)
+	$ROWS.each(function(index) {
+		var nt_index = index - 1;
+		if (index > 0) {
+			var nt = non_terminals[nt_index]
+			var feedback_object = feedback[nt]
+			
+			// Iterate through columns of this row (terminals)
+			$(this).children().each(function(child_index) {
+				var t_index = child_index - 1;
+				if (child_index > 0) {
+					// show this cell is incorrect
+					if (feedback_object[t_index]) {
+						$(this).removeClass('pt-incorrect');
+						$(this).addClass('pt-incorrect');
+					// remove incorrect class
+					} else {
+						$(this).removeClass('pt-incorrect');
+					}
+				}
+			})
+		}
+	})	
+}
 
 
 $(document).ready(function() {
@@ -90,7 +119,7 @@ function draw_question() {
 		$('#questions-container').append(parseTable_template(question_data));
 
 		var $CELLS = $("#pt").find("td");
-		$CELLS.click(function() {
+		$CELLS.focusin(function() {
 			prevFocus = $(this);
 		})
 	}
@@ -128,8 +157,10 @@ function draw_question() {
 				},
 				success: function(results) {
 					console.log(results)
+					display_parse_table_feedback(results.feedback);
 
 					if (results.correct) {
+						$('#question-input > .feedback').html("");
 						swal({
 							title: "Good Job!",
 							type: "success",
@@ -140,8 +171,7 @@ function draw_question() {
 						});
 						
 					} else { // valid syntax, incorrect result
-						$('#question-input > .feedback').html("<p>Incorrect answer</p>")
-						$('#question-answer').css('border','1px solid #F6781D')
+						$('#question-input > .feedback').html("<p>Incorrect answer</p>");
 					}
 				},
 				error: function(error) {
