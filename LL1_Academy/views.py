@@ -12,8 +12,12 @@ from LL1_Academy.models import *
 from LL1_Academy.tools.GrammarChecker import *
 
 def get_random_grammar(max_id=None):
-    randid = random.randint(0,Grammar.objects.count()-1)
-    return Grammar.objects.all()[randid]
+	randid = random.randint(0,Grammar.objects.count()-1)
+	g = Grammar.objects.all()[randid]
+	gid = g.gid 
+	nStart = g.nStart
+	Grammar.objects.filter(gid=gid).update(nStart=nStart+1)
+	return g
 
 def index(request):
 	return render(request, 'LL1_Academy/index.html')
