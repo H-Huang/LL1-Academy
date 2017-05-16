@@ -1,13 +1,16 @@
 {% extends "LL1_Academy/_base.html" %}
 
+{% load static %}
+
 {% block title %}Homepage{% endblock %}
 
 {% block content %}
 <div id="landingPage">
+    <img src="{% static 'img/LL1-logo-white_white.png' %}" style="height:125px;margin-bottom:20px;">
     <h1 id="siteTitle">LL(1) Academy</h1>
     <div id="loginActions">
         {% if user.is_authenticated %}
-            <p style="color:white;font-size:20px;">Welcome back {{ user.username }}!</p>
+            <p style="color:white;font-size:20px;">Welcome back <a href="profile">{{ user.username }}</a>!</p>
             <a href="accounts/logout"><button class="button indexButtons">Logout</button></a>
             <p style="display:inline;color: white;margin-left:10px; margin-right:10px;">or</p>
             <a href="learn"><button class="button indexButtons">Start Learning</button></a>
@@ -18,10 +21,9 @@
             <p style="color: white;font-size:20px;margin: 1rem 0 1rem 0;">Or continue without an account</p>-->
             {% load socialaccount %}
             {% providers_media_js %}
-            <a href="{% provider_login_url "facebook" method="js_sdk" %}"><button class="button indexButtons" style="width:225px;">Login with Facebook</button></a>
-            <p style="color: white;margin:1rem 0 1rem 0">or</p>
-            <a href="{% provider_login_url "google" method="oauth2" %}"><button class="button indexButtons" style="width:225px;">Login with Google</button></a>
-            </div>
+            <div class="loginOption"><a href="{% provider_login_url "facebook" method="js_sdk" %}"><button class="button indexButtons" style="width:225px;">Login with Facebook</button></a></div>
+            <div class="loginOption"><p style="display:inline;color: white;margin:1rem 10px 1rem 10px;">or</p></div>
+            <div class="loginOption"><a href="{% provider_login_url "google" method="oauth2" %}"><button class="button indexButtons" style="width:225px;">Login with Google</button></a></div>
         {% endif %}
        
     </div>

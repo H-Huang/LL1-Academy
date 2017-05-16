@@ -70,8 +70,10 @@
 		<div class="row">
 			<!-- grammar here -->
 			<div class="small-12 medium-6 columns" id="grammar-container">
-				<h3 id="grammarHeader">Consider the grammar</h3>
-				<button type="button" class="button" id="skip">skip </button>
+				<div style="display:flex;justify-content:space-between;">
+					<h3 id="grammarHeader" >Consider the grammar</h3>
+					<button type="button" class="button" id="skip">Skip</button>
+				</div>
 				<div id="grammar">
 					{% for grammar in grammar_object %}
 						<div class="productions">
