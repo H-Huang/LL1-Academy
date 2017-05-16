@@ -27,7 +27,6 @@ a {
 		color: #E56F1B;
 	}
 
-
 /* Landing Page styling */
 #siteTitle {
 	text-align: center;
@@ -63,21 +62,17 @@ a {
 	margin-top:30px;
 }
 
+.loginOption {
+	display:inline;
+}
+
 /* Learning Page Styling */
 #navbar {
 	padding:20px;
-	/*padding-bottom:20px;*/
 	background-color: #37BCDA;
 	display: flex;
+	align-items: center;
   	justify-content: space-between;
-}
-
-#navbarLearnButton {
-	margin-top:0.5rem;
-}
-
-#navbarUserButton {
-	margin-top:0.5rem;
 }
 
 #siteBanner {
@@ -133,6 +128,10 @@ h3 {
 
 #giveup {
 	background-color: #F6781D !important;
+}
+
+#giveup:hover {
+	background-color: #E56F1B !important;
 }
 
 .pt-incorrect {
@@ -209,5 +208,9 @@ h3 {
 @media screen and (max-width:620px) {
 	#siteTitle {
 		font-size:10vw;
+	}
+	.loginOption {
+		display:block;
+		width: 100%;
 	}
 }

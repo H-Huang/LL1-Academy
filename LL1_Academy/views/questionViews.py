@@ -87,6 +87,8 @@ def register_page(request):
 	else:
 		return render(request, 'LL1_Academy/register.html')
 
+def profile(request):
+    return render(request, 'LL1_Academy/profile.html')
 
 def get_question(request):
 	gid = request.session['gid']
