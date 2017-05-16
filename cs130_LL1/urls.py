@@ -16,7 +16,8 @@ Including another URLconf
 from django.conf.urls import url,include
 from django.contrib import admin
 
-from LL1_Academy import views
+import LL1_Academy.views.questionViews as views
+import LL1_Academy.views.stats as stats
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -29,6 +30,6 @@ urlpatterns = [
     url(r'^get_question', views.get_question),
     url(r'^check_answer', views.check_answer),
     url(r'^give_up', views.give_up),
-    url(r'^log_grammar', views.log_grammar),
+    url(r'^log_grammar', stats.log_grammar),
     url(r'^accounts/', include('allauth.urls')),
 ]

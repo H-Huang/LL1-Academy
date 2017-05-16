@@ -7,16 +7,14 @@ from django.http import JsonResponse, HttpRequest, HttpResponseRedirect, Http404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
+from LL1_Academy.views import stats 
 
 from LL1_Academy.models import *
-from LL1_Academy.tools.GrammarChecker import *
 
 def get_random_grammar(max_id=None):
 	randid = random.randint(0,Grammar.objects.count()-1)
-	g = Grammar.objects.all()[randid]
-	g.nStart += 1
-	g.save()
-	return g
+	stats.log_start_grammar(randid)
+	return Grammar.objects.all()[randid]
 
 def index(request):
 	return render(request, 'LL1_Academy/index.html')
@@ -225,21 +223,3 @@ def check_answer(request):
 	else:
 		raise Http404("Cannot use GET method for check_answer")
 
-def log_grammar(request):
-	if request.method == 'POST':
-		gid = request.session['gid']
-		completed = request.POST.get('completed')
-		grammar_obj = Grammar.objects.filter(gid=gid).first()
-		if completed == '1':
-			grammar_obj.nComplete +=1
-			grammar_obj.save()
-		elif completed == '0':
-			#if skipped
-			grammar_obj.nSkip +=1 
-			grammar_obj.save()
-		else:
-			raise Http404("log_grammar does not recognize the status of grammar")
-
-		return JsonResponse({})
-	else:
-		raise Http404("Cannot use GET method for log_grammar")
