@@ -10,8 +10,9 @@
     </div>
     <div id="navbarUser">
         {% if user.is_authenticated %}
-            <p style="color:white;">Welcome back {{ user.email }}</p>
-            <a href="logout"><button class="button indexButtons">Logout</button></a>
+            <p style="color:white;">Welcome back {{ user.username }}</p>
+             <!--<img src="{{user.socialaccount_set.all.0.get_avatar_url}}">-->
+            <a href="accounts/logout"><button class="button indexButtons">Logout</button></a>
         {% else %}
             <a href="login"><button class="button indexButtons" id="navbarUserButton">Login</button></a>
         {% endif %}
