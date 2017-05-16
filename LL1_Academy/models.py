@@ -47,11 +47,12 @@ class UserHistory(models.Model):
 	updateTime = models.DateTimeField(auto_now=True)
 
 	def __str__(self):
-		return str(self.user) + ' ' + self.grammar
+		return str(self.user) + ' ' + str(self.grammar.gid)
 
 	def save(self, *args, **kwargs):
-	    if complete and (score is None):
+	    if self.complete and (self.score is None):
 	        raise Exception("Score cannot be empty for a completed question")
+	    super(UserHistory, self).save(*args, **kwargs) 
 
 	class Meta:
 		unique_together = (("user","grammar"))
