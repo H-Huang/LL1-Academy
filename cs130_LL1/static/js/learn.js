@@ -101,7 +101,13 @@ function fill_parse_table_with_answer(answer) {
 				if (child_index > 0) {
 					var term = terminals[t_index]
 					if (pt_object.hasOwnProperty(term)) {
-						$(this).html(pt_object[term]);
+						var pt_arr = pt_object[term]
+						var final = ""
+						for (var i = pt_arr.length - 1; i >= 0; i--) {
+							final = final.concat(pt_arr[i] + ',')
+						}
+						final = final.slice(0, -1); // Remove trailing ','
+						$(this).html(final);
 					} else {
 						$(this).html("");
 					}
@@ -200,8 +206,10 @@ function draw_question() {
 	if (lastQ) {
 		$('#opt-char-pt').click(function() {
 				var field = prevFocus;
-				field.html(field.html() + question_data.opt);
-				placeCaretAtEnd(field.get(0));
+				if (field) {
+					field.html(field.html() + question_data.opt);
+					placeCaretAtEnd(field.get(0));
+				}
 		});
 	} else {
 		$('#opt-char').click(function() {
@@ -227,7 +235,7 @@ function draw_question() {
 					'answer': get_data_from_table()
 				},
 				success: function(results) {
-					console.log(results)
+					// console.log(results)
 					display_parse_table_feedback(results.feedback);
 
 					// TODO: show score in SWAL maybe??
@@ -290,7 +298,7 @@ function draw_question() {
 					'll1answer': ll1radio
 				},
 				success: function(results) {
-					console.log(results)
+					// console.log(results)
 
 					if (results.correct) {
 						correct_ans_form_question(ll1radio,input_trimmed,false);						
@@ -318,7 +326,7 @@ function draw_question() {
 
 
 // Focus tracking helper for opt-char in parse table input
-var prevFocus = $();
+var prevFocus = null;
 
 // moves cursor to end of contenteditable td --> ridiculous that this is even needed
 // cross platform, comes from StackOverflow credit to Tim Down
