@@ -198,3 +198,16 @@ h3 {
 .question-title {
 	display: inline;
 }
+
+/* media screen styling */
+@media screen and (max-width:990px) {
+  #navbar {
+	  flex-wrap: wrap;  
+  }
+}
+
+@media screen and (max-width:620px) {
+	#siteTitle {
+		font-size:10vw;
+	}
+}
