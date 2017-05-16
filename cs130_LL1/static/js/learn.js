@@ -119,8 +119,14 @@ function fill_parse_table_with_answer(answer) {
 
 
 $(document).ready(function() {
-	query_for_question()
+	query_for_question();
+	$('#skip').click(skip);
 })
+
+function skip(){
+	log_grammar(0);
+	location.reload();
+}
 
 function query_for_question() {
 	$.ajax({
@@ -175,6 +181,28 @@ function correct_ans_form_question(ll1radio,input,giveup) {
 	query_for_question();	
 }
 
+function log_grammar(completed){
+	$.ajax({
+				type: "POST",
+				url: "/log_grammar",
+				data : { 
+					'csrfmiddlewaretoken': csrfmiddlewaretoken,
+					'completed': completed
+				},
+				success: function(results) {
+					//console.log(results)
+				},
+				error: function(error) {
+					console.log(error)
+					swal({
+						title: "Oops...",
+						text: "Something went wrong!",
+						type: "error"
+					})
+				}
+			});
+}
+
 function draw_question() {
 
 	if (question_data.category == "parseTable")
@@ -201,7 +229,7 @@ function draw_question() {
 	else
 		$('#questions-container').append(question_template(question_data));
 
-	$('#active').slideDown();
+	$('#active').fadeIn({duration:1300});
 	$('#question-answer').focus();
 	if (lastQ) {
 		$('#opt-char-pt').click(function() {
@@ -241,6 +269,7 @@ function draw_question() {
 					// TODO: show score in SWAL maybe??
 
 					if (results.correct) {
+						log_grammar(1);
 						$('#question-input > .feedback').html("");
 						swal({
 							title: "Good Job!",

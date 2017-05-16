@@ -29,5 +29,6 @@ urlpatterns = [
     url(r'^get_question', views.get_question),
     url(r'^check_answer', views.check_answer),
     url(r'^give_up', views.give_up),
+    url(r'^log_grammar', views.log_grammar),
     url(r'^accounts/', include('allauth.urls')),
 ]
