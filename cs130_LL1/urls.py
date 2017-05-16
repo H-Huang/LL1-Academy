@@ -28,5 +28,6 @@ urlpatterns = [
     url(r'^register$', views.register_page),
     url(r'^get_question', views.get_question),
     url(r'^check_answer', views.check_answer),
+    url(r'^give_up', views.give_up),
     url(r'^accounts/', include('allauth.urls')),
 ]

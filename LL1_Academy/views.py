@@ -1,5 +1,6 @@
 import random
 import ast
+import json
 
 from django.shortcuts import render
 from django.http import JsonResponse, HttpRequest, HttpResponseRedirect, Http404
@@ -141,6 +142,29 @@ def compare_parse_table_answer(gid, true_answer, answer):
 						feedback[nt].append(1)
 						isCorrect = False
 	return isCorrect, feedback
+
+def give_up(request):
+	if 'gid' in request.session and 'curQ' in request.session:
+		gid = request.session['gid']
+		currentQ = request.session['curQ']
+		question = Question.objects.filter(gid__gid__contains=gid, qnum=currentQ).first()
+		
+		if question.category == 'PT':
+			ret = json.dumps(ast.literal_eval(question.answer))
+		elif question.category == 'LL':
+			ret = question.answer
+			request.session['curQ'] = currentQ + 1
+		else:
+			ret = ','.join(question.answer)
+			request.session['curQ'] = currentQ + 1
+
+		return JsonResponse({
+			"answer": ret,
+			"category": question.category
+		})
+
+	else:
+		raise Http404("Invalid request to give_up - no question in progress")
 
 def check_answer(request):
 	if request.method == 'POST':

@@ -81,6 +81,36 @@ function display_parse_table_feedback(feedback) {
 	})	
 }
 
+function fill_parse_table_with_answer(answer) {
+	var ans = JSON.parse(answer);
+	var $ROWS = $("#pt").find('tr');
+	var non_terminals = question_data.non_terminals
+	var terminals = question_data.terminals
+
+	// Iterate through rows of parse table (nonterminals)
+	$ROWS.each(function(index) {
+		var nt_index = index - 1;
+		if (index > 0) {
+			var nt = non_terminals[nt_index]
+			var pt_object = ans[nt]
+			// console.log(pt_object)
+			
+			// Iterate through columns of this row (terminals)
+			$(this).children().each(function(child_index) {
+				var t_index = child_index - 1;
+				if (child_index > 0) {
+					var term = terminals[t_index]
+					if (pt_object.hasOwnProperty(term)) {
+						$(this).html(pt_object[term]);
+					} else {
+						$(this).html("");
+					}
+				}
+			})
+		}
+	})
+}
+
 
 $(document).ready(function() {
 	query_for_question()
@@ -98,6 +128,45 @@ function query_for_question() {
 			console.log(error)
 		}
 	});
+}
+
+function give_up() {
+	$.ajax({
+		type: "GET",
+		url: "/give_up",
+		success: function(results) {
+			if (results.category == 'PT') {
+				fill_parse_table_with_answer(results.answer)
+				// TODO: do something at this point lol
+
+			} else if (results.category == 'LL') {
+				correct_ans_form_question(results.answer, "", true)
+			} else {
+				correct_ans_form_question("", results.answer, true)
+			}
+		},
+		error: function(error) {
+			console.log(error)
+		}
+	});
+}
+
+function correct_ans_form_question(ll1radio,input,giveup) {
+	$('#question-input').remove()
+
+	var checkbox
+	if (giveup)
+		checkbox = '<i class="im im im-x-mark badanswercheck"></i>'
+	else
+		checkbox = '<i class="im im-check-mark answercheck"></i>'
+
+	if (ll1radio)
+		$('#active > .question-title').after('<div id="answer-panel"><p class="answer">' + ll1radio + '</p>' + checkbox + '</div><div style="clear:both;">')
+	else 
+		$('#active > .question-title').after('<div id="answer-panel"><p class="answer">' + input + '</p>' + checkbox + '</div><div style="clear:both;">')
+	$('#active').removeAttr('id')
+	
+	query_for_question();	
 }
 
 function draw_question() {
@@ -142,6 +211,8 @@ function draw_question() {
 		});
 	}
 
+	$('#giveup').click(give_up);
+
 	// submit parse table in specific way
 	if (lastQ) {
 		$('#question-input').on('submit', function() {
@@ -158,6 +229,8 @@ function draw_question() {
 				success: function(results) {
 					console.log(results)
 					display_parse_table_feedback(results.feedback);
+
+					// TODO: show score in SWAL maybe??
 
 					if (results.correct) {
 						$('#question-input > .feedback').html("");
@@ -220,15 +293,7 @@ function draw_question() {
 					console.log(results)
 
 					if (results.correct) {
-						$('#question-input').remove()
-						if (ll1radioActive)
-							$('#active > .question-title').after('<div id="answer-panel"><p class="answer">' + ll1radio + '</p><i class="im im-check-mark answercheck"></i></div><div style="clear:both;">')
-						else 
-							$('#active > .question-title').after('<div id="answer-panel"><p class="answer">' + input_trimmed + '</p><i class="im im-check-mark answercheck"></i></div><div style="clear:both;">')
-						$('#active').removeAttr('id')
-						
-						query_for_question();	
-						
+						correct_ans_form_question(ll1radio,input_trimmed,false);						
 					} else { // valid syntax, incorrect result
 						$('#question-input > .feedback').html("<p>Incorrect answer</p>")
 						$('#question-answer').css('border','1px solid #F6781D')
@@ -255,6 +320,8 @@ function draw_question() {
 // Focus tracking helper for opt-char in parse table input
 var prevFocus = $();
 
+// moves cursor to end of contenteditable td --> ridiculous that this is even needed
+// cross platform, comes from StackOverflow credit to Tim Down
 function placeCaretAtEnd(el) {
     el.focus();
     if (typeof window.getSelection != "undefined"
