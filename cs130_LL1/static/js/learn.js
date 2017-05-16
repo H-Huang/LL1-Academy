@@ -169,6 +169,30 @@ function correct_ans_form_question(ll1radio,input,giveup) {
 	query_for_question();	
 }
 
+function complete_grammar(){
+	console.log("complete_grammar");
+	$.ajax({
+				type: "POST",
+				url: "/update_grammar",
+				data : { 
+					// 'question_data': question_data,
+					'csrfmiddlewaretoken': csrfmiddlewaretoken,
+					'completed': true
+				},
+				success: function(results) {
+					console.log(results)
+				},
+				error: function(error) {
+					console.log(error)
+					swal({
+						title: "Oops...",
+						text: "Something went wrong!",
+						type: "error"
+					})
+				}
+			});
+}
+
 function draw_question() {
 
 	if (question_data.category == "parseTable")
@@ -232,7 +256,9 @@ function draw_question() {
 
 					// TODO: show score in SWAL maybe??
 
-					if (results.correct) {
+					//if (results.correct) {
+					if(true){
+						complete_grammar();
 						$('#question-input > .feedback').html("");
 						swal({
 							title: "Good Job!",

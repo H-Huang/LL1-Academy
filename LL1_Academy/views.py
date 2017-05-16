@@ -14,9 +14,8 @@ from LL1_Academy.tools.GrammarChecker import *
 def get_random_grammar(max_id=None):
 	randid = random.randint(0,Grammar.objects.count()-1)
 	g = Grammar.objects.all()[randid]
-	gid = g.gid 
-	nStart = g.nStart
-	Grammar.objects.filter(gid=gid).update(nStart=nStart+1)
+	g.nStart += 1
+	g.save()
 	return g
 
 def index(request):
@@ -225,3 +224,20 @@ def check_answer(request):
 		})
 	else:
 		raise Http404("Cannot use GET method for check_answer")
+
+def update_grammar(request):
+	if request.method == 'POST':
+		gid = request.session['gid']
+		completed = request.POST.get('completed')
+		grammar_obj = Grammar.objects.filter(gid=gid).first()
+		if completed:
+			grammar_obj.nComplete +=1
+			grammar_obj.save()
+		else: 
+			#if skipped
+			grammar_obj.nSkip +=1 
+			grammar_obj.save()
+
+		return JsonResponse({})
+	else:
+		raise Http404("Cannot use GET method for update_grammar")
