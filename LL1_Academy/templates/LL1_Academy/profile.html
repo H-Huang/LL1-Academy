@@ -1,8 +1,14 @@
 {% extends "LL1_Academy/_navbarPages.html" %}
 
+{% load static %}
+
 {% block title %}Profile{% endblock %}
 
 {% block content %}
 <h1>PROFILE PAGE</h1>
 
+{% endblock %}
+
+{% block pagescripts %}
+	<script src="{% static 'js/profile.js' %}"></script>
 {% endblock %}
