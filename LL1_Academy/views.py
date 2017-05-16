@@ -56,7 +56,7 @@ def login_page(request):
 		if user is not None:
 			login(request, user)
 			messages.success(request, 'Successfully logged in')
-			return HttpResponseRedirect('/learn')
+			return HttpResponseRedirect('/index')
 		else:
 			# Return an 'invalid login' error message.
 			messages.error(request, 'invalid credentials')
@@ -66,12 +66,12 @@ def login_page(request):
 
 def logout_page(request):
 	logout(request)
-	return HttpResponseRedirect('/learn')
+	return HttpResponseRedirect('/index')
 
 def register_page(request):
 	if request.method == 'POST':
 		email = request.POST['email']
-		username = request.POST['username']
+		username = request.POST['email']
 		password = request.POST['password']
 		#TODO: this confirm password should be down on client side so we dont refresh the page
 		confirm_password = request.POST['confirm_password']

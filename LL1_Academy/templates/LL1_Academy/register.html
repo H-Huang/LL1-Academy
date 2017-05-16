@@ -1,4 +1,4 @@
-{% extends "LL1_Academy/_base.html" %}
+{% extends "LL1_Academy/_navbarPages.html" %}
 
 {% block title %}Register{% endblock %}
 
@@ -11,16 +11,14 @@
                 <label><b>Email</b></label>
                 <input type="text" placeholder="Enter Email" name="email" required>
 
-                <label><b>Username</b></label>
-                <input type="text" placeholder="Enter Username" name="username" required>
-
                 <label><b>Password</b></label>
                 <input type="password" placeholder="Enter Password" name="password" required>
 
                 <label><b>Confirm Password</b></label>
                 <input type="password" placeholder="Confirm Password" name="confirm_password" required>
 
-                <button type="submit">Register</button>
+                <button type="submit" class="button">Register</button> 
+                <p style="display:inline;">Already have an account? <a href="login">Login here</a></p>
             </form>
         </div>
     </div>

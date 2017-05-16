@@ -12,11 +12,21 @@ button {
 	font-size: 20px;
 	font-weight:bold;
 	font-family: 'Lato', sans-serif;
+	margin-bottom: 0 !important;
 }
 
-button:hover {
-	background-color: #30A7C1 !important;
+	button:hover {
+		background-color: #30A7C1 !important;
+	}
+
+a {
+	color: #F6781D;
 }
+
+	a:hover {
+		color: #E56F1B;
+	}
+
 
 /* Landing Page styling */
 #siteTitle {
@@ -28,15 +38,13 @@ button:hover {
 	font-size: 80px;
 }
 
-#startLearning {
-	margin-top:20px;
+.button.indexButtons {
 	background-color:white !important;
 	color: #37BCDA !important;
 	font-size: 20px;
 }
 
-#startLearning:hover {
-	/*background-color:#30A7C1 !important;*/
+.button.indexButtons:hover {
 	background-color:#F6781D !important;
 	color: white !important;
 }
@@ -50,21 +58,39 @@ button:hover {
   align-items: center;
 }
 
-#startButton {
+#loginActions {
 	text-align:center;
+	margin-top:30px;
 }
 
 /* Learning Page Styling */
+#navbar {
+	padding:20px;
+	/*padding-bottom:20px;*/
+	background-color: #37BCDA;
+	display: flex;
+  	justify-content: space-between;
+}
+
+#navbarLearnButton {
+	margin-top:0.5rem;
+}
+
+#navbarUserButton {
+	margin-top:0.5rem;
+}
+
 #siteBanner {
 	text-align: center;
 	font-family: 'Lato', sans-serif;
 	text-transform: uppercase;
 	font-weight:400;
-	padding-top:20px;
-	padding-bottom:20px;
-	background-color: #37BCDA;
 	color: white;
+	margin-bottom:0;
 }
+	#siteBanner:hover {
+		color: #F6781D;
+	}
 
 .container {
 	margin-top:20px;

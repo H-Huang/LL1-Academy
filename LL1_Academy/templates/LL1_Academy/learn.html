@@ -1,4 +1,4 @@
-{% extends "LL1_Academy/_base.html" %}
+{% extends "LL1_Academy/_navbarPages.html" %}
 
 {% load static %}
 
@@ -64,15 +64,6 @@
 {% endblock %}
 
 {% block content %}
-
-    {% if user.is_authenticated %}
-        <p>Welcome back {{ user.email }}</p>
-		<p><a href="logout">logout here</a></p>
-	{% else %}
-		<p><a href="login">please login to your account</a></p>  
-    {% endif %}
-
-	<h1 id="siteBanner">LL(1) Academy</h1>
 	<div class="container">
 		<div class="row">
 			<!-- grammar here -->
