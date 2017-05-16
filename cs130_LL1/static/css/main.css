@@ -24,7 +24,7 @@ a {
 }
 
 	a:hover {
-		color: #E56F1B;
+		color: #CC6318;
 	}
 
 /* Landing Page styling */
@@ -75,6 +75,17 @@ a {
   	justify-content: space-between;
 }
 
+#navbarTitle {
+	position: absolute;
+	left: 50%;
+	-webkit-transform: translateX(-50%);
+	transform: translateX(-50%)
+}
+
+#navbarUser {
+	text-align: center;
+}
+
 #siteBanner {
 	text-align: center;
 	font-family: 'Lato', sans-serif;
@@ -100,6 +111,9 @@ h3 {
 @media only screen and (max-width: 40em) { 
 	#questions-container {
 		margin-top: 1rem;
+	}
+	#siteBanner {
+		font-size:3rem;
 	}
 }
 
@@ -131,7 +145,7 @@ h3 {
 }
 
 #giveup:hover {
-	background-color: #E56F1B !important;
+	background-color: #CC6318 !important;
 }
 
 .pt-incorrect {
@@ -200,17 +214,54 @@ h3 {
 
 /* media screen styling */
 @media screen and (max-width:990px) {
-  #navbar {
+  /*#navbar {
 	  flex-wrap: wrap;  
-  }
+  }*/
 }
 
 @media screen and (max-width:620px) {
 	#siteTitle {
 		font-size:10vw;
 	}
+
+	#navbarTitle {
+		position:relative;
+		margin-bottom:10px;
+	}
+
+	#siteBanner {
+		font-size:50px;
+	}
+
 	.loginOption {
 		display:block;
 		width: 100%;
+	}
+
+	#navbar {
+		flex-wrap:wrap;
+	}
+
+	#navbarLearn {
+		width:100%;
+		order: 2;
+		margin-bottom:10px;
+	}
+
+	#navbarLearnButton {
+		width:100%;
+	}
+
+	#navbarTitle {
+		order: 1;
+	}
+
+	#navbarUser {
+		width:100%;
+		order: 3;
+	}
+
+	.navbarUserButton {
+		width:100%;
 	}
 }
