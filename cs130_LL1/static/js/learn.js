@@ -195,7 +195,7 @@ function draw_question() {
 	else
 		$('#questions-container').append(question_template(question_data));
 
-	$('#active').slideDown();
+	$('#active').fadeIn({duration:1300});
 	$('#question-answer').focus();
 	if (lastQ) {
 		$('#opt-char-pt').click(function() {
