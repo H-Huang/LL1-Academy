@@ -121,6 +121,8 @@ AUTHENTICATION_BACKENDS = (
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
+LOGIN_REDIRECT_URL = "/learn"
+
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'

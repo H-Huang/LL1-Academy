@@ -21,5 +21,6 @@
     {% load socialaccount %}
 {% providers_media_js %}
 <a href="{% provider_login_url "facebook" method="js_sdk" %}">Facebook Connect</a>
+<a href="{% provider_login_url "google" method="oauth2" %}">Google OAuth2</a>
 </div>
 {% endblock %}

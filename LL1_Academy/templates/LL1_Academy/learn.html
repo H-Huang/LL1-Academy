@@ -64,6 +64,16 @@
 {% endblock %}
 
 {% block content %}
+
+    {% if user.is_authenticated %}
+        <p>Welcome back {{ user.username }}</p>
+        <img src="{{user.socialaccount_set.all.0.get_avatar_url}}">
+		<p><a href="accounts/logout">logout here</a></p>
+	{% else %}
+		<p><a href="index">please login to your account</a></p>  
+    {% endif %}
+
+	<h1 id="siteBanner">LL(1) Academy</h1>
 	<div class="container">
 		<div class="row">
 			<!-- grammar here -->
