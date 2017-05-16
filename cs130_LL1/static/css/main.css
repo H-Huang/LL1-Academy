@@ -129,6 +129,12 @@ h3 {
 	margin-bottom: 0.3rem;
 }
 /* Questions styling */
+
+
+#giveup {
+	background-color: #F6781D !important;
+}
+
 .pt-incorrect {
 	border: 1px solid #F6781D; 
 }
@@ -166,6 +172,12 @@ h3 {
 .answercheck {
 	display: inline;
 	color: #33cc33;
+	font-size: 12px !important;
+}
+
+.badanswercheck {
+	display: inline;
+	color: #F6781D;
 	font-size: 12px !important;
 }
 
