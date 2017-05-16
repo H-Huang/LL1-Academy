@@ -110,6 +110,9 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+# Django all-auth config
+# http://django-allauth.readthedocs.io/en/latest/index.html
+
 AUTHENTICATION_BACKENDS = (
     # Needed to login by username in Django admin, regardless of `allauth`
     'django.contrib.auth.backends.ModelBackend',
@@ -118,10 +121,12 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
+LOGIN_REDIRECT_URL = "/learn"
+ACCOUNT_LOGOUT_ON_GET = True
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
-LOGIN_REDIRECT_URL = "/learn"
 
 LANGUAGE_CODE = 'en-us'
 
