@@ -113,8 +113,14 @@ function fill_parse_table_with_answer(answer) {
 
 
 $(document).ready(function() {
-	query_for_question()
+	query_for_question();
+	$('#skip').click(skip);
 })
+
+function skip(){
+	log_grammar(0);
+	location.reload();
+}
 
 function query_for_question() {
 	$.ajax({
@@ -169,18 +175,16 @@ function correct_ans_form_question(ll1radio,input,giveup) {
 	query_for_question();	
 }
 
-function complete_grammar(){
-	console.log("complete_grammar");
+function log_grammar(completed){
 	$.ajax({
 				type: "POST",
-				url: "/update_grammar",
+				url: "/log_grammar",
 				data : { 
-					// 'question_data': question_data,
 					'csrfmiddlewaretoken': csrfmiddlewaretoken,
-					'completed': true
+					'completed': completed
 				},
 				success: function(results) {
-					console.log(results)
+					//console.log(results)
 				},
 				error: function(error) {
 					console.log(error)
@@ -256,9 +260,8 @@ function draw_question() {
 
 					// TODO: show score in SWAL maybe??
 
-					//if (results.correct) {
-					if(true){
-						complete_grammar();
+					if (results.correct) {
+						log_grammar(1);
 						$('#question-input > .feedback').html("");
 						swal({
 							title: "Good Job!",

@@ -225,19 +225,21 @@ def check_answer(request):
 	else:
 		raise Http404("Cannot use GET method for check_answer")
 
-def update_grammar(request):
+def log_grammar(request):
 	if request.method == 'POST':
 		gid = request.session['gid']
 		completed = request.POST.get('completed')
 		grammar_obj = Grammar.objects.filter(gid=gid).first()
-		if completed:
+		if completed == '1':
 			grammar_obj.nComplete +=1
 			grammar_obj.save()
-		else: 
+		elif completed == '0':
 			#if skipped
 			grammar_obj.nSkip +=1 
 			grammar_obj.save()
+		else:
+			raise Http404("log_grammar does not recognize the status of grammar")
 
 		return JsonResponse({})
 	else:
-		raise Http404("Cannot use GET method for update_grammar")
+		raise Http404("Cannot use GET method for log_grammar")
