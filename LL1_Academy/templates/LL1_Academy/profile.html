@@ -7,10 +7,10 @@
 {% block content %}
 <h1>PROFILE PAGE</h1>
 <h2>here is user info</h2>
-
+	<p>{{ user_info }}</p>
 <h2>here is grammar info</h2>
 {% for grammar in list_of_grammars %}
-	<h3>grammar data: {{grammar}}</h3>
+	<p>data: {{grammar}}</p>
 {% endfor %}
 
 {% endblock %}

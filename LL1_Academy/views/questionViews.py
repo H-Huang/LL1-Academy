@@ -99,7 +99,9 @@ def profile(request):
 		stats_dict = model_to_dict(user_history, fields=["complete", "score", "updateTime"])
 		combined_dicts = dict(list(grammar_dict.items()) + list(stats_dict.items()))
 		context["list_of_grammars"].append(combined_dicts)
-	
+	# get user information
+	user_info = model_to_dict(User.objects.get(pk=current_user_id), ["first_name", "last_name", "data_joined", "email", "last_login"])
+	context["user_info"] = user_info
 	return render(request, 'LL1_Academy/profile.html', context)
 
 def get_question(request):
