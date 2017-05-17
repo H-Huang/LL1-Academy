@@ -7,8 +7,9 @@ from django.http import JsonResponse, HttpRequest, HttpResponseRedirect, Http404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
-from LL1_Academy.views import stats 
+from django.forms.models import model_to_dict
 
+from LL1_Academy.views import stats 
 from LL1_Academy.models import *
 
 def get_random_grammar(max_id=None):
@@ -88,7 +89,18 @@ def register_page(request):
 		return render(request, 'LL1_Academy/register.html')
 
 def profile(request):
-    return render(request, 'LL1_Academy/profile.html')
+	current_user_id = request.user.id
+	user_histories = UserHistory.objects.all().filter(user_id=current_user_id)
+	context = {"list_of_grammars": [], "user_info": {}}
+	# get data for each grammar that the user has completed
+	for user_history in user_histories:
+		grammar = Grammar.objects.get(pk=user_history.grammar_id)
+		grammar_dict = model_to_dict(grammar, fields=["prods", "terminals", "nonTerminals", "startSymbol"])
+		stats_dict = model_to_dict(user_history, fields=["complete", "score", "updateTime"])
+		combined_dicts = dict(list(grammar_dict.items()) + list(stats_dict.items()))
+		context["list_of_grammars"].append(combined_dicts)
+	
+	return render(request, 'LL1_Academy/profile.html', context)
 
 def get_question(request):
 	gid = request.session['gid']
