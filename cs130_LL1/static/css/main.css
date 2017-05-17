@@ -83,7 +83,11 @@ a {
 }
 
 #navbarUser {
-	text-align: center;
+	text-align: right;
+}
+
+#navbarUser > p {
+	margin-bottom:5px;
 }
 
 #siteBanner {
