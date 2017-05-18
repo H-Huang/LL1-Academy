@@ -190,7 +190,7 @@ function log_grammar(completed){
 				},
 				success: function(results) {
 					//console.log(results)
-					//location.reload();
+					window.location.replace("/learn");
 				},
 				error: function(error) {
 					console.log(error)
@@ -264,7 +264,6 @@ function draw_question() {
 				},
 				success: function(results) {
 					// console.log(results)
-					log_grammar(1);
 					display_parse_table_feedback(results.feedback);
 
 					// TODO: show score in SWAL maybe??
@@ -275,10 +274,10 @@ function draw_question() {
 							title: "Good Job!",
 							type: "success",
 							html:true,
-							confirmButtonText: "<a href='/learn'>Next Question</a>"
+							confirmButtonText: "Next Question"
 						}, 
 						function() {
-							//console
+							log_grammar(1);
 						});
 						
 					} else { // valid syntax, incorrect result
