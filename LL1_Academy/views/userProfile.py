@@ -5,9 +5,13 @@ from django.http import HttpRequest, HttpResponseRedirect, Http404
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.forms.models import model_to_dict
-from django.db.models import Count
+from django.db.models import Count, Avg
 
 from LL1_Academy.models import *
+
+def get_grammar_avg(gid):
+	grammar_avg = UserHistory.objects.filter(grammar=gid, complete=True).aggregate(Avg('score'))
+	return round(grammar_avg["score__avg"],2)
 
 
 def get_user_performance(uid):
@@ -33,6 +37,7 @@ def profile(request):
 		stats_dict = model_to_dict(user_history, fields=["complete", "score", "updateTime"])
 		combined_dicts = dict(list(grammar_dict.items()) + list(stats_dict.items()))
 		if stats_dict["complete"]:
+			combined_dicts["grammar_avg"] = get_grammar_avg(user_history.grammar_id)
 			context["completed_grammars"].append(combined_dicts)
 			total_score += stats_dict["score"]
 		else: 

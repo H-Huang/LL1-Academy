@@ -25,7 +25,8 @@
   <thead>
     <tr>
       <th width="200">Grammar</th>
-      <th width="150">Score</th>
+      <th width="150">Avg Score</th>
+      <th width="150">Your Score</th>
     </tr>
   </thead>
   <tbody>
@@ -34,6 +35,7 @@
       <td>
       	<a href="/learn/?gid={{grammar.gid}}">{{grammar.prods}}</a>
       </td>
+      <td>{{grammar.grammar_avg}}</td>
       <td>{{grammar.score}}</td>
     </tr>
   {% endfor %}
