@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 from django.contrib.auth.models import User
 
 class Grammar(models.Model):
@@ -43,8 +44,8 @@ class UserHistory(models.Model):
 	user = models.ForeignKey(User, on_delete = models.CASCADE)
 	grammar = models.ForeignKey(Grammar, on_delete = models.CASCADE)
 	complete = models.BooleanField(default=False)
-	score = models.IntegerField(blank=True)
-	updateTime = models.DateTimeField(auto_now=True)
+	score = models.IntegerField(blank=True,null=True)
+	updateTime = models.DateTimeField()
 
 	def __str__(self):
 		return str(self.user) + ' ' + str(self.grammar.gid)
@@ -52,6 +53,7 @@ class UserHistory(models.Model):
 	def save(self, *args, **kwargs):
 	    if self.complete and (not self.score):
 	        raise Exception("Score cannot be blank for a completed question")
+	    self.updateTime = timezone.now()
 	    super(UserHistory, self).save(*args, **kwargs) 
 
 	class Meta:
