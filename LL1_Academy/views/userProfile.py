@@ -5,16 +5,24 @@ from django.http import HttpRequest, HttpResponseRedirect, Http404
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.forms.models import model_to_dict
+from django.db.models import Count
 
 from LL1_Academy.models import *
 
 
+def get_user_performance(uid):
+	nComplete_by_user = UserHistory.objects.filter(complete=True).values('user').annotate(nComplete=Count('user'))
+	current_user_nComplete = nComplete_by_user.get(user=uid)['nComplete']
+	nMore = nComplete_by_user.filter(nComplete__gte = current_user_nComplete).count()
+	percentile = (1 - nMore/User.objects.all().count())*100
+	return percentile
 
 def profile(request):
 	current_user_id = request.user.id
 	user_histories = UserHistory.objects.all().filter(user_id=current_user_id)
 	context = {"skipped_grammars": [], 
 		"completed_grammars": [], 
+		"percentile": 0,
 		"avg_score": 0, 
 		"user_info": {}}
 	total_score = 0
@@ -34,6 +42,7 @@ def profile(request):
 	context["skipped_grammars"] = sorted(context["skipped_grammars"], key=lambda k: k['updateTime'])
 	# get user information
 	user_info = model_to_dict(User.objects.get(pk=current_user_id), ["first_name", "last_name", "data_joined", "email", "last_login"])
+	context["percentile"] = round(get_user_performance(current_user_id),2)
 	context["user_info"] = user_info
 	context["avg_score"] = total_score / len(context["completed_grammars"])
 	return render(request, 'LL1_Academy/profile.html', context)
