@@ -44,6 +44,10 @@ def log_grammar(request):
 			#if skipped
 			grammar_obj.nSkip +=1 
 			grammar_obj.save()
+			#save a not completed history
+			if not UserHistory.objects.filter(user=request.user, grammar=grammar_obj).exists():
+				newHistory = UserHistory(user=request.user,grammar=grammar_obj)
+				newHistory.save()
 		else:
 			raise Http404("log_grammar does not recognize the status of grammar")
 
