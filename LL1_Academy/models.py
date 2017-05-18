@@ -50,8 +50,8 @@ class UserHistory(models.Model):
 		return str(self.user) + ' ' + str(self.grammar.gid)
 
 	def save(self, *args, **kwargs):
-	    if self.complete and (self.score is None):
-	        raise Exception("Score cannot be empty for a completed question")
+	    if self.complete and (not self.score):
+	        raise Exception("Score cannot be blank for a completed question")
 	    super(UserHistory, self).save(*args, **kwargs) 
 
 	class Meta:
