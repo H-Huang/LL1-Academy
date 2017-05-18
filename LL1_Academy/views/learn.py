@@ -11,11 +11,16 @@ from django.forms.models import model_to_dict
 from LL1_Academy.views import stats 
 from LL1_Academy.models import *
 
-def get_random_grammar(max_id=None):
-	randid = random.randint(0,Grammar.objects.count()-1)
-	g = Grammar.objects.all()[randid]
-	g.nStart += 1
-	g.save()
+
+def get_random_grammar(user):
+	completed_gids = UserHistory.objects.all().filter(user=user,complete=True).values_list('grammar',flat=True)
+	uncompleted_grammars = Grammar.objects.exclude(gid__in=completed_gids)
+	size = uncompleted_grammars.count()
+	if size == 0:
+		#TODO: do something if someone finishes all the grammars LOL 
+		pass
+	randid = random.randint(0,size-1)
+	g=uncompleted_grammars[randid]
 	return g
 
 def learn(request):
@@ -24,7 +29,7 @@ def learn(request):
 	#if 'gid' not in request.session or request.session['gid']==None
 	#print(request.GET.get('gid') )
 	if request.GET.get('gid') == None:
-		random_grammar = get_random_grammar()
+		random_grammar = get_random_grammar(request.user)
 		request.session['gid'] = random_grammar.gid
 	else:
 		request.session['gid'] = request.GET.get('gid')
