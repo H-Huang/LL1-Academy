@@ -16,9 +16,6 @@ def get_random_grammar(max_id=None):
 	stats.log_start_grammar(randid)
 	return Grammar.objects.all()[randid]
 
-def index(request):
-	return render(request, 'LL1_Academy/index.html')
-
 def learn(request):
 	# on page load we start the session over
 

@@ -16,15 +16,17 @@ Including another URLconf
 from django.conf.urls import url,include
 from django.contrib import admin
 
-import LL1_Academy.views.questionViews as views
+import LL1_Academy.views.learn as views
+import LL1_Academy.views.pages as pages
 import LL1_Academy.views.stats as stats
 import LL1_Academy.views.userProfile as user_profile
 
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', views.index),
-    url(r'^index', views.index),
+    url(r'^$', pages.index),
+    url(r'^index', pages.index),
+    url(r'^about', pages.about),
     url(r'^learn', views.learn),
     url(r'^get_question', views.get_question),
     url(r'^check_answer', views.check_answer),
