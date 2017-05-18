@@ -30,7 +30,9 @@
   <tbody>
   {% for grammar in completed_grammars %}
     <tr>
-      <td>{{grammar.prods}}</td>
+      <td>
+      	<a href="/learn/?gid={{grammar.gid}}">{{grammar.prods}}</a>
+      </td>
       <td>{{grammar.score}}</td>
     </tr>
   {% endfor %}
@@ -48,7 +50,9 @@
   <tbody>
   {% for grammar in skipped_grammars %}
     <tr>
-      <td>{{grammar.prods}}</td>
+      <td>
+      	<a href="/learn/?gid={{grammar.gid}}">{{grammar.prods}}</a>
+      </td>
     </tr>
   {% endfor %}
   </tbody>

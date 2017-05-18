@@ -21,7 +21,7 @@ def profile(request):
 	# get data for each grammar that the user has completed
 	for user_history in user_histories:
 		grammar = Grammar.objects.get(pk=user_history.grammar_id)
-		grammar_dict = model_to_dict(grammar, fields=["prods"])
+		grammar_dict = model_to_dict(grammar, fields=["gid","prods"])
 		stats_dict = model_to_dict(user_history, fields=["complete", "score", "updateTime"])
 		combined_dicts = dict(list(grammar_dict.items()) + list(stats_dict.items()))
 		if stats_dict["complete"]:

@@ -125,7 +125,6 @@ $(document).ready(function() {
 
 function skip(){
 	log_grammar(0);
-	location.reload();
 }
 
 function query_for_question() {
@@ -191,6 +190,7 @@ function log_grammar(completed){
 				},
 				success: function(results) {
 					//console.log(results)
+					//location.reload();
 				},
 				error: function(error) {
 					console.log(error)
@@ -264,20 +264,21 @@ function draw_question() {
 				},
 				success: function(results) {
 					// console.log(results)
+					log_grammar(1);
 					display_parse_table_feedback(results.feedback);
 
 					// TODO: show score in SWAL maybe??
 
 					if (results.correct) {
-						log_grammar(1);
 						$('#question-input > .feedback').html("");
 						swal({
 							title: "Good Job!",
 							type: "success",
-							confirmButtonText: "Next Question"
+							html:true,
+							confirmButtonText: "<a href='/learn'>Next Question</a>"
 						}, 
 						function() {
-							location.reload();
+							//console
 						});
 						
 					} else { // valid syntax, incorrect result

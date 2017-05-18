@@ -10,7 +10,7 @@ from django.contrib import messages
 
 
 def log_start_grammar(gid):
-	g = Grammar.objects.all()[gid]
+	g = Grammar.objects.filter(gid=gid).first()
 	g.nStart += 1
 	g.save()
 	return 
@@ -51,6 +51,7 @@ def log_grammar(request):
 		else:
 			raise Http404("log_grammar does not recognize the status of grammar")
 
+		#request.session['gid'] = None
 		#no need to return anything 
 		return JsonResponse({})
 

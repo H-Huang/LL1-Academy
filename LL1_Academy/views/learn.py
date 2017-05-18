@@ -11,18 +11,20 @@ from django.forms.models import model_to_dict
 from LL1_Academy.views import stats 
 from LL1_Academy.models import *
 
-def get_random_grammar(max_id=None):
-	randid = random.randint(0,Grammar.objects.count()-1)
-	stats.log_start_grammar(randid)
-	return Grammar.objects.all()[randid]
 
 def learn(request):
 	# on page load we start the session over
 
-	if 'gid1' not in request.session:
-		random_grammar = get_random_grammar()
-		request.session['gid'] = random_grammar.gid
-		request.session['curQ'] = 0
+	#if 'gid' not in request.session or request.session['gid']==None
+	#print(request.GET.get('gid') )
+	if request.GET.get('gid') == None:
+		randid = random.randint(0,Grammar.objects.count()-1)
+		request.session['gid'] = randid
+	else:
+		request.session['gid'] = request.GET.get('gid')
+
+	stats.log_start_grammar(request.session['gid'])
+	request.session['curQ'] = 0
 
 	grammar_obj = Grammar.objects.filter(gid=request.session['gid']).first()
 	non_terminals = list(grammar_obj.nonTerminals)
