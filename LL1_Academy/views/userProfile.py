@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpRequest, HttpResponseRedirect, Http404
 from django.contrib.auth.models import User
+from django.contrib import messages
 from django.forms.models import model_to_dict
 
 from LL1_Academy.models import *
@@ -21,3 +22,19 @@ def profile(request):
 	user_info = model_to_dict(User.objects.get(pk=current_user_id), ["first_name", "last_name", "data_joined", "email", "last_login"])
 	context["user_info"] = user_info
 	return render(request, 'LL1_Academy/profile.html', context)
+
+def disconnect_account(request):
+    context = {}
+    if not request.user.is_authenticated():
+        messages.error(request, 'Please log in to access this feature.')
+        return redirect('account_login')
+
+    provider_name = request.POST.get('account', '')
+
+    for acc in request.user.socialaccount_set.all().iterator():
+        if acc.get_provider().id == provider_name:
+            acc.delete()
+            messages.info(request,
+                          'Your account has been successfully disconnected.')
+
+    return render(request, 'LL1_Academy/profile.html', context)

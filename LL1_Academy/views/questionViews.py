@@ -6,7 +6,6 @@ from django.shortcuts import render
 from django.http import JsonResponse, HttpRequest, HttpResponseRedirect, Http404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from django.contrib import messages
 from django.forms.models import model_to_dict
 
 from LL1_Academy.views import stats 

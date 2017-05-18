@@ -32,4 +32,5 @@ urlpatterns = [
     url(r'^log_grammar', stats.log_grammar),
     url(r'^accounts/', include('allauth.urls')),
     url(r'^profile$', user_profile.profile),
+     url(r'^disconnect_account$', user_profile.disconnect_account),
 ]

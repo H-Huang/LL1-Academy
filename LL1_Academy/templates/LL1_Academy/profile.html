@@ -7,6 +7,9 @@
 {% block content %}
 <h1>PROFILE PAGE</h1>
 <h2>here is user info</h2>
+
+	{% include "socialaccount/manage_providers.html" with process="login" %}
+
 	<p>{{ user_info }}</p>
 <h2>here is grammar info</h2>
 {% for grammar in list_of_grammars %}

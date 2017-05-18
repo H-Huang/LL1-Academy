@@ -1,0 +1,36 @@
+{% load socialaccount %}
+{% get_social_accounts user as accounts %}
+{% get_providers as socialaccount_providers %}
+{% for provider in socialaccount_providers %}
+  <li>
+    <!--<div class="social-icon {{provider.id}}"><i class="fa fa-{{provider.id}}"></i></div>-->
+    {{provider.name}} Account: 
+    {% if provider.id in accounts %}
+    <div class="username">
+      {% if user.first_name or user.last_name %}
+          {{ user.first_name }} {{ user.last_name }}
+      {% else %}
+          {{ user.username }}
+      {% endif %}
+    </div>
+    <div class="social-action">
+      <form method="post" action="/disconnect_account">
+        {% csrf_token %}
+        <input type="hidden" name="account" value="{{ provider.id }}"/>
+        <button class="button" style="background-color: #F6781D !important;" type="submit" 
+          {% if accounts|length == 1 %}disabled{% endif %}>
+          Disconnect
+        </button>
+      </form>
+    </div>
+    {% else %}
+    <div class="social-info">
+      <a href="{% provider_login_url provider.id process='connect' scope=scope auth_params=auth_params %}">
+        <button class="button">
+        Connect your {{provider.id|title}} account.
+        </button>
+      </a>
+    </div>
+    {% endif %}
+  </li>
+{% endfor %}
