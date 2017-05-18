@@ -19,6 +19,8 @@
             <p style="display:inline;color: white;margin-left:10px; margin-right:10px;">or</p>
             <a href="register"><button class="button indexButtons">Register</button></a>
             <p style="color: white;font-size:20px;margin: 1rem 0 1rem 0;">Or continue without an account</p>-->
+            {% block login_error %}
+            {% endblock %}
             {% load socialaccount %}
             {% providers_media_js %}
             <div class="loginOption"><a href="{% provider_login_url "facebook" method="js_sdk" %}"><button class="button indexButtons" style="width:225px;">Login with Facebook</button></a></div>
