@@ -51,59 +51,6 @@ def learn(request):
 	
 	return render(request, 'LL1_Academy/learn.html', context)
 
-def login_page(request):
-	if request.method == 'POST':
-		username = request.POST['username']
-		password = request.POST['password']
-		user = authenticate(username=username, password=password)
-		if user is not None:
-			login(request, user)
-			messages.success(request, 'Successfully logged in')
-			return HttpResponseRedirect('/index')
-		else:
-			# Return an 'invalid login' error message.
-			messages.error(request, 'invalid credentials')
-			return HttpResponseRedirect('/login')
-	else:
-		return render(request, 'LL1_Academy/login.html')
-
-def logout_page(request):
-	logout(request)
-	return HttpResponseRedirect('/index')
-
-def register_page(request):
-	if request.method == 'POST':
-		email = request.POST['email']
-		username = request.POST['email']
-		password = request.POST['password']
-		#TODO: this confirm password should be down on client side so we dont refresh the page
-		confirm_password = request.POST['confirm_password']
-		if password != confirm_password:
-			messages.error(request, "passwords do not match")
-			return HttpResponseRedirect('/register')
-		user = User.objects.create_user(username=username, email=email, password=password)
-		login(request, user)
-		messages.success(request, 'Successfully resgister and logged in')
-		return HttpResponseRedirect('/learn')
-	else:
-		return render(request, 'LL1_Academy/register.html')
-
-def profile(request):
-	current_user_id = request.user.id
-	user_histories = UserHistory.objects.all().filter(user_id=current_user_id)
-	context = {"list_of_grammars": [], "user_info": {}}
-	# get data for each grammar that the user has completed
-	for user_history in user_histories:
-		grammar = Grammar.objects.get(pk=user_history.grammar_id)
-		grammar_dict = model_to_dict(grammar, fields=["prods", "terminals", "nonTerminals", "startSymbol"])
-		stats_dict = model_to_dict(user_history, fields=["complete", "score", "updateTime"])
-		combined_dicts = dict(list(grammar_dict.items()) + list(stats_dict.items()))
-		context["list_of_grammars"].append(combined_dicts)
-	# get user information
-	user_info = model_to_dict(User.objects.get(pk=current_user_id), ["first_name", "last_name", "data_joined", "email", "last_login"])
-	context["user_info"] = user_info
-	return render(request, 'LL1_Academy/profile.html', context)
-
 def get_question(request):
 	gid = request.session['gid']
 	currentQ = request.session['curQ']

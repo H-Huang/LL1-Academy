@@ -18,19 +18,18 @@ from django.contrib import admin
 
 import LL1_Academy.views.questionViews as views
 import LL1_Academy.views.stats as stats
+import LL1_Academy.views.userProfile as user_profile
+
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.index),
     url(r'^index', views.index),
     url(r'^learn', views.learn),
-    url(r'^login$', views.login_page),
-    url(r'^logout$', views.logout_page),
-    url(r'^register$', views.register_page),
     url(r'^get_question', views.get_question),
     url(r'^check_answer', views.check_answer),
     url(r'^give_up', views.give_up),
     url(r'^log_grammar', stats.log_grammar),
     url(r'^accounts/', include('allauth.urls')),
-    url(r'^profile$', views.profile),
+    url(r'^profile$', user_profile.profile),
 ]
