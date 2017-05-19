@@ -8,6 +8,7 @@
 <h2>User Info</h2>
 	
 	<p>{{ user_info.email }}</p>
+  {% include "socialaccount/snippets/login_extra.html" %}
 	{% include "socialaccount/manage_providers.html" with process="login" %}
 
 <h2> Statistics </h2>

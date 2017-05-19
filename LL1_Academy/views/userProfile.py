@@ -59,9 +59,6 @@ def profile(request):
 
 def disconnect_account(request):
     context = {}
-    if not request.user.is_authenticated():
-        messages.error(request, 'Please log in to access this feature.')
-        return redirect('account_login')
 
     provider_name = request.POST.get('account', '')
 
@@ -72,3 +69,6 @@ def disconnect_account(request):
                           'Your account has been successfully disconnected.')
 
     return render(request, 'LL1_Academy/profile.html', context)
+
+def login_duplicate(request):
+	return render(request, 'socialaccount/login_duplicate.html')

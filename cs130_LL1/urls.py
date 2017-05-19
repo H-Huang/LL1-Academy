@@ -35,5 +35,6 @@ urlpatterns = [
     url(r'^profile$', user_profile.profile),
     url(r'^accounts/disconnect_account$', user_profile.disconnect_account),
     url(r'^accounts/social/connections/$', user_profile.profile),
+    url(r'^accounts/social/signup/$', user_profile.login_duplicate),
     url(r'^accounts/', include('allauth.urls')),
 ]
