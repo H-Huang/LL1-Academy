@@ -32,7 +32,8 @@ urlpatterns = [
     url(r'^check_answer', views.check_answer),
     url(r'^give_up', views.give_up),
     url(r'^log_grammar', stats.log_grammar),
-    url(r'^accounts/', include('allauth.urls')),
     url(r'^profile$', user_profile.profile),
-     url(r'^disconnect_account$', user_profile.disconnect_account),
+    url(r'^accounts/disconnect_account$', user_profile.disconnect_account),
+    url(r'^accounts/social/connections/$', user_profile.profile),
+    url(r'^accounts/', include('allauth.urls')),
 ]

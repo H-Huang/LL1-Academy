@@ -14,7 +14,7 @@
       {% endif %}
     </div>
     <div class="social-action">
-      <form method="post" action="/disconnect_account">
+      <form method="post" action="/accounts/disconnect_account">
         {% csrf_token %}
         <input type="hidden" name="account" value="{{ provider.id }}"/>
         <button class="button" style="background-color: #F6781D !important;" type="submit" 
