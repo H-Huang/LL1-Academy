@@ -36,6 +36,7 @@ def learn(request):
 
 	stats.log_start_grammar(request.session['gid'])
 	request.session['curQ'] = 0
+	request.session['score'] = 0
 
 	grammar_obj = Grammar.objects.filter(gid=request.session['gid']).first()
 	non_terminals = list(grammar_obj.nonTerminals)
@@ -125,10 +126,12 @@ def give_up(request):
 		# TODO: fix the PT question handling
 		if question.category == 'PT':
 			ret = json.dumps(ast.literal_eval(question.answer))
-			# request.session['curQ'] = currentQ + 1
+			# the below is a hacky fix b/c the frontend submits this separately
+			request.session['score'] = request.session['score'] - 1
 		elif question.category == 'LL':
 			ret = question.answer
 			request.session['curQ'] = currentQ + 1
+			calc_score_log_grammar(request)
 		else:
 			ret = ','.join(question.answer)
 			request.session['curQ'] = currentQ + 1
@@ -143,6 +146,16 @@ def give_up(request):
 
 def last_question_reached():
 	print("last question --> do something")
+
+def calc_score_log_grammar(request):
+	gid = request.session['gid']
+	qcount = Question.objects.filter(gid__gid__contains=gid).count()
+	score = request.session['score']
+	scorestr = "{0:.0f}%".format((score * 100) / qcount)
+
+	# print(qcount,request.session['score'])
+	# TODO: log this somewhere
+	print("Recorded score of " + scorestr + " or {} / {}".format(score,qcount))
 
 def check_answer(request):
 	if request.method == 'POST':
@@ -174,14 +187,16 @@ def check_answer(request):
 			true_answers = set(list(question.answer))
 			isCorrect = answer_set == true_answers
 
-
-
 		# print(answers[category][symbol])
 		# print(answer_set)
 		# print(answer_set == answers[category][symbol])
 
 		if (isCorrect):
 			request.session['curQ'] = currentQ + 1
+			request.session['score'] = request.session['score'] + 1
+			if (category == 'isLL1'):
+				calc_score_log_grammar(request)
+
 
 		if (category == 'parseTable'):
 			print(feedback)
