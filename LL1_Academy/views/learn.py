@@ -122,8 +122,10 @@ def give_up(request):
 		currentQ = request.session['curQ']
 		question = Question.objects.filter(gid__gid__contains=gid, qnum=currentQ).first()
 		
+		# TODO: fix the PT question handling
 		if question.category == 'PT':
 			ret = json.dumps(ast.literal_eval(question.answer))
+			# request.session['curQ'] = currentQ + 1
 		elif question.category == 'LL':
 			ret = question.answer
 			request.session['curQ'] = currentQ + 1
@@ -139,6 +141,9 @@ def give_up(request):
 	else:
 		raise Http404("Invalid request to give_up - no question in progress")
 
+def last_question_reached():
+	print("last question --> do something")
+
 def check_answer(request):
 	if request.method == 'POST':
 		gid = request.session['gid']
@@ -152,6 +157,7 @@ def check_answer(request):
 		# category = request.POST.get('category')
 		# symbol = request.POST.get('symbol')
 		isCorrect = False
+		feedback = ''
 
 		if (category == 'isLL1'):
 			answer = request.POST.get('ll1answer') == "True"
@@ -162,17 +168,6 @@ def check_answer(request):
 			answer_dict = ast.literal_eval(answer)
 			true_answer = ast.literal_eval(question.answer)
 			isCorrect, feedback = compare_parse_table_answer(gid,true_answer,answer_dict)
-			
-			# print(answer_dict)
-			# print(true_answer)
-			# print(feedback)
-
-			return JsonResponse({
-				# "valid": True,
-				"feedback": feedback,
-				"correct": isCorrect
-			})
-
 		else:
 			answer = request.POST.get('answer').rstrip(',')
 			answer_set = set(answer.split(','))
@@ -188,10 +183,16 @@ def check_answer(request):
 		if (isCorrect):
 			request.session['curQ'] = currentQ + 1
 
-		return JsonResponse({
-			# "valid": True,
-			"correct": isCorrect
-		})
+		if (category == 'parseTable'):
+			print(feedback)
+			return JsonResponse({
+				"feedback": feedback,
+				"correct": isCorrect
+			})
+		else:
+			return JsonResponse({
+				"correct": isCorrect
+			})
 	else:
 		raise Http404("Cannot use GET method for check_answer")
 

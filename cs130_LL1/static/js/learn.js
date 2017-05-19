@@ -148,12 +148,12 @@ function give_up() {
 		success: function(results) {
 			if (results.category == 'PT') {
 				fill_parse_table_with_answer(results.answer)
-				// TODO: do something at this point lol
+				submit_parse_table(true)
 
 			} else if (results.category == 'LL') {
-				correct_ans_form_question(results.answer, "", true)
+				correct_ans_form_question(results.answer, "", true, true)
 			} else {
-				correct_ans_form_question("", results.answer, true)
+				correct_ans_form_question("", results.answer, true, false)
 			}
 		},
 		error: function(error) {
@@ -162,7 +162,7 @@ function give_up() {
 	});
 }
 
-function correct_ans_form_question(ll1radio,input,giveup) {
+function correct_ans_form_question(ll1radio,input,giveup,lastQ) {
 	$('#question-input').remove()
 
 	var checkbox
@@ -177,47 +177,109 @@ function correct_ans_form_question(ll1radio,input,giveup) {
 		$('#active > .question-title').after('<div id="answer-panel"><p class="answer">' + input + '</p>' + checkbox + '</div><div style="clear:both;">')
 	$('#active').removeAttr('id')
 	
-	query_for_question();	
+	// NEW LASTQ HANDLER
+	if (lastQ) {
+		$('#question-input > .feedback').html("");
+		swal({
+			title: "Good Job!",
+			type: "success",
+			html:true,
+			confirmButtonText: "Next Question"
+		}, 
+		function() {
+			log_grammar(1);
+		});
+	} else {
+		query_for_question();
+	}
 }
 
 function log_grammar(completed){
 	$.ajax({
-				type: "POST",
-				url: "/log_grammar",
-				data : { 
-					'csrfmiddlewaretoken': csrfmiddlewaretoken,
-					'completed': completed
-				},
-				success: function(results) {
-					//console.log(results)
-					window.location.replace("/learn");
-				},
-				error: function(error) {
-					console.log(error)
-					swal({
-						title: "Oops...",
-						text: "Something went wrong!",
-						type: "error"
-					})
-				}
-			});
+		type: "POST",
+		url: "/log_grammar",
+		data : { 
+			'csrfmiddlewaretoken': csrfmiddlewaretoken,
+			'completed': completed
+		},
+		success: function(results) {
+			//console.log(results)
+			window.location.replace("/learn");
+		},
+		error: function(error) {
+			console.log(error)
+			swal({
+				title: "Oops...",
+				text: "Something went wrong!",
+				type: "error"
+			})
+		}
+	});
+}
+
+function submit_parse_table(giveup) {
+	$.ajax({
+		type: "POST",
+		url: "/check_answer",
+		data : { 
+			// 'question_data': question_data,
+			'csrfmiddlewaretoken': csrfmiddlewaretoken,
+			'category': "parseTable",
+			'symbol': "",
+			'answer': get_data_from_table()
+		},
+		success: function(results) {
+			// console.log(results)
+			display_parse_table_feedback(results.feedback);
+
+			if (results.correct) {
+				if (giveup)
+					checkbox = '<i class="im im im-x-mark badanswercheck"></i>'
+				else
+					checkbox = '<i class="im im-check-mark answercheck"></i>'
+				$('#active > .question-title').after('<div id="answer-panel">' + checkbox + '</div><div style="clear:both;">')
+				$('#question-input').remove()
+				$('#active').removeAttr('id')
+
+				query_for_question();						
+			} else { // valid syntax, incorrect result
+				$('#question-input > .feedback').html("<p>Incorrect answer</p>");
+			}
+		},
+		error: function(error) {
+			console.log(error)
+			swal({
+				title: "Oops...",
+				text: "Something went wrong!",
+				type: "error"
+			})
+		}
+	});
 }
 
 function draw_question() {
 
-	if (question_data.category == "parseTable")
-		var lastQ = true;
-	else
+	if (question_data.category == "parseTable") {
+		var isParseTable = true;
 		var lastQ = false;
+	}
+	else if (question_data.category == "isLL1") {
+		var isParseTable = false;
+		var lastQ = true;
+	}
+	else {
+		var isParseTable = false;
+		var lastQ = false;
+	}
 
-	if (question_data.category == "first" || question_data.category == "parseTable") {
+	if (question_data.category == "first" || isParseTable) {
 		question_data.opt = "ε"
 	} else {
 		question_data.opt = "$"
 	}
 	
 
-	if (lastQ) {
+	if (isParseTable) {
 		question_data.terminals.push('$');
 		$('#questions-container').append(parseTable_template(question_data));
 
@@ -226,12 +288,14 @@ function draw_question() {
 			prevFocus = $(this);
 		})
 	}
-	else
+	else {
 		$('#questions-container').append(question_template(question_data));
+	}
 
 	$('#active').fadeIn({duration:1300});
 	$('#question-answer').focus();
-	if (lastQ) {
+
+	if (isParseTable) {
 		$('#opt-char-pt').click(function() {
 				var field = prevFocus;
 				if (field) {
@@ -250,49 +314,9 @@ function draw_question() {
 	$('#giveup').click(give_up);
 
 	// submit parse table in specific way
-	if (lastQ) {
+	if (isParseTable) {
 		$('#question-input').on('submit', function() {
-			$.ajax({
-				type: "POST",
-				url: "/check_answer",
-				data : { 
-					// 'question_data': question_data,
-					'csrfmiddlewaretoken': csrfmiddlewaretoken,
-					'category': question_data.category,
-					'symbol': question_data.symbol,
-					'answer': get_data_from_table()
-				},
-				success: function(results) {
-					// console.log(results)
-					display_parse_table_feedback(results.feedback);
-
-					// TODO: show score in SWAL maybe??
-
-					if (results.correct) {
-						$('#question-input > .feedback').html("");
-						swal({
-							title: "Good Job!",
-							type: "success",
-							html:true,
-							confirmButtonText: "Next Question"
-						}, 
-						function() {
-							log_grammar(1);
-						});
-						
-					} else { // valid syntax, incorrect result
-						$('#question-input > .feedback').html("<p>Incorrect answer</p>");
-					}
-				},
-				error: function(error) {
-					console.log(error)
-					swal({
-						title: "Oops...",
-						text: "Something went wrong!",
-						type: "error"
-					})
-				}
-			});
+			submit_parse_table(false);
 		});
 	}
 
@@ -330,7 +354,7 @@ function draw_question() {
 					// console.log(results)
 
 					if (results.correct) {
-						correct_ans_form_question(ll1radio,input_trimmed,false);						
+						correct_ans_form_question(ll1radio,input_trimmed,false,lastQ);						
 					} else { // valid syntax, incorrect result
 						$('#question-input > .feedback').html("<p>Incorrect answer</p>")
 						$('#question-answer').css('border','1px solid #F6781D')
