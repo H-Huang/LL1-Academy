@@ -15,6 +15,8 @@ def get_grammar_avg(gid):
 
 
 def get_user_performance(uid):
+	if not UserHistory.objects.filter(complete=True, user=uid).exists():
+		return 0
 	nComplete_by_user = UserHistory.objects.filter(complete=True).values('user').annotate(nComplete=Count('user'))
 	current_user_nComplete = nComplete_by_user.get(user=uid)['nComplete']
 	nMore = nComplete_by_user.filter(nComplete__gte = current_user_nComplete).count()
@@ -49,7 +51,10 @@ def profile(request):
 	user_info = model_to_dict(User.objects.get(pk=current_user_id), ["first_name", "last_name", "data_joined", "email", "last_login"])
 	context["percentile"] = round(get_user_performance(current_user_id),2)
 	context["user_info"] = user_info
-	context["avg_score"] = total_score / len(context["completed_grammars"])
+	if len(context["completed_grammars"]) > 0:
+		context["avg_score"] = total_score / len(context["completed_grammars"])
+	else:
+		context["avg_score"] = 0
 	return render(request, 'LL1_Academy/profile.html', context)
 
 def disconnect_account(request):
