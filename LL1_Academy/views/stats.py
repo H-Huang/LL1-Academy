@@ -15,45 +15,37 @@ def log_start_grammar(gid):
 	g.save()
 	return 
 
-def log_grammar(request):
-	#update NSkip or NComplete
-	if request.method == 'POST':
-		gid = request.session['gid']
-		completed = request.POST.get('completed')
-		grammar_obj = Grammar.objects.filter(gid=gid).first()
+def log_complete_grammar(request):
+	#Update the grammar field
+	gid = request.session['gid']
+	score = request.session['score']
+	grammar_obj = Grammar.objects.filter(gid=gid).first()
+	grammar_obj.nComplete +=1
+	grammar_obj.save()
 
-		if completed == '1':
-			#Update the grammar field
-			grammar_obj.nComplete +=1
-			grammar_obj.save()
+	#Create a user history
+	history = UserHistory.objects.filter(user=request.user,grammar=grammar_obj).first()
+	if history == None:
+		newHistory = UserHistory(user=request.user,grammar=grammar_obj,complete=True,score=score)
+		newHistory.save()
+	else: 
+		history.complete = True
+		#save the highest score 
+		if history.score < score:
+			history.score = score
+		history.save()
+	return 
 
-			#Create a user history
-			history = UserHistory.objects.filter(user=request.user,grammar=grammar_obj).first()
-			print(history)
-			if history == None:
-				#TODO: Also log the scores
-				newHistory = UserHistory(user=request.user,grammar=grammar_obj,complete=True,score=10)
-				newHistory.save()
-			else: 
-				#TODO update the score
-				history.complete = True
-				history.score = 10
-				history.save()
+def log_skip_grammar(request):
+	if not request.method == 'POST':
+		raise Http404("Wrong request type for log_skip_grammar")
+	gid = request.session['gid']
+	grammar_obj = Grammar.objects.filter(gid=gid).first()
+	grammar_obj.nSkip +=1
+	grammar_obj.save()
 
-		elif completed == '0':
-			#if skipped
-			grammar_obj.nSkip +=1 
-			grammar_obj.save()
-			#save a not completed history
-			if not UserHistory.objects.filter(user=request.user, grammar=grammar_obj).exists():
-				newHistory = UserHistory(user=request.user,grammar=grammar_obj)
-				newHistory.save()
-		else:
-			raise Http404("log_grammar does not recognize the status of grammar")
+	if not UserHistory.objects.filter(user=request.user, grammar=grammar_obj).exists():
+		newHistory = UserHistory(user=request.user,grammar=grammar_obj)
+		newHistory.save()
+	return JsonResponse({})
 
-		#request.session['gid'] = None
-		#no need to return anything 
-		return JsonResponse({})
-
-	else:
-		raise Http404("Cannot use GET method for log_grammar")

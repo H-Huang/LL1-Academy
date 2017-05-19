@@ -155,7 +155,8 @@ def calc_score_log_grammar(request):
 
 	# print(qcount,request.session['score'])
 	# TODO: log this somewhere
-	print("Recorded score of " + scorestr + " or {} / {}".format(score,qcount))
+	# print("Recorded score of " + scorestr + " or {} / {}".format(score,qcount))
+	stats.log_complete_grammar(request)
 
 def check_answer(request):
 	if request.method == 'POST':

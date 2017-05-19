@@ -124,7 +124,7 @@ $(document).ready(function() {
 })
 
 function skip(){
-	log_grammar(0);
+	log_skip_grammar();
 }
 
 function query_for_question() {
@@ -187,17 +187,17 @@ function correct_ans_form_question(ll1radio,input,giveup,lastQ) {
 			confirmButtonText: "Next Question"
 		}, 
 		function() {
-			log_grammar(1);
+			window.location.replace("/learn");
 		});
 	} else {
 		query_for_question();
 	}
 }
 
-function log_grammar(completed){
+function log_skip_grammar(completed){
 	$.ajax({
 		type: "POST",
-		url: "/log_grammar",
+		url: "/log_skip_grammar",
 		data : { 
 			'csrfmiddlewaretoken': csrfmiddlewaretoken,
 			'completed': completed

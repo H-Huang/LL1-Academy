@@ -31,7 +31,7 @@ urlpatterns = [
     url(r'^get_question', views.get_question),
     url(r'^check_answer', views.check_answer),
     url(r'^give_up', views.give_up),
-    url(r'^log_grammar', stats.log_grammar),
+    url(r'^log_skip_grammar', stats.log_skip_grammar),
     url(r'^profile$', user_profile.profile),
     url(r'^accounts/disconnect_account$', user_profile.disconnect_account),
     url(r'^accounts/social/connections/$', user_profile.profile),
