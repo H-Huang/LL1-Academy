@@ -19,6 +19,8 @@ def log_complete_grammar(request):
 	#Update the grammar field
 	gid = request.session['gid']
 	score = request.session['score']
+
+	print(score)
 	grammar_obj = Grammar.objects.filter(gid=gid).first()
 	grammar_obj.nComplete +=1
 	grammar_obj.save()

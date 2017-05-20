@@ -131,7 +131,7 @@ def give_up(request):
 		elif question.category == 'LL':
 			ret = question.answer
 			request.session['curQ'] = currentQ + 1
-			calc_score_log_grammar(request)
+			stats.log_complete_grammar(request)
 		else:
 			ret = ','.join(question.answer)
 			request.session['curQ'] = currentQ + 1
@@ -147,15 +147,14 @@ def give_up(request):
 def last_question_reached():
 	print("last question --> do something")
 
+# TODO: remove this function its pointless but the logic is useful for displaying stuff
 def calc_score_log_grammar(request):
 	gid = request.session['gid']
 	qcount = Question.objects.filter(gid__gid__contains=gid).count()
 	score = request.session['score']
 	scorestr = "{0:.0f}%".format((score * 100) / qcount)
-
+	print("Recorded score of " + scorestr + " or {} / {}".format(score,qcount))
 	# print(qcount,request.session['score'])
-	# TODO: log this somewhere
-	# print("Recorded score of " + scorestr + " or {} / {}".format(score,qcount))
 	stats.log_complete_grammar(request)
 
 def check_answer(request):
@@ -196,7 +195,7 @@ def check_answer(request):
 			request.session['curQ'] = currentQ + 1
 			request.session['score'] = request.session['score'] + 1
 			if (category == 'isLL1'):
-				calc_score_log_grammar(request)
+				stats.log_complete_grammar(request)
 
 
 		if (category == 'parseTable'):

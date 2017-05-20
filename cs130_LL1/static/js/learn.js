@@ -146,6 +146,7 @@ function give_up() {
 		type: "GET",
 		url: "/give_up",
 		success: function(results) {
+			console.log(results)
 			if (results.category == 'PT') {
 				fill_parse_table_with_answer(results.answer)
 				submit_parse_table(true)
