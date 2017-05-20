@@ -23,46 +23,53 @@
     <h2>Learn History</h2>
 
     <h3>Completed Grammars</h3>
-
-    <table class="grammar-table">
-      <thead>
-        <tr>
-          <th width="200">Grammar</th>
-          <th width="150">Avg Score</th>
-          <th width="150">Your Score</th>
-        </tr>
-      </thead>
-      <tbody>
-      {% for grammar in completed_grammars %}
-        <tr>
-          <td>
-          	<a href="/learn/?gid={{grammar.gid}}">{{grammar.prods}}</a>
-          </td>
-          <td>{{grammar.grammar_avg}}</td>
-          <td>{{grammar.score}}</td>
-        </tr>
-      {% endfor %}
-      </tbody>
-    </table>
+    {% if completed_grammars|length > 0 %}
+      <table class="grammar-table">
+        <thead>
+          <tr>
+            <th width="200">Grammar</th>
+            <th width="150">Avg Score</th>
+            <th width="150">Your Score</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for grammar in completed_grammars %}
+          <tr>
+            <td>
+            	<a href="/learn/?gid={{grammar.gid}}">{{grammar.prods}}</a>
+            </td>
+            <td>{{grammar.grammar_avg}}</td>
+            <td>{{grammar.score}}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p class="profile-none">You have not completed any grammars.</p>
+    {% endif %}
 
     <h3>Skipped Grammars</h3>
 
-    <table class="grammar-table">
-      <thead>
-        <tr>
-          <th width="200">Grammar</th>
-        </tr>
-      </thead>
-      <tbody>
-      {% for grammar in skipped_grammars %}
-        <tr>
-          <td>
-          	<a href="/learn/?gid={{grammar.gid}}">{{grammar.prods}}</a>
-          </td>
-        </tr>
-      {% endfor %}
-      </tbody>
-    </table>
+    {% if skipped_grammars|length > 0 %}
+      <table class="grammar-table">
+        <thead>
+          <tr>
+            <th width="200">Grammar</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for grammar in skipped_grammars %}
+          <tr>
+            <td>
+            	<a href="/learn/?gid={{grammar.gid}}">{{grammar.prods}}</a>
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p class="profile-none">You have not skipped any grammars.</p>
+    {% endif %}
   </div>
 </div>
 {% endblock %}
