@@ -18,20 +18,14 @@
 
   <body style="font-family: 'Lato', sans-serif;">
 
-      {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-            {% endfor %}
-        </ul>
-      {% endif %}
-
-      {% block navbar %}
+      {% block indexcontent %}
       {% endblock %}
 
-      {% block content %}
+      {% block navbarpages %}
       {% endblock %}
       
+
+
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.1/js/foundation.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.8/handlebars.min.js"></script>
@@ -42,12 +36,6 @@
 
       {% block pagescripts %}
       {% endblock %}
-
-
-      <footer>
-        <a href="/about"> About this Project </a>
-        <a href="https://github.com/vivz/LL1-Academy"> Github </a>
-      </footer>
   </body>
 
 </html>

@@ -5,64 +5,66 @@
 {% block title %}Profile{% endblock %}
 
 {% block content %}
-<h2>User Info</h2>
-	
-	<p>{{ user_info.email }}</p>
-  {% include "socialaccount/snippets/login_extra.html" %}
-	{% include "socialaccount/manage_providers.html" with process="login" %}
+<div class="row">
+  <div class="small-12 medium-4 columns">
+    <h2>User Info</h2>
+  	<p>{{ user_info.email }}</p>
+    {% include "socialaccount/snippets/login_extra.html" %}
+  	{% include "socialaccount/manage_providers.html" with process="login" %}
 
-<h2> Statistics </h2>
+    <h2> Statistics </h2>
+    <p> You have completed {{completed_grammars|length}} grammars. </p>
+    <p> You beat {{percentile}} % of our users. </p>
+    <p> Your average score is {{avg_score}}. </p>
+    <p> You have skipped {{skipped_grammars|length}} grammars </p>
+  </div>
 
-<p> You have completed {{completed_grammars|length}} grammars. </p>
-<p> You beat {{percentile}} % of our users. </p>
-<p> Your average score is {{avg_score}}. </p>
-<p> You have skipped {{skipped_grammars|length}} grammars </p>
+  <div class="small-12 medium-8 columns">
+    <h2>Learn History</h2>
 
-<h2>Learn History</h2>
+    <h3>Completed Grammars</h3>
 
-<h3>Completed Grammars</h3>
+    <table class="grammar-table">
+      <thead>
+        <tr>
+          <th width="200">Grammar</th>
+          <th width="150">Avg Score</th>
+          <th width="150">Your Score</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for grammar in completed_grammars %}
+        <tr>
+          <td>
+          	<a href="/learn/?gid={{grammar.gid}}">{{grammar.prods}}</a>
+          </td>
+          <td>{{grammar.grammar_avg}}</td>
+          <td>{{grammar.score}}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
 
-<table class="grammar-table">
-  <thead>
-    <tr>
-      <th width="200">Grammar</th>
-      <th width="150">Avg Score</th>
-      <th width="150">Your Score</th>
-    </tr>
-  </thead>
-  <tbody>
-  {% for grammar in completed_grammars %}
-    <tr>
-      <td>
-      	<a href="/learn/?gid={{grammar.gid}}">{{grammar.prods}}</a>
-      </td>
-      <td>{{grammar.grammar_avg}}</td>
-      <td>{{grammar.score}}</td>
-    </tr>
-  {% endfor %}
-  </tbody>
-</table>
+    <h3>Skipped Grammars</h3>
 
-<h3>Skipped Grammars</h3>
-
-<table class="grammar-table">
-  <thead>
-    <tr>
-      <th width="200">Grammar</th>
-    </tr>
-  </thead>
-  <tbody>
-  {% for grammar in skipped_grammars %}
-    <tr>
-      <td>
-      	<a href="/learn/?gid={{grammar.gid}}">{{grammar.prods}}</a>
-      </td>
-    </tr>
-  {% endfor %}
-  </tbody>
-</table>
-
-	
+    <table class="grammar-table">
+      <thead>
+        <tr>
+          <th width="200">Grammar</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for grammar in skipped_grammars %}
+        <tr>
+          <td>
+          	<a href="/learn/?gid={{grammar.gid}}">{{grammar.prods}}</a>
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
 {% endblock %}
 
 {% block pagescripts %}

@@ -1,23 +1,43 @@
 {% extends "LL1_Academy/_base.html" %}
 
-{% block navbar %}
-<div id="navbar">
-    <div id="navbarLearn">
-        <a href="learn"><button class="button indexButtons" id="navbarLearnButton">Learn</button></a>
-    </div>
-    <div id="navbarTitle">
-        <a href="/index"><h1 id="siteBanner">LL(1) Academy</h1></a>
-    </div>
-    <div id="navbarUser">
-        {% if user.is_authenticated %}
-            <p style="color:white;font-size:20px;">Welcome back <a href="/profile" style="font-weight: bold;">{{ user.username }}</a>!</p>
-             <!--<img src="{{user.socialaccount_set.all.0.get_avatar_url}}">-->
-            <a href="/accounts/logout" style="justify-content:center;"><button class="button indexButtons navbarUserButton">Logout</button></a>
-        {% else %}
-            <a href="/index"><button class="button indexButtons navbarUserButton">Login</button></a>
-        {% endif %}
-    </div>
-</div>
+{% block navbarpages %}
+    <div id="page-wrap">
+        <div id="main">
+          {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+          {% endif %}
+
+            <div id="navbar">
+                <div id="navbarLearn">
+                    <a href="learn"><button class="button indexButtons" id="navbarLearnButton">Learn</button></a>
+                </div>
+                <div id="navbarTitle">
+                    <a href="/index"><h1 id="siteBanner">LL(1) Academy</h1></a>
+                </div>
+                <div id="navbarUser">
+                    {% if user.is_authenticated %}
+                        <p style="color:white;font-size:20px;">Welcome back <a href="/profile" style="font-weight: bold;">{{ user.username }}</a>!</p>
+                         <!--<img src="{{user.socialaccount_set.all.0.get_avatar_url}}">-->
+                        <a href="/accounts/logout" style="justify-content:center;"><button class="button indexButtons navbarUserButton">Logout</button></a>
+                    {% else %}
+                        <a href="/index"><button class="button indexButtons navbarUserButton">Login</button></a>
+                    {% endif %}
+                </div>
+            </div>
 
 
+            {% block content %}
+            {% endblock %}
+
+        </div>
+    </div>
+      
+        <div id="footer">
+            <a href="/about"> About this Project </a>
+            <a href="https://github.com/vivz/LL1-Academy"> Github </a>
+        </div>
 {% endblock %}
