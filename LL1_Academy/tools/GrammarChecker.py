@@ -222,11 +222,12 @@ class GrammarChecker:
 
                 if prod != self.epsilon:
                     for terminal in GrammarChecker.firstOfProduction(self,prod):
-                        if terminal in self.parsingTable[LHS]:
-                            self.isLL1 = False
-                            self.parsingTable[LHS][terminal].append(prod)
-                        else:
-                            self.parsingTable[LHS][terminal] = [prod]
+                        if terminal != self.epsilon:
+                            if terminal in self.parsingTable[LHS]:
+                                self.isLL1 = False
+                                self.parsingTable[LHS][terminal].append(prod)
+                            else:
+                                self.parsingTable[LHS][terminal] = [prod]
 
                 else:
                     for terminal in self.followSets[LHS]:
