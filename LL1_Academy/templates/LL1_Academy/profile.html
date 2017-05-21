@@ -13,10 +13,10 @@
   	{% include "socialaccount/manage_providers.html" with process="login" %}
 
     <h2> Statistics </h2>
-    <div id="chart"></div>
+    <div id="grammar_chart"></div>
+     <div id="question_chart"></div>
     <p> You have completed {{completed_grammars|length}} grammars. </p>
     <p> You beat {{percentile}} % of our users. </p>
-    <p> Your average score is {{avg_score}}. </p>
     <p> You have skipped {{skipped_grammars|length}} grammars </p>
   </div>
 
