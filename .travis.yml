@@ -1,0 +1,13 @@
+language: python
+python:
+  - "3.6"
+services:
+  - postgresql
+env:
+  - DJANGO_VERSION=1.11.1 DB=postgres
+install:
+  - pip install -r requirements.txt
+# before_script:
+#   - mysql -e 'create database test;' -u root
+script:
+  - python manage.py runserver
