@@ -13,11 +13,26 @@
 }
 
 #footer {
+	padding:10px;
 	position: relative;
-	margin-top: -30px;
-	height: 30px;
+	margin-top: -50px;
+	height: 50px;
 	clear: both;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-top: thin solid #d9d9d9;
 }
+
+.footerLinks {
+	color: #37BCDA;
+	font-size: 18px;
+	margin-left: 24px;
+}
+
+	.footerLinks:hover {
+		color: #30A7C1;
+	}
 
 /* Profile page styling */
 .socialprovider {
@@ -65,10 +80,10 @@ a {
 	font-size: 20px;
 }
 
-.button.indexButtons:hover {
-	background-color:#F6781D !important;
-	color: white !important;
-}
+	.button.indexButtons:hover {
+		background-color:#F6781D !important;
+		color: white !important;
+	}
 
 #landingPage {
 	height:100%;
