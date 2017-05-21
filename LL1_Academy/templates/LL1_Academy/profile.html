@@ -7,22 +7,18 @@
 {% block content %}
 <div class="row">
   <div class="small-12 medium-4 columns">
-    <h2>User Info</h2>
-  	<p>{{ user_info.email }}</p>
+  	<h2>{{ user_info.first_name }} {{user_info.last_name}}</h2>
     {% include "socialaccount/snippets/login_extra.html" %}
   	{% include "socialaccount/manage_providers.html" with process="login" %}
 
-    <h2> Statistics </h2>
     <div id="grammar_chart"></div>
-     <div id="question_chart"></div>
-    <p> You have completed {{completed_grammars|length}} grammars. </p>
-    <p> You beat {{percentile}} % of our users. </p>
-    <p> You have skipped {{skipped_grammars|length}} grammars </p>
+    <div id="question_chart"></div>
+    <p> You beat <b>{{percentile}} % </b>of our users. </p>
   </div>
 
   <div class="small-12 medium-8 columns">
-    <h2>Learn History</h2>
-
+    
+    <p>Click on the grammars to review</p>
     <h3>Completed Grammars</h3>
     {% if completed_grammars|length > 0 %}
       <table class="grammar-table">
@@ -80,6 +76,6 @@
   <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
   <script src="{% static 'js/c3.min.js' %}"></script>
 	<script src="{% static 'js/profile.js' %}"></script>
-
+  <script> create_chart( {{chart_stats|safe}} )</script>
 
 {% endblock %}

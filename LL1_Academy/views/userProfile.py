@@ -1,4 +1,5 @@
 import operator
+import json
 
 from django.shortcuts import render
 from django.http import HttpRequest, HttpResponseRedirect, Http404
@@ -15,8 +16,8 @@ def get_grammar_avg(gid):
 
 def get_complete_rate(uid):
 	results = {}
-	results["complete"] = UserHistory.objects.filter(user_id=uid, complete=True)
-	results["skip"] = UserHistory.objects.filter(user_id=uid, complete=True)
+	results["complete"] = UserHistory.objects.filter(user_id=uid, complete=True).count()
+	results["skip"] = UserHistory.objects.filter(user_id=uid, complete=True).count()
 	return results
 
 def get_user_performance(uid):
@@ -40,10 +41,10 @@ def profile(request):
 	# get data for each grammar that the user has completed
 	for user_history in user_histories:
 		grammar = Grammar.objects.get(pk=user_history.grammar_id)
-		grammar_dict = model_to_dict(grammar, fields=["gid","prods"])
+		grammar_dict = model_to_dict(grammar, fields=["gid","prods","nonTerminals"])
 		stats_dict = model_to_dict(user_history, fields=["complete", "score", "updateTime"])
 		stats_dict.update(grammar_dict)
-		available_score += (2 * len(stats_dict["prods"]) + 2)
+		available_score += (2 * len(stats_dict['nonTerminals']) + 2)
 		if stats_dict["complete"]:
 			stats_dict["grammar_avg"] = get_grammar_avg(user_history.grammar_id)
 			context["completed_grammars"].append(stats_dict)
@@ -58,8 +59,9 @@ def profile(request):
 	context["percentile"] = round(get_user_performance(current_user_id),2)
 	context["user_info"] = user_info
 	#pack up infos for the pie charts
-	context["chart_stats"] = {"correct": earned_score, "wrong": available_score-earned_score}
-	context["chart_stats"].update(get_complete_rate(current_user_id))
+	chart_stats = {"correct": earned_score, "wrong": available_score-earned_score}
+	chart_stats.update(get_complete_rate(current_user_id))
+	context["chart_stats"] = json.dumps(chart_stats)
 
 	return render(request, 'LL1_Academy/profile.html', context)
 
