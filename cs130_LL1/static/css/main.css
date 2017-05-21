@@ -27,7 +27,11 @@
 .footerLinks {
 	color: #37BCDA;
 	font-size: 18px;
+}
+
+.footerLinks.middle {
 	margin-left: 24px;
+	margin-right: 24px;
 }
 
 	.footerLinks:hover {
