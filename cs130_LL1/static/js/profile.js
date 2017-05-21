@@ -15,7 +15,7 @@ gD[1][0] = "Completed: " + gD[1][1];
 var grammarChart = c3.generate({
     bindto: '#grammar_chart',
     color: {
-        pattern: ['#DBE6EA','#5AB2D1',]
+        pattern: ['#B3E9F3','#5AB2D1',]
     },
     data: {
         columns: gD,
@@ -41,7 +41,7 @@ qD[1][0] = "Correct: " + qD[1][1];
 var questionChart = c3.generate({
     bindto: '#question_chart',
     color: {
-        pattern: ['#F7C996', '#F6781D']
+        pattern: ['#F7C996', '#e86830']
     },
     data: {
         columns: qD,
