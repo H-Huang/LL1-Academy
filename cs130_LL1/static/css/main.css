@@ -270,6 +270,11 @@ h3 {
 	margin:20px 0 20px 0;
 }
 
+.aboutSection img {
+	width:200px;
+	margin-bottom:14px;
+}
+
 /* media screen styling */
 @media screen and (max-width:640px) {
 	#siteTitle {
