@@ -1,4 +1,15 @@
+[![Build Status](https://travis-ci.org/H-Huang/LL1-Academy.svg?branch=master)](https://travis-ci.org/H-Huang/LL1-Academy)
+
 # LL1-Academy
+
+### Team :fire: :
+| Julien Brundrett | Howard Huang | Vincent Siu | Elise Yuen | Vivian (Ni) Zhang |
+| :-: | :-: | :-: | :-: | :-: |
+| [@jbrundrett](https://github.com/jbrundrett) | [@H-Huang](https://github.com/H-Huang) | [@vincesiu](https://github.com/vincesiu) | [@eliseyuen](https://github.com/eliseyuen) | [@vivz](https://github.com/vivz)
+
+## Introduction:
+
+The LL(1) Academy web application is intended to be used as a resource for students to gain more familiarity with compiler concepts such as LL(1) grammars, First sets, and Follow sets. 
 
 ## Getting Started:
 
@@ -15,7 +26,7 @@
 
 The commands above will use Docker Compose to run the Django/PostgreSQL app. You will be able to view the application on your local computer on localhost:8000/.
 
-##  Important files
+##  Important files:
 
 __cs130_LL1/settings.py__:  Modify project-wide settings (type of database, static folder location, etc.)
 
