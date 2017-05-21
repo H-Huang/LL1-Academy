@@ -255,7 +255,10 @@ h3 {
 .aboutSection {
 	padding: 20px 100px 20px 100px;
 	border: thin solid #F6781D;
-	margin-bottom:20px;
+}
+
+.aboutSection.bios {
+	margin-top:20px;
 }
 
 .row.bioRow {
