@@ -183,10 +183,9 @@ class GrammarChecker:
         if symbol == self.startsymbol:
             self.followSets[symbol].add('$')
 
-        for LHS,RHS in GrammarChecker.getProductionsWithSymbol(self,symbol):
+        for LHS,RHS,symbolIndex in GrammarChecker.getProductionsWithSymbol(self,symbol):
             RHS_nospace = RHS.replace(" ", "")
 
-            symbolIndex = RHS_nospace.find(symbol)
             followIndex = symbolIndex + 1
 
             for i in range(followIndex, len(RHS_nospace) + 1):
@@ -210,8 +209,9 @@ class GrammarChecker:
         productions = []
         for LHS,RHS in self.grammar.items():
             for prod in RHS:
-                if symbol in prod:
-                    productions.append((LHS,prod))
+                for index,char in enumerate(prod):
+                    if char == symbol:
+                        productions.append((LHS,prod,index))
         return productions
     
     def buildParsingTable(self):
@@ -222,11 +222,12 @@ class GrammarChecker:
 
                 if prod != self.epsilon:
                     for terminal in GrammarChecker.firstOfProduction(self,prod):
-                        if terminal in self.parsingTable[LHS]:
-                            self.isLL1 = False
-                            self.parsingTable[LHS][terminal].append(prod)
-                        else:
-                            self.parsingTable[LHS][terminal] = [prod]
+                        if terminal != self.epsilon:
+                            if terminal in self.parsingTable[LHS]:
+                                self.isLL1 = False
+                                self.parsingTable[LHS][terminal].append(prod)
+                            else:
+                                self.parsingTable[LHS][terminal] = [prod]
 
                 else:
                     for terminal in self.followSets[LHS]:

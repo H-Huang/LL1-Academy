@@ -1,0 +1,19 @@
+language: python
+python:
+  - "3.6"
+services:
+  - postgresql
+env:
+  - DJANGO=1.11.1
+install:
+  - pip install -r requirements.txt
+before_script:
+  - psql -c "CREATE DATABASE travisci;" -U postgres
+script:
+  - python manage.py hello_world
+notifications:
+  email:
+    recipients:
+      - howardhuang96@gmail.com
+    on_success: never
+    on_failure: change

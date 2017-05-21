@@ -2,6 +2,43 @@
 	display: inline;
 }
 
+/* Style to stick footer to bottom */
+#page-wrap {
+	min-height: 100%;
+}
+
+#main {
+	overflow: auto;
+	padding-bottom: 30px;
+}
+
+#footer {
+	padding:10px;
+	position: relative;
+	margin-top: -50px;
+	height: 50px;
+	clear: both;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-top: thin solid #d9d9d9;
+}
+
+.footerLinks {
+	color: #37BCDA;
+	font-size: 18px;
+	margin-left: 24px;
+}
+
+	.footerLinks:hover {
+		color: #30A7C1;
+	}
+
+/* Profile page styling */
+.socialprovider {
+	margin-bottom: 1rem;
+}
+
 /* General styling */
 body {
 	font-family: 'Lato', sans-serif;
@@ -12,11 +49,20 @@ button {
 	font-size: 20px;
 	font-weight:bold;
 	font-family: 'Lato', sans-serif;
+	margin-bottom: 0 !important;
 }
 
-button:hover {
-	background-color: #30A7C1 !important;
+	button:hover {
+		background-color: #30A7C1 !important;
+	}
+
+a {
+	color: #F6781D;
 }
+
+	a:hover {
+		color: #CC6318;
+	}
 
 /* Landing Page styling */
 #siteTitle {
@@ -28,18 +74,16 @@ button:hover {
 	font-size: 80px;
 }
 
-#startLearning {
-	margin-top:20px;
+.button.indexButtons {
 	background-color:white !important;
 	color: #37BCDA !important;
 	font-size: 20px;
 }
 
-#startLearning:hover {
-	/*background-color:#30A7C1 !important;*/
-	background-color:#F6781D !important;
-	color: white !important;
-}
+	.button.indexButtons:hover {
+		background-color:#F6781D !important;
+		color: white !important;
+	}
 
 #landingPage {
 	height:100%;
@@ -50,21 +94,50 @@ button:hover {
   align-items: center;
 }
 
-#startButton {
+#loginActions {
 	text-align:center;
+	margin-top:30px;
+}
+
+.loginOption {
+	display:inline;
 }
 
 /* Learning Page Styling */
+#navbar {
+	padding:20px;
+	background-color: #37BCDA;
+	display: flex;
+	align-items: center;
+  	justify-content: space-between;
+}
+
+#navbarTitle {
+	position: absolute;
+	left: 50%;
+	-webkit-transform: translateX(-50%);
+	transform: translateX(-50%)
+}
+
+#navbarUser {
+	text-align: right;
+}
+
+#navbarUser > p {
+	margin-bottom:5px;
+}
+
 #siteBanner {
 	text-align: center;
 	font-family: 'Lato', sans-serif;
 	text-transform: uppercase;
 	font-weight:400;
-	padding-top:20px;
-	padding-bottom:20px;
-	background-color: #37BCDA;
 	color: white;
+	margin-bottom:0;
 }
+	#siteBanner:hover {
+		color: #F6781D;
+	}
 
 .container {
 	margin-top:20px;
@@ -79,6 +152,9 @@ h3 {
 @media only screen and (max-width: 40em) { 
 	#questions-container {
 		margin-top: 1rem;
+	}
+	#siteBanner {
+		font-size:3rem;
 	}
 }
 
@@ -103,6 +179,20 @@ h3 {
 	margin-bottom: 0.3rem;
 }
 /* Questions styling */
+
+
+#giveup {
+	background-color: #F6781D !important;
+}
+
+#giveup:hover {
+	background-color: #CC6318 !important;
+}
+
+.pt-incorrect {
+	border: 1px solid #F6781D; 
+}
+
 #question-answer {
 	width: 82%;
 	display: inline;
@@ -139,6 +229,12 @@ h3 {
 	font-size: 12px !important;
 }
 
+.badanswercheck {
+	display: inline;
+	color: #F6781D;
+	font-size: 12px !important;
+}
+
 .question {
 	color: grey;
 	margin-top:12px;
@@ -155,4 +251,58 @@ h3 {
 
 .question-title {
 	display: inline;
+}
+
+/* media screen styling */
+@media screen and (max-width:990px) {
+  /*#navbar {
+	  flex-wrap: wrap;  
+  }*/
+}
+
+@media screen and (max-width:620px) {
+	#siteTitle {
+		font-size:10vw;
+	}
+
+	#navbarTitle {
+		position:relative;
+		margin-bottom:10px;
+	}
+
+	#siteBanner {
+		font-size:50px;
+	}
+
+	.loginOption {
+		display:block;
+		width: 100%;
+	}
+
+	#navbar {
+		flex-wrap:wrap;
+	}
+
+	#navbarLearn {
+		width:100%;
+		order: 2;
+		margin-bottom:10px;
+	}
+
+	#navbarLearnButton {
+		width:100%;
+	}
+
+	#navbarTitle {
+		order: 1;
+	}
+
+	#navbarUser {
+		width:100%;
+		order: 3;
+	}
+
+	.navbarUserButton {
+		width:100%;
+	}
 }

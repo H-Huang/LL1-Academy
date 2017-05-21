@@ -3,3 +3,4 @@ psycopg2
 sklearn
 numpy
 scipy
+django-allauth

@@ -81,6 +81,11 @@ class MassGrammarGenerator:
             qFollow.save()
             qnum +=1 
 
+        #Parse Table Question
+        qPT = Question(gid=newG,qnum=qnum,category='PT',answer=str(parsingTable))
+        qPT.save()
+        qnum+=1
+        
         #LL1 Question
         if status == 0:
             ans = 'True'
@@ -90,12 +95,4 @@ class MassGrammarGenerator:
             self.statusSummary["non-LL1"]+=1
         qLL = Question(gid=newG,qnum=qnum,category='LL',answer=ans)
         qLL.save()
-        qnum+=1
-
-        #Parse Table Question
-        qPT = Question(gid=newG,qnum=qnum,category='PT',answer=str(parsingTable))
-        qPT.save()
-
-        
-
         

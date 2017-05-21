@@ -1,0 +1,27 @@
+{% extends "LL1_Academy/_navbarPages.html" %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="small-6 small-offset-3 columns">
+            <form method="POST" action="">
+                {% csrf_token %}
+                <label><b>Email</b></label>
+                <input type="text" placeholder="Enter Email" name="email" required>
+
+                <label><b>Password</b></label>
+                <input type="password" placeholder="Enter Password" name="password" required>
+
+                <label><b>Confirm Password</b></label>
+                <input type="password" placeholder="Confirm Password" name="confirm_password" required>
+
+                <button type="submit" class="button">Register</button> 
+                <p style="display:inline;">Already have an account? <a href="login">Login here</a></p>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

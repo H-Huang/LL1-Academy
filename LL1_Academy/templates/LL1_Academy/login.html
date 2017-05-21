@@ -1,0 +1,24 @@
+{% extends "LL1_Academy/_navbarPages.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="small-6 small-offset-3 columns">
+            <form method="POST" action="">
+                {% csrf_token %}
+                <label><b>Email</b></label>
+                <input type="text" placeholder="Enter Email" name="username" required>
+
+                <label><b>Password</b></label>
+                <input type="password" placeholder="Enter Password" name="password" required>
+
+                <button type="submit" class="button">Login</button>
+                <p style="display:inline;">Already have an account? <a href="register">Register here</a></p>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
