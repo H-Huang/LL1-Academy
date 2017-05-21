@@ -2,17 +2,23 @@
 {% get_social_accounts user as accounts %}
 {% get_providers as socialaccount_providers %}
 {% for provider in socialaccount_providers %}
-  <li>
-    <!--<div class="social-icon {{provider.id}}"><i class="fa fa-{{provider.id}}"></i></div>-->
-    {{provider.name}} Account: 
+  <div class="socialprovider">
+    <span class="social-icon {{provider.id}}">
+    {% if provider.id == "google" %}
+      <i class="im im-google-plus"></i>
+    {% else %}
+      <i class="im im-facebook"></i>
+    {% endif %}
+    </span>
+    <!-- {{provider.name}} Account:  -->
     {% if provider.id in accounts %}
-    <div class="username">
+    <span class="username">
       {% if user.first_name or user.last_name %}
           {{ user.first_name }} {{ user.last_name }}
       {% else %}
           {{ user.username }}
       {% endif %}
-    </div>
+    </span>
     <div class="social-action">
       <form method="post" action="/accounts/disconnect_account">
         {% csrf_token %}
@@ -24,13 +30,13 @@
       </form>
     </div>
     {% else %}
-    <div class="social-info">
+    <span class="social-info">
       <a href="{% provider_login_url provider.id process='connect' scope=scope auth_params=auth_params %}">
         <button class="button">
         Connect your {{provider.id|title}} account.
         </button>
       </a>
-    </div>
+    </span>
     {% endif %}
-  </li>
+  </div>
 {% endfor %}
