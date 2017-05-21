@@ -286,6 +286,7 @@ h3 {
 .aboutSection.bios img {
 	width:200px;
 	margin-bottom:14px;
+	border-radius: 50%;
 }
 
 /* media screen styling */
