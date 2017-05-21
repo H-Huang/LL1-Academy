@@ -102,6 +102,16 @@ a {
 	margin-top:20px;
 }
 
+.img-circle {
+    border-radius: 50%;
+	height:40px;
+	border:thin solid white;
+}
+
+.img-circle:hover {
+	border:medium solid #CC6318;
+}
+
 /* Footer styling */
 #page-wrap {
 	min-height: 100%;

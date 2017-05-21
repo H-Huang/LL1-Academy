@@ -22,8 +22,7 @@
                 </div>
                 <div id="navbarUser">
                     {% if user.is_authenticated %}
-                        <p style="color:white;font-size:20px;">Welcome back <a href="/profile" style="font-weight: bold;">{{ user.username }}</a>!</p>
-                         <!--<img src="{{user.socialaccount_set.all.0.get_avatar_url}}">-->
+                        <p style="color:white;font-size:20px;">Welcome back <a href="/profile" style="font-weight: bold;text-transform: uppercase;">{{ user.username }}</a>! <a href="/profile"><img src="{{user.socialaccount_set.all.0.get_avatar_url}}" class="img-circle"></a></p>
                         <a href="/accounts/logout" style="justify-content:center;"><button class="button indexButtons navbarUserButton">Logout</button></a>
                     {% else %}
                         <a href="/index"><button class="button indexButtons navbarUserButton">Login</button></a>
