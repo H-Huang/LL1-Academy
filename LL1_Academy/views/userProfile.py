@@ -17,7 +17,7 @@ def get_grammar_avg(gid):
 def get_complete_rate(uid):
 	results = {}
 	results["complete"] = UserHistory.objects.filter(user_id=uid, complete=True).count()
-	results["skip"] = UserHistory.objects.filter(user_id=uid, complete=True).count()
+	results["skip"] = UserHistory.objects.filter(user_id=uid, complete=False).count()
 	return results
 
 def get_user_performance(uid):
