@@ -19,6 +19,10 @@
 	clear: both;
 }
 
+/* Profile page styling */
+.socialprovider {
+	margin-bottom: 1rem;
+}
 
 /* General styling */
 body {
