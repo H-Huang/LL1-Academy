@@ -117,7 +117,6 @@ function fill_parse_table_with_answer(answer) {
 	})
 }
 
-
 $(document).ready(function() {
 	query_for_question();
 	$('#skip').click(skip);
@@ -134,6 +133,51 @@ function query_for_question() {
 		success: function(results) {
 			question_data = results;
 			draw_question();
+			window.trip = new Trip([
+			  { 
+			    sel : $('#grammar'),
+			    content : 'Here is a grammar.',
+			    position : "n"
+			  },
+			  {
+			    sel : $('#explainer'),
+			    content : 'Refer to the explainer <br> for what each symbol means.',
+			    position : "n"
+			  },
+			  {
+			    sel : $('#skip'),
+			    content : 'Don\'t like this grammar? Skip it',
+			    position : "n"
+			  },
+			  {
+			    sel : $('#question-input'),
+			    content : 'Type in your answers here. <br> Click submit to check the anwser.',
+			    position : "n"
+			  },
+			  {
+			    sel : $('#opt-char'),
+			    content : 'This button helps you <br> to input special characters.',
+			    position : "w"
+			  },
+			  {
+			    sel : $('#giveup'),
+			    content : 'Click "Give Up" to show the answer.<br>You will not receive any points for a given up question.',
+			    position : "s"
+			  },
+			  {
+			    sel : $('#navbarUser'),
+			    content : 'Click here to view your learning history and manage your account',
+			    position : "w"
+			  }
+
+			],{
+			  showNavigation : true,
+			  delay : -1,
+			  canGoPrev: false,
+			  prevLabel: "",
+			  skipLabel: ""
+			}
+			);
 		},
 		error: function(error) {
 			console.log(error)

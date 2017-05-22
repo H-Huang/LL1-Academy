@@ -72,7 +72,7 @@
 			<div id="grammarTitle">
 				<h3 id="grammarHeader" style="margin-bottom:0;">Consider the grammar</h3>
 				<div id="grammarButtons">
-					<button type="button" class="button">Tutorial</button>
+					<button type="button" class="button" onclick="trip.start()">Tutorial</button>
 					<button type="button" class="button" id="skip">Skip</button>
 				</div>
 			</div>
@@ -107,60 +107,12 @@
 		</div>
 	</div>
 
-	{% if new_user %}
-	<!-- <ol id="chooseID" style="display:none">
-	  <li data-id="grammar" data-options="tipLocation:top;" data-button="Next">
-	  	Here is a grammar and an explainer.
-	  </li>
-	  <li data-id="question-input" data-options="tipLocation:top;"  data-button="Next">
-	  	Type in your answers here and click submit to check the anwser.
-	  </li>
-	  <li data-id="opt-char" data-options="tipLocation:bottom; tipContainer: question"  data-button="Next">
-	  	This button helps you to input special characters.
-	  </li>
-	  <li data-id="giveup" data-options="tipLocation:top;"  data-button="Next">
-	  	Click "give up" to show the answer. You will not receive any points for a given up question.
-	  </li>
-
-	  <li data-id="skip" data-options="tipLocation:bottom;"  data-button="Close">
-	  	Don't like this grammar? Skip it by pressing here.
-	  </li>
-	  <li>Have fun learning LL(1) grammars!</li>
-
-	</ol> -->
-	<ol data-joyride data-autostart="true" id="docs-joyride">
-	  <li data-target="#grammar">
-	    <p>Here is a grammar.</p>
-	  </li>
-	  <li data-target="#explainer">
-	    <p>Here is a explainer.</p>
-	  </li>
-	  <li data-target="#skip">
-	    <p>Don't like this grammar? Skip it by pressing here.</p>
-	  </li>
-	  <li>
-	    <p>Have fun learning LL(1) grammars!</p>
-	   	<p class="text-center">
-	      <button class="button success" data-joyride-close>Close</button>
-	    </p>
-	  </li>
-	</ol>
-	{% endif %}
-
 {% endblock %}
 
 {% block pagescripts %}
 	<script> var csrfmiddlewaretoken = "{{ csrf_token }}"; </script>
 	<script src="{% static 'js/learn.js' %}"></script>
-	{% if new_user %}
-	<link rel=" stylesheet" type="text/css" href="{% static 'css/foundation.joyride.css' %}">
-	<script src="{% static 'js/foundation.joyride.js' %}"></script>
-	<script>
-		$(window).on('load',function() {
-	  		$(document).foundation();
-			// $("#docs-joyride").joyride({});
-		});
-	</script>
-	{% endif %}
+	<link rel="stylesheet" type="text/css" href="http://oss.maxcdn.com/jquery.trip.js/3.3.3/trip.min.css"/>
+	<script src="http://oss.maxcdn.com/jquery.trip.js/3.3.3/trip.min.js"></script>
 		
 {% endblock %}
