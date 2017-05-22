@@ -3,8 +3,8 @@
 {% load static %}
 
 {% block navbarpages %}
-    <div id="page-wrap">
-        <div id="main">
+    <div class="page-wrap">
+        <div class="main">
           <!--{% if messages %}
             <ul class="messages">
                 {% for message in messages %}
@@ -23,7 +23,9 @@
                 <div id="navbarUser">
                     {% if user.is_authenticated %}
                         <p style="color:white;font-size:20px;">Welcome back <a href="/profile" style="font-weight: bold;text-transform: capitalize;">{{ user.username }}</a>! <a href="/profile"><img src="{{user.socialaccount_set.all.0.get_avatar_url}}" class="img-circle"></a></p>
-                        <a href="learn"><button class="button indexButtons navbarButton">Learn</button></a>
+                        {% if request.path != '/learn' %}
+                            <a href="learn"><button class="button indexButtons navbarButton">Learn</button></a>
+                        {% endif %}
                         <a href="/accounts/logout" style="justify-content:center;"><button class="button indexButtons navbarButton">Logout</button></a>
                     {% else %}
                         <a href="learn"><button class="button indexButtons navbarButton">Learn</button></a>
@@ -39,7 +41,7 @@
 
         </div>
     </div>
-    <div id="footer">
+    <div class="footer">
         <a href="/index" class="footerLinks"><img src="{% static 'img/LL1-logo.ico' %}" style="height:20px;margin-right:5px;">Home</a>
         <!--<a href="/index" class="footerLinks"><img src="{% static 'img/LL1-logo-white_white.png' %}" style="height:20px;margin-right:5px;">Home</a>-->
         <a href="/about" class="footerLinks middle">About</a>

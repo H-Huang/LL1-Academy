@@ -69,9 +69,12 @@
 	<div class="row">
 		<!-- grammar here -->
 		<div class="small-12 medium-6 columns" id="grammar-container">
-			<div style="display:flex;justify-content:space-between;">
-				<h3 id="grammarHeader" >Consider the grammar</h3>
-				<button type="button" class="button" id="skip">Skip</button>
+			<div id="grammarTitle">
+				<h3 id="grammarHeader" style="margin-bottom:0;">Consider the grammar</h3>
+				<div id="grammarButtons">
+					<button type="button" class="button">Tutorial</button>
+					<button type="button" class="button" id="skip">Skip</button>
+				</div>
 			</div>
 			<div id="grammar">
 				{% for grammar in grammar_object %}
@@ -152,14 +155,14 @@
 {% block pagescripts %}
 	<script> var csrfmiddlewaretoken = "{{ csrf_token }}"; </script>
 	<script src="{% static 'js/learn.js' %}"></script>
-	{% if new_user %}
-	<link rel=" stylesheet" type="text/css" href="{% static 'css/solo.joyride.css' %}">
-	<script src="{% static 'js/solo.joyride.js' %}"></script>
 	<script>
-	$(window).on('load',function() {
+		$(window).on('load',function() {
   		$(document).foundation();
 	});
 	</script>
+	{% if new_user %}
+	<link rel=" stylesheet" type="text/css" href="{% static 'css/solo.joyride.css' %}">
+	<script src="{% static 'js/solo.joyride.js' %}"></script>
 	{% endif %}
 		
 {% endblock %}

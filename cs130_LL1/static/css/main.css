@@ -116,17 +116,23 @@ a {
 	border:medium solid #CC6318;
 }
 
+#grammarTitle {
+	display:flex;
+	align-items: center;
+	justify-content:space-between;
+}
+
 /* Footer styling */
-#page-wrap {
+.page-wrap {
 	min-height: 100%;
 }
 
-#main {
+.main {
 	overflow: auto;
 	padding-bottom: 70px;
 }
 
-#footer {
+.footer {
 	padding:10px;
 	position: relative;
 	margin-top: -50px;
@@ -343,5 +349,15 @@ h3 {
 
 	.aboutSection {
 		padding: 20px;
+	}
+
+	/*#grammarTitle button {
+		width:100%;
+	}*/
+}
+
+@media screen and (max-width:945px) {
+	#grammarTitle {
+		flex-wrap:wrap;
 	}
 }
