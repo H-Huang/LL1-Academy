@@ -11,14 +11,20 @@
     {% include "socialaccount/snippets/login_extra.html" %}
   	{% include "socialaccount/manage_providers.html" with process="login" %}
 
-    <div id="grammar_chart"></div>
-    <div id="question_chart"></div>
     <p> You beat <b>{{percentile}} % </b>of our users. </p>
+
+    {% if completed_grammars|length > 0 or skipped_grammars|length > 0 %}
+      <div id="grammar_chart"></div>
+    {% endif %}
+    {% if completed_grammars|length > 0 %}
+      <div id="question_chart"></div>
+    {% endif %}
+    
   </div>
 
   <div class="small-12 medium-8 columns">
     
-    <p>Click on the grammars to review</p>
+   <!--  <p>Click on the grammars to review</p> -->
     <h3>Completed Grammars</h3>
     {% if completed_grammars|length > 0 %}
       <table class="grammar-table">
