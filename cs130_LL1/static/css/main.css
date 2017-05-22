@@ -78,6 +78,10 @@ a {
 	transform: translateX(-50%)
 }
 
+#navbar .button.indexButtons {
+	font-size: 16px;
+}
+
 #navbarUser {
 	text-align: right;
 }
@@ -315,25 +319,22 @@ h3 {
 
 	#navbarLearn {
 		width:100%;
-		order: 2;
 		margin-bottom:10px;
 	}
 
-	#navbarLearnButton {
+	.button.navbarButton {
 		width:100%;
-	}
-
-	#navbarTitle {
-		order: 1;
+		margin-top:10px;
+		font-size:16px;
 	}
 
 	#navbarUser {
 		width:100%;
-		order: 3;
 	}
 
-	.navbarUserButton {
-		width:100%;
+	#navbarUser p {
+		text-align:center;
+		font-size:20px;
 	}
 	
 	#aboutContent {
