@@ -34,6 +34,11 @@ def learn(request):
 	else:
 		request.session['gid'] = request.GET.get('gid')
 
+	if UserHistory.objects.all().filter(user=request.user).count()==0:
+		new_user = True
+	else:
+		new_user = False
+
 	stats.log_start_grammar(request.session['gid'])
 	request.session['curQ'] = 0
 	request.session['score'] = 0
@@ -56,7 +61,8 @@ def learn(request):
 		"grammar_object": grammar_object,
 		"terminals": terminals,
 		"non_terminals": non_terminals,
-		"start_symbol": 'A'
+		"start_symbol": 'A',
+		"new_user":new_user
 	}
 	
 	return render(request, 'LL1_Academy/learn.html', context)

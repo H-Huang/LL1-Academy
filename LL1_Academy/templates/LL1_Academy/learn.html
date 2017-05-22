@@ -103,9 +103,28 @@
 			<h3>Questions</h3>
 		</div>
 	</div>
+
+	{% if new_user %}
+	<ol id="chooseID" style="display:none">
+	  <li data-id="grammarHeader" data-options="tip_location: top; next_button: false">Tip content...</li>
+	  <li data-id="explainer">Tip content2...</li>
+	</ol>
+	{% endif %}
+
 {% endblock %}
 
 {% block pagescripts %}
 	<script> var csrfmiddlewaretoken = "{{ csrf_token }}"; </script>
 	<script src="{% static 'js/learn.js' %}"></script>
+	{% if new_user %}
+	<link rel=" stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/joyride/2.1.0/joyride.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/joyride/2.1.0/jquery.joyride.js"></script>
+	<script>
+		$(window).on("load", function() {
+	  				 $("#chooseID").joyride({});  
+	  			});
+		$("#chooseID").joyride({}); 
+	</script>
+	{% endif %}
+		
 {% endblock %}
