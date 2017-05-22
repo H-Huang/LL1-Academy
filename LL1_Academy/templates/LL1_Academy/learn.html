@@ -129,9 +129,6 @@
 
 	</ol> -->
 	<ol data-joyride data-autostart="true" id="docs-joyride">
-	  <li data-target="#question-input">
-	    <p>ugh</p>
-	  </li>
 	  <li data-target="#grammar">
 	    <p>Here is a grammar.</p>
 	  </li>
@@ -155,14 +152,15 @@
 {% block pagescripts %}
 	<script> var csrfmiddlewaretoken = "{{ csrf_token }}"; </script>
 	<script src="{% static 'js/learn.js' %}"></script>
+	{% if new_user %}
+	<link rel=" stylesheet" type="text/css" href="{% static 'css/foundation.joyride.css' %}">
+	<script src="{% static 'js/foundation.joyride.js' %}"></script>
 	<script>
 		$(window).on('load',function() {
-  		$(document).foundation();
-	});
+	  		$(document).foundation();
+			// $("#docs-joyride").joyride({});
+		});
 	</script>
-	{% if new_user %}
-	<link rel=" stylesheet" type="text/css" href="{% static 'css/solo.joyride.css' %}">
-	<script src="{% static 'js/solo.joyride.js' %}"></script>
 	{% endif %}
 		
 {% endblock %}
