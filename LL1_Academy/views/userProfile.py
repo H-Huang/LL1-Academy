@@ -66,8 +66,6 @@ def profile(request):
 	return render(request, 'LL1_Academy/profile.html', context)
 
 def disconnect_account(request):
-    context = {}
-
     provider_name = request.POST.get('account', '')
 
     for acc in request.user.socialaccount_set.all().iterator():
@@ -76,7 +74,7 @@ def disconnect_account(request):
             messages.info(request,
                           'Your account has been successfully disconnected.')
 
-    return render(request, 'LL1_Academy/profile.html', context)
+    return HttpResponseRedirect('/profile')
 
 def login_duplicate(request):
 	return render(request, 'socialaccount/login_duplicate.html')
