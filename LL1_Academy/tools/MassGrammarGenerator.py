@@ -62,9 +62,9 @@ class MassGrammarGenerator:
         #This function takes the grammar and the result returned by gc.solve. It
         #populates the Grammar and Question table in DB with the correct fields
 
-        firstSets, followSets, parsingTable, status, reachable = result
+        firstSets, followSets, parsingTable, status, reachable, terminals = result
         newG = Grammar(prods=str(grammar), nonTerminals=''.join(self.nonTerminals), 
-                terminals=''.join(self.terminals), startSymbol='A')
+                terminals=''.join(terminals), startSymbol='A')
         newG.save()
 
         #First and Follow Set

@@ -19,7 +19,7 @@
 #       the solve function will pretty print its outputs
 # 
 #   RETURNS:
-#       (firstSets, followSets, parsingTable, status, reachable)
+#       (firstSets, followSets, parsingTable, status, reachable, terminals)
 #           status:     0 if LL(1), 1 if not LL(1), and -1 if left recursion was found
 #           reachable:  True if every nonterminal is reachable, else False
 # 
@@ -72,7 +72,7 @@ class GrammarChecker:
                     print("grammar is LL(1)") 
                 else:
                     print("grammar is NOT LL(1)")
-        return((returnFirstSets,self.followSets,self.parsingTable,status,GrammarChecker.reachability(self)))
+        return((returnFirstSets,self.followSets,self.parsingTable,status,GrammarChecker.reachability(self),self.terminals))
     
     def getSymbols(self, grammar):
         self.grammar = grammar
