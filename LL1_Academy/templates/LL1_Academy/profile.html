@@ -8,12 +8,12 @@
 <div class="small-12 medium-12 large-10 columns" id="wrapper">
 <div class="row">
   <div class="small-12 medium-4 columns" id="user-info-box">
-    <div class="row" style="margin-bottom: 20px">
-      <div class="small-5 medium-5 columns">
-        <img src="{{user.socialaccount_set.all.0.get_avatar_url}}" style="border-radius: 50%;">
+    <div class="row" style="margin-bottom: 0px;text-align:center;">
+      <div class="medium-5 columns">
+        <img id="profileIcon" src="{{user.socialaccount_set.all.0.get_avatar_url}}" style="border-radius: 50%;">
       </div>
-    	<div class="small-7 medium-7 columns">
-        <h2>{{ user_info.first_name }} {{user_info.last_name}}</h2>
+    	<div class="medium-7 columns">
+        <h2 id="userName" style="font-family: 'Lato', sans-serif;">{{ user_info.first_name }} {{user_info.last_name}}</h2>
       </div>
     </div>
     <h5 class="status-text"> 

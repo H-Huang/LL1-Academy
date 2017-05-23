@@ -354,6 +354,15 @@ h3 {
 	/*#grammarTitle button {
 		width:100%;
 	}*/
+
+	#profileIcon {
+		width:50%;
+		margin: 0 auto 10px auto;
+	}
+
+	#userName {
+		font-size:30px;
+	}
 }
 
 @media screen and (max-width:945px) {
@@ -362,6 +371,7 @@ h3 {
 	}
 }
 
+/* Profile page styling */
 #history-tables{
 	margin-top: 50px;
 	margin-left: auto;
@@ -378,21 +388,27 @@ h3 {
 	margin-right: auto;
 	float: none;
 }
+
 .connect{
 	width: 100%;
 	margin-left: auto;
 	margin-right: auto;
 	float: none;
 }
+
 .social-icon{
 	padding-right: 10px;
 }
+
 .status-text{
 	color:grey;
 	text-align: center;
 }
+
 #accounts-manage{
 	margin-top: 20px;
 }
+
 #user-info-box{
 	vertical-align:middle;
+}
