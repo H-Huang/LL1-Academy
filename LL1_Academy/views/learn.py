@@ -34,11 +34,6 @@ def learn(request):
 	else:
 		request.session['gid'] = request.GET.get('gid')
 
-	if UserHistory.objects.all().filter(user=request.user).count()==0:
-		new_user = True
-	else:
-		new_user = False
-
 	stats.log_start_grammar(request.session['gid'])
 	request.session['curQ'] = 0
 	request.session['score'] = 0
@@ -61,8 +56,7 @@ def learn(request):
 		"grammar_object": grammar_object,
 		"terminals": terminals,
 		"non_terminals": non_terminals,
-		"start_symbol": 'A',
-		"new_user":new_user
+		"start_symbol": 'A'
 	}
 	
 	return render(request, 'LL1_Academy/learn.html', context)
@@ -86,10 +80,20 @@ def get_question(request):
 			"terminals": terminals
 		})
 
-	return JsonResponse({
+	result = {
 		"category": category,
-		"symbol": symbol
-	})
+		"symbol": symbol,
+	}
+
+	if currentQ == 0 and is_new_user(request.user):
+		result["new_user"] = is_new_user(request.user)
+	else:
+		result["new_user"] = False
+
+	return JsonResponse(result)
+
+def is_new_user(uid):
+	return UserHistory.objects.filter(user=uid).count() == 0
 
 def compare_parse_table_answer(gid, true_answer, answer):
 	grammar_obj = Grammar.objects.filter(gid=gid).first()
