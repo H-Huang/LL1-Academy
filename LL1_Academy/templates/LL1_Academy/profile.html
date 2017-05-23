@@ -83,5 +83,21 @@
   <script src="{% static 'js/c3.min.js' %}"></script>
 	<script src="{% static 'js/profile.js' %}"></script>
   <script> create_chart( {{chart_stats|safe}} )</script>
+  {% if messages %}
+    {% for message in messages %}
+    {% if message.tags == "error" %}
+      <script>
+        swal({
+          title: "Oops!",
+          text: '{{ message }}',
+          type: "error",
+          confirmButtonText: "Close"
+        }, 
+        function() {
+        });
+      </script>
+    {% endif %}
+    {% endfor %}
+  {% endif %}
 
 {% endblock %}

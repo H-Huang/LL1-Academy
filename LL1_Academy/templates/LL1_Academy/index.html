@@ -21,6 +21,13 @@
             <p style="color: white;font-size:20px;margin: 1rem 0 1rem 0;">Or continue without an account</p>-->
             {% block login_error %}
             {% endblock %}
+            {% if messages %}
+                {% for message in messages %}
+                <p class="message" style="color:white;font-size:15px;">
+                {{ message }}
+                </p>
+                {% endfor %}
+            {% endif %}
             {% load socialaccount %}
             {% providers_media_js %}
             <div class="loginOption"><a href="{% provider_login_url "facebook" method="js_sdk" %}"><button class="button indexButtons" style="width:225px;">Login with Facebook</button></a></div>
