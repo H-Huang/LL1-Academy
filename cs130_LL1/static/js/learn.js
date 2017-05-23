@@ -137,7 +137,7 @@ function query_for_question() {
 				window.trip = new Trip([
 				  { 
 				    sel : $('#grammar'),
-				    content : 'Here is a grammar.',
+				    content : 'Hello! Here is a grammar.',
 				    position : "n"
 				  },
 				  {
@@ -187,7 +187,7 @@ function query_for_question() {
 				);
 			}
 			if(results.new_user == true && window.trip!=null){
-				trip.start()
+				setTimeout(function() {trip.start();},1200);
 			}
 		},
 		error: function(error) {

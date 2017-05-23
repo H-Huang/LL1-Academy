@@ -5,41 +5,64 @@
 {% block title %}Profile{% endblock %}
 
 {% block content %}
+<div class="small-12 medium-12 large-10 columns" id="wrapper">
 <div class="row">
-  <div class="small-12 medium-4 columns">
-  	<h2>{{ user_info.first_name }} {{user_info.last_name}}</h2>
-    {% include "socialaccount/snippets/login_extra.html" %}
-  	{% include "socialaccount/manage_providers.html" with process="login" %}
-
-    <p> You beat <b>{{percentile}} % </b>of our users. </p>
-
+  <div class="small-12 medium-4 columns" id="user-info-box">
+    <div class="row" style="margin-bottom: 20px">
+      <div class="small-5 medium-5 columns">
+        <img src="{{user.socialaccount_set.all.0.get_avatar_url}}">
+      </div>
+    	<div class="small-7 medium-7 columns">
+        <h2>{{ user_info.first_name }} {{user_info.last_name}}</h2>
+      </div>
+    </div>
+    <h5 class="status-text"> 
+      <i class="im im-users"></i> 
+      You beat <b>{{percentile}} % </b>of our users. 
+    </h5>
+    <h5 class="status-text">
+      <i class="im im-check-mark-circle-o"></i>
+      You completed <b>{{completed_grammars|length}}</b> grammar{% if completed_grammars|length > 1 %}s{% endif %}.
+    </h5>
+    <div id="accounts-manage">
+      {% include "socialaccount/snippets/login_extra.html" %}
+    	{% include "socialaccount/manage_providers.html" with process="login" %} 
+    </div>
+  </div>
+  <div class="small-12 medium-8 columns">
     {% if completed_grammars|length > 0 or skipped_grammars|length > 0 %}
-      <div id="grammar_chart"></div>
+      <div class="small-12 medium-6 columns">
+        <div id="grammar_chart"></div>
+      </div>
     {% endif %}
     {% if completed_grammars|length > 0 %}
-      <div id="question_chart"></div>
+      <div class="small-12 medium-6 columns">
+        <div id="question_chart"></div>
+      </div>
     {% endif %}
-    
   </div>
+</div>
 
-  <div class="small-12 medium-8 columns">
-    
+<div class="row">   
    <!--  <p>Click on the grammars to review</p> -->
-    <h3>Completed Grammars</h3>
+    <div class="small-12 medium-12 columns" id="history-tables">
+    <h3 class="table-header">Completed Grammars</h3>
     {% if completed_grammars|length > 0 %}
       <table class="grammar-table">
         <thead>
           <tr>
-            <th width="200">Grammar</th>
-            <th width="150">Avg Score</th>
-            <th width="150">Your Score</th>
+            <th>Grammar</th>
+            <th width="15%">Avg Score</th>
+            <th width="15%">Your Score</th>
           </tr>
         </thead>
         <tbody>
         {% for grammar in completed_grammars %}
           <tr>
             <td>
-            	<a href="/learn/?gid={{grammar.gid}}">{{grammar.prods}}</a>
+            	<a href="/learn/?gid={{grammar.gid}}">
+                {{grammar.prods}}
+              </a>
             </td>
             <td>{{grammar.grammar_avg}}</td>
             <td>{{grammar.score}}</td>
@@ -51,7 +74,7 @@
       <p class="profile-none">You have not completed any grammars.</p>
     {% endif %}
 
-    <h3>Skipped Grammars</h3>
+    <h3 class="table-header">Skipped Grammars</h3>
 
     {% if skipped_grammars|length > 0 %}
       <table class="grammar-table">
@@ -73,7 +96,8 @@
     {% else %}
       <p class="profile-none">You have not skipped any grammars.</p>
     {% endif %}
-  </div>
+    </div>
+</div>
 </div>
 {% endblock %}
 
@@ -82,7 +106,7 @@
   <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
   <script src="{% static 'js/c3.min.js' %}"></script>
 	<script src="{% static 'js/profile.js' %}"></script>
-  <script> create_chart( {{chart_stats|safe}} )</script>
+  <script> $(window).onload = create_chart( {{chart_stats|safe}} )</script>
   {% if messages %}
     {% for message in messages %}
     {% if message.tags == "error" %}
@@ -99,5 +123,4 @@
     {% endif %}
     {% endfor %}
   {% endif %}
-
 {% endblock %}

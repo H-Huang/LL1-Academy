@@ -361,3 +361,38 @@ h3 {
 		flex-wrap:wrap;
 	}
 }
+
+#history-tables{
+	margin-top: 50px;
+	margin-left: auto;
+	margin-right: auto;
+	float: none;
+}
+
+.table-header{
+	text-align: center;
+}
+
+#wrapper{
+	margin-left: auto;
+	margin-right: auto;
+	float: none;
+}
+.connect{
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	float: none;
+}
+.social-icon{
+	padding-right: 10px;
+}
+.status-text{
+	color:grey;
+	text-align: center;
+}
+#accounts-manage{
+	margin-top: 20px;
+}
+#user-info-box{
+	vertical-align:middle;
