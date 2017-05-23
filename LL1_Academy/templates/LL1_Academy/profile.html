@@ -109,18 +109,16 @@
   <script> $(window).onload = create_chart( {{chart_stats|safe}} )</script>
   {% if messages %}
     {% for message in messages %}
-    {% if message.tags == "error" %}
       <script>
         swal({
-          title: "Oops!",
+          title: "{% if message.tags == "info" %}Success{% else %}Oops{% endif %}",
           text: '{{ message }}',
-          type: "error",
+          type: "{% if message.tags == "info" %}success{% else %}{{message.tags}}{% endif %}",
           confirmButtonText: "Close"
         }, 
         function() {
         });
       </script>
-    {% endif %}
     {% endfor %}
   {% endif %}
 {% endblock %}
