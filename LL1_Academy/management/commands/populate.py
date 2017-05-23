@@ -1,14 +1,17 @@
 from django.core.management.base import BaseCommand, CommandError
-import time
 from LL1_Academy.tools import MassGrammarGenerator
 import os
+import time
 
 class Command(BaseCommand):
-	help = 'This command will populate the database with a small set of grammars'
+	help = 'This command will add grammars to the database, starting from <num> grammars and gradually filtering them down to a valid set (which may be much less than <num>)'
+
+	def add_arguments(self, parser):
+		parser.add_argument('num', type=int)
 	
 	def handle(self, *args, **options):
 		#Number of randomly generated grammars
-		num = 100
+		num = options['num']
 
 		#Number variables this run will include. 
 		#For example [2,3] will run the script to generate
