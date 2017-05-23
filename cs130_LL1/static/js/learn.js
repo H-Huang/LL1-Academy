@@ -166,16 +166,22 @@ function query_for_question() {
 			  },
 			  {
 			    sel : $('#navbarUser'),
-			    content : 'Click here to view your learning history and manage your account',
+			    content : 'Click here to view your learning history <br> and manage your account',
 			    position : "w"
+			  },
+			  {
+			    sel : $('.footer'),
+			    content : 'Learn more about the LL(1) Academy project.',
+			    position : "n"
 			  }
 
 			],{
-			  showNavigation : true,
-			  delay : -1,
-			  canGoPrev: false,
-			  prevLabel: "",
-			  skipLabel: ""
+			    showNavigation : true,
+			    delay : -1,
+			    canGoPrev: false,
+			    prevLabel: "",
+			    skipLabel: "",
+			    showCloseBox : true,
 			}
 			);
 		},
