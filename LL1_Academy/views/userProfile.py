@@ -1,4 +1,5 @@
 import operator
+import json
 
 from django.shortcuts import render
 from django.http import HttpRequest, HttpResponseRedirect, Http404
@@ -13,6 +14,11 @@ def get_grammar_avg(gid):
 	grammar_avg = UserHistory.objects.filter(grammar=gid, complete=True).aggregate(Avg('score'))
 	return round(grammar_avg["score__avg"],2)
 
+def get_complete_rate(uid):
+	results = {}
+	results["complete"] = UserHistory.objects.filter(user_id=uid, complete=True).count()
+	results["skip"] = UserHistory.objects.filter(user_id=uid, complete=False).count()
+	return results
 
 def get_user_performance(uid):
 	if not UserHistory.objects.filter(complete=True, user=uid).exists():
@@ -29,21 +35,22 @@ def profile(request):
 	context = {"skipped_grammars": [], 
 		"completed_grammars": [], 
 		"percentile": 0,
-		"avg_score": 0, 
 		"user_info": {}}
-	total_score = 0
+	available_score = 0
+	earned_score = 0
 	# get data for each grammar that the user has completed
 	for user_history in user_histories:
 		grammar = Grammar.objects.get(pk=user_history.grammar_id)
-		grammar_dict = model_to_dict(grammar, fields=["gid","prods"])
+		grammar_dict = model_to_dict(grammar, fields=["gid","prods","nonTerminals"])
 		stats_dict = model_to_dict(user_history, fields=["complete", "score", "updateTime"])
-		combined_dicts = dict(list(grammar_dict.items()) + list(stats_dict.items()))
+		stats_dict.update(grammar_dict)
+		available_score += (2 * len(stats_dict['nonTerminals']) + 2)
 		if stats_dict["complete"]:
-			combined_dicts["grammar_avg"] = get_grammar_avg(user_history.grammar_id)
-			context["completed_grammars"].append(combined_dicts)
-			total_score += stats_dict["score"]
+			stats_dict["grammar_avg"] = get_grammar_avg(user_history.grammar_id)
+			context["completed_grammars"].append(stats_dict)
+			earned_score += stats_dict["score"]
 		else: 
-			context["skipped_grammars"].append(combined_dicts)
+			context["skipped_grammars"].append(stats_dict)
 	#sort grammarhistory based on time
 	context["completed_grammars"] = sorted(context["completed_grammars"], key=lambda k: k['updateTime'])
 	context["skipped_grammars"] = sorted(context["skipped_grammars"], key=lambda k: k['updateTime'])
@@ -51,15 +58,14 @@ def profile(request):
 	user_info = model_to_dict(User.objects.get(pk=current_user_id), ["first_name", "last_name", "data_joined", "email", "last_login"])
 	context["percentile"] = round(get_user_performance(current_user_id),2)
 	context["user_info"] = user_info
-	if len(context["completed_grammars"]) > 0:
-		context["avg_score"] = total_score / len(context["completed_grammars"])
-	else:
-		context["avg_score"] = 0
+	#pack up infos for the pie charts
+	chart_stats = {"correct": earned_score, "wrong": available_score-earned_score}
+	chart_stats.update(get_complete_rate(current_user_id))
+	context["chart_stats"] = json.dumps(chart_stats)
+
 	return render(request, 'LL1_Academy/profile.html', context)
 
 def disconnect_account(request):
-    context = {}
-
     provider_name = request.POST.get('account', '')
 
     for acc in request.user.socialaccount_set.all().iterator():
@@ -68,7 +74,7 @@ def disconnect_account(request):
             messages.info(request,
                           'Your account has been successfully disconnected.')
 
-    return render(request, 'LL1_Academy/profile.html', context)
+    return HttpResponseRedirect('/profile')
 
 def login_duplicate(request):
 	return render(request, 'socialaccount/login_duplicate.html')

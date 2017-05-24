@@ -117,7 +117,6 @@ function fill_parse_table_with_answer(answer) {
 	})
 }
 
-
 $(document).ready(function() {
 	query_for_question();
 	$('#skip').click(skip);
@@ -134,6 +133,62 @@ function query_for_question() {
 		success: function(results) {
 			question_data = results;
 			draw_question();
+			if (window.trip == null){
+				window.trip = new Trip([
+				  { 
+				    sel : $('#grammar'),
+				    content : 'Hello! Here is a grammar.',
+				    position : "n"
+				  },
+				  {
+				    sel : $('#explainer'),
+				    content : 'Refer to the explainer <br> for what each symbol means.',
+				    position : "n"
+				  },
+				  {
+				    sel : $('#skip'),
+				    content : 'Don\'t like this grammar? Skip it',
+				    position : "n"
+				  },
+				  {
+				    sel : $('#question-input'),
+				    content : 'Type in your answers here. <br> Click submit to check the anwser.',
+				    position : "n"
+				  },
+				  {
+				    sel : $('#opt-char'),
+				    content : 'This button helps you <br> to input special characters.',
+				    position : "e"
+				  },
+				  {
+				    sel : $('#giveup'),
+				    content : 'Click "Give Up" to show the answer.<br>You will not receive any points <br> for a given up question.',
+				    position : "s"
+				  },
+				  {
+				    sel : $('#navbarUser'),
+				    content : 'Click here to view your learning history <br> and manage your account',
+				    position : "s"
+				  },
+				  {
+				    sel : $('.footer'),
+				    content : 'Learn more about the LL(1) Academy project.',
+				    position : "n"
+				  }
+
+				],{
+				    showNavigation : true,
+				    delay : -1,
+				    canGoPrev: false,
+				    prevLabel: "",
+				    skipLabel: "",
+				    showCloseBox : true,
+				}
+				);
+			}
+			if(results.new_user == true && window.trip!=null){
+				setTimeout(function() {trip.start();},1200);
+			}
 		},
 		error: function(error) {
 			console.log(error)
@@ -293,7 +348,7 @@ function draw_question() {
 		$('#questions-container').append(question_template(question_data));
 	}
 
-	$('#active').fadeIn({duration:1300});
+	$('#active').fadeIn({duration:800});
 	$('#question-answer').focus();
 
 	if (isParseTable) {

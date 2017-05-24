@@ -5,38 +5,64 @@
 {% block title %}Profile{% endblock %}
 
 {% block content %}
+<div class="small-12 medium-12 large-10 columns" id="wrapper">
 <div class="row">
-  <div class="small-12 medium-4 columns">
-    <h2>User Info</h2>
-  	<p>{{ user_info.email }}</p>
-    {% include "socialaccount/snippets/login_extra.html" %}
-  	{% include "socialaccount/manage_providers.html" with process="login" %}
-
-    <h2> Statistics </h2>
-    <p> You have completed {{completed_grammars|length}} grammars. </p>
-    <p> You beat {{percentile}} % of our users. </p>
-    <p> Your average score is {{avg_score}}. </p>
-    <p> You have skipped {{skipped_grammars|length}} grammars </p>
+  <div class="small-12 medium-4 columns" id="user-info-box">
+    <div class="row" style="margin-bottom: 0px;text-align:center;">
+      <div class="medium-5 columns">
+        <img id="profileIcon" src="{{user.socialaccount_set.all.0.get_avatar_url}}" style="border-radius: 50%;">
+      </div>
+    	<div class="medium-7 columns">
+        <h2 id="userName" style="font-family: 'Lato', sans-serif;">{{ user_info.first_name }} {{user_info.last_name}}</h2>
+      </div>
+    </div>
+    <h5 class="status-text"> 
+      <i class="im im-users"></i> 
+      You beat <b>{{percentile}} % </b>of our users. 
+    </h5>
+    <h5 class="status-text">
+      <i class="im im-check-mark-circle-o"></i>
+      You completed <b>{{completed_grammars|length}}</b> grammar{% if completed_grammars|length > 1 %}s{% endif %}.
+    </h5>
+    <div id="accounts-manage">
+      {% include "socialaccount/snippets/login_extra.html" %}
+    	{% include "socialaccount/manage_providers.html" with process="login" %} 
+    </div>
   </div>
-
   <div class="small-12 medium-8 columns">
-    <h2>Learn History</h2>
+    {% if completed_grammars|length > 0 or skipped_grammars|length > 0 %}
+      <div class="small-12 medium-6 columns">
+        <div id="grammar_chart"></div>
+      </div>
+    {% endif %}
+    {% if completed_grammars|length > 0 %}
+      <div class="small-12 medium-6 columns">
+        <div id="question_chart"></div>
+      </div>
+    {% endif %}
+  </div>
+</div>
 
-    <h3>Completed Grammars</h3>
+<div class="row">   
+   <!--  <p>Click on the grammars to review</p> -->
+    <div class="small-12 medium-12 columns" id="history-tables">
+    <h3 class="table-header">Completed Grammars</h3>
     {% if completed_grammars|length > 0 %}
       <table class="grammar-table">
         <thead>
           <tr>
-            <th width="200">Grammar</th>
-            <th width="150">Avg Score</th>
-            <th width="150">Your Score</th>
+            <th>Grammar</th>
+            <th width="15%">Avg Score</th>
+            <th width="15%">Your Score</th>
           </tr>
         </thead>
         <tbody>
         {% for grammar in completed_grammars %}
           <tr>
             <td>
-            	<a href="/learn/?gid={{grammar.gid}}">{{grammar.prods}}</a>
+            	<a href="/learn/?gid={{grammar.gid}}">
+                {{grammar.prods}}
+              </a>
             </td>
             <td>{{grammar.grammar_avg}}</td>
             <td>{{grammar.score}}</td>
@@ -48,7 +74,7 @@
       <p class="profile-none">You have not completed any grammars.</p>
     {% endif %}
 
-    <h3>Skipped Grammars</h3>
+    <h3 class="table-header">Skipped Grammars</h3>
 
     {% if skipped_grammars|length > 0 %}
       <table class="grammar-table">
@@ -70,10 +96,29 @@
     {% else %}
       <p class="profile-none">You have not skipped any grammars.</p>
     {% endif %}
-  </div>
+    </div>
+</div>
 </div>
 {% endblock %}
 
-{% block pagescripts %}
+{% block pagescripts %} 
+  <link href="{% static 'css/c3.css' %}" rel="stylesheet" type="text/css">
+  <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+  <script src="{% static 'js/c3.min.js' %}"></script>
 	<script src="{% static 'js/profile.js' %}"></script>
+  <script> $(window).onload = create_chart( {{chart_stats|safe}} )</script>
+  {% if messages %}
+    {% for message in messages %}
+      <script>
+        swal({
+          title: "{% if message.tags == "info" %}Success{% else %}Oops{% endif %}",
+          text: '{{ message }}',
+          type: "{% if message.tags == "info" %}success{% else %}{{message.tags}}{% endif %}",
+          confirmButtonText: "Close"
+        }, 
+        function() {
+        });
+      </script>
+    {% endfor %}
+  {% endif %}
 {% endblock %}

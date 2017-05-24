@@ -17,16 +17,21 @@
     <form id="question-input" onsubmit="return false;">
 		{{#if symbol}}
     		<input type="text" id="question-answer" placeholder="example: x,y,z" required>
-    		{{#if opt}}
-    			<button class="button" type="button" id="opt-char">{{opt}}</button>
-	    	{{/if}}
+    		
     	{{else}}
 			<input type="radio" name="ll1" value="True" id="input1" style="display:inline;" required> True
   			<input type="radio" name="ll1" value="False" id="input2" style="display:inline;margin-left:10px;"> False
 		{{/if}}
 		<div class="feedback"></div>
-    	<button type="submit" class="button">Submit</button>
-    	<button type="button" class="button" id="giveup">Give Up</button>
+		<div id="buttons-container" style="width: 82%;">
+			{{#if opt}}
+	    		<button class="button" type="button" id="opt-char">{{opt}}</button>
+		    {{/if}}
+		    <div id="right-buttons" style="float: right;">
+	    	<button type="button" class="button" id="giveup">Give Up</button>
+	    	<button type="submit" class="button" >Submit</button>
+	    	</div>
+	    </div>
     </form>
   </div>  
 </script>
@@ -69,9 +74,12 @@
 	<div class="row">
 		<!-- grammar here -->
 		<div class="small-12 medium-6 columns" id="grammar-container">
-			<div style="display:flex;justify-content:space-between;">
-				<h3 id="grammarHeader" >Consider the grammar</h3>
-				<button type="button" class="button" id="skip">Skip</button>
+			<div id="grammarTitle">
+				<h3 id="grammarHeader" style="margin-bottom:0;">Consider the grammar</h3>
+				<div id="grammarButtons">
+					<button type="button" class="button" onclick="trip.start()">Tutorial</button>
+					<button type="button" class="button" id="skip">Skip</button>
+				</div>
 			</div>
 			<div id="grammar">
 				{% for grammar in grammar_object %}
@@ -103,9 +111,13 @@
 			<h3>Questions</h3>
 		</div>
 	</div>
+
 {% endblock %}
 
 {% block pagescripts %}
 	<script> var csrfmiddlewaretoken = "{{ csrf_token }}"; </script>
 	<script src="{% static 'js/learn.js' %}"></script>
+	<link rel="stylesheet" type="text/css" href="http://oss.maxcdn.com/jquery.trip.js/3.3.3/trip.min.css"/>
+	<script src="http://oss.maxcdn.com/jquery.trip.js/3.3.3/trip.min.js"></script>
+		
 {% endblock %}
