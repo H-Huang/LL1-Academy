@@ -348,7 +348,7 @@ function draw_question() {
 		$('#questions-container').append(question_template(question_data));
 	}
 
-	$('#active').fadeIn({duration:1300});
+	$('#active').fadeIn({duration:800});
 	$('#question-answer').focus();
 
 	if (isParseTable) {
