@@ -158,7 +158,7 @@ function query_for_question() {
 				  {
 				    sel : $('#opt-char'),
 				    content : 'This button helps you <br> to input special characters.',
-				    position : "w"
+				    position : "e"
 				  },
 				  {
 				    sel : $('#giveup'),
@@ -168,7 +168,7 @@ function query_for_question() {
 				  {
 				    sel : $('#navbarUser'),
 				    content : 'Click here to view your learning history <br> and manage your account',
-				    position : "w"
+				    position : "s"
 				  },
 				  {
 				    sel : $('.footer'),
@@ -348,7 +348,7 @@ function draw_question() {
 		$('#questions-container').append(question_template(question_data));
 	}
 
-	$('#active').fadeIn({duration:1300});
+	$('#active').fadeIn({duration:800});
 	$('#question-answer').focus();
 
 	if (isParseTable) {
