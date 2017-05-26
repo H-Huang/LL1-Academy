@@ -16,21 +16,21 @@ Including another URLconf
 from django.conf.urls import url,include
 from django.contrib import admin
 
-import LL1_Academy.views.learn as views
-import LL1_Academy.views.pages as pages
+import LL1_Academy.views.learn as learn
+import LL1_Academy.views.views as views
 import LL1_Academy.views.stats as stats
 import LL1_Academy.views.userProfile as user_profile
 
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', pages.index),
-    url(r'^index', pages.index),
-    url(r'^about', pages.about),
-    url(r'^learn', views.learn),
-    url(r'^get_question', views.get_question),
-    url(r'^check_answer', views.check_answer),
-    url(r'^give_up', views.give_up),
+    url(r'^$', views.index),
+    url(r'^index', views.index),
+    url(r'^about', views.about),
+    url(r'^learn', learn.learn),
+    url(r'^get_question', learn.get_question),
+    url(r'^check_answer', learn.check_answer),
+    url(r'^give_up', learn.give_up),
     url(r'^log_skip_grammar', stats.log_skip_grammar),
     url(r'^profile$', user_profile.profile),
     url(r'^accounts/disconnect_account$', user_profile.disconnect_account),
@@ -38,3 +38,7 @@ urlpatterns = [
     url(r'^accounts/social/signup/$', user_profile.login_duplicate),
     url(r'^accounts/', include('allauth.urls')),
 ]
+
+handler404='LL1_Academy.views.views.handler404'
+handler500='LL1_Academy.views.views.handler500'
+handler400='LL1_Academy.views.views.handler400'

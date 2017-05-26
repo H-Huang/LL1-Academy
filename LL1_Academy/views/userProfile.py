@@ -44,9 +44,11 @@ def profile(request):
 		grammar_dict = model_to_dict(grammar, fields=["gid","prods","nonTerminals"])
 		stats_dict = model_to_dict(user_history, fields=["complete", "score", "updateTime"])
 		stats_dict.update(grammar_dict)
-		available_score += (2 * len(stats_dict['nonTerminals']) + 2)
+		nQuestions = (2 * len(stats_dict['nonTerminals']) + 2)
+		available_score += nQuestions
 		if stats_dict["complete"]:
 			stats_dict["grammar_avg"] = get_grammar_avg(user_history.grammar_id)
+			stats_dict["total_score"] = nQuestions
 			context["completed_grammars"].append(stats_dict)
 			earned_score += stats_dict["score"]
 		else: 

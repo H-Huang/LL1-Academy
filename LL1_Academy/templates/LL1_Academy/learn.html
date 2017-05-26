@@ -23,7 +23,7 @@
   			<input type="radio" name="ll1" value="False" id="input2" style="display:inline;margin-left:10px;"> False
 		{{/if}}
 		<div class="feedback"></div>
-		<div id="buttons-container" style="width: 82%;">
+		<div id="buttons-container">
 			{{#if opt}}
 	    		<button class="button" type="button" id="opt-char">{{opt}}</button>
 		    {{/if}}
@@ -58,11 +58,15 @@
 
     <form id="question-input" onsubmit="return false;">
 		<div class="feedback"></div>
-		{{#if opt}}
-			<button class="button" type="button" id="opt-char-pt">{{opt}}</button>
-		{{/if}}
-    	<button type="submit" class="button">Submit</button>
-    	<button type="button" class="button" id="giveup">Give Up</button>
+		<div id="buttons-container">
+			{{#if opt}}
+	    		<button class="button" type="button" id="opt-char-pt">{{opt}}</button>
+		    {{/if}}
+		    <div id="right-buttons" style="float: right;">
+	    	<button type="button" class="button" id="giveup">Give Up</button>
+	    	<button type="submit" class="button" >Submit</button>
+	    	</div>
+	    </div>
     </form>
   </div>  
 </script>
@@ -117,7 +121,7 @@
 {% block pagescripts %}
 	<script> var csrfmiddlewaretoken = "{{ csrf_token }}"; </script>
 	<script src="{% static 'js/learn.js' %}"></script>
-	<link rel="stylesheet" type="text/css" href="http://oss.maxcdn.com/jquery.trip.js/3.3.3/trip.min.css"/>
-	<script src="http://oss.maxcdn.com/jquery.trip.js/3.3.3/trip.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://oss.maxcdn.com/jquery.trip.js/3.3.3/trip.min.css"/>
+	<script src="https://oss.maxcdn.com/jquery.trip.js/3.3.3/trip.min.js"></script>
 		
 {% endblock %}

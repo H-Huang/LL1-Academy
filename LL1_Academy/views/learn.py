@@ -3,7 +3,7 @@ import ast
 import json
 
 from django.shortcuts import render
-from django.http import JsonResponse, HttpRequest, HttpResponseRedirect, Http404
+from django.http import JsonResponse, HttpRequest, HttpResponseRedirect, Http404, HttpResponseBadRequest
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.forms.models import model_to_dict
@@ -13,8 +13,11 @@ from LL1_Academy.models import *
 
 
 def get_random_grammar(user):
-	completed_gids = UserHistory.objects.all().filter(user=user,complete=True).values_list('grammar',flat=True)
-	uncompleted_grammars = Grammar.objects.exclude(gid__in=completed_gids)
+	if not user.is_authenticated:
+		uncompleted_grammars = Grammar.objects.all()
+	else:
+		completed_gids = UserHistory.objects.all().filter(user=user,complete=True).values_list('grammar',flat=True)
+		uncompleted_grammars = Grammar.objects.exclude(gid__in=completed_gids)
 	size = uncompleted_grammars.count()
 	if size == 0:
 		#TODO: do something if someone finishes all the grammars LOL 
@@ -64,7 +67,7 @@ def learn(request):
 def get_question(request):
 	gid = request.session['gid']
 	currentQ = request.session['curQ']
-	question = Question.objects.filter(gid__gid__contains=gid, qnum=currentQ).first()
+	question = Question.objects.filter(gid__gid__exact=gid, qnum=currentQ).first()
 	category = question.get_category_display()
 	symbol = question.symbol
 	print(question.answer)
@@ -85,15 +88,23 @@ def get_question(request):
 		"symbol": symbol,
 	}
 
-	if currentQ == 0 and is_new_user(request.user):
-		result["new_user"] = is_new_user(request.user)
+	if currentQ == 0 and is_new_user(request):
+		result["new_user"] = True
 	else:
 		result["new_user"] = False
 
 	return JsonResponse(result)
 
-def is_new_user(uid):
-	return UserHistory.objects.filter(user=uid).count() == 0
+def is_new_user(request):
+	user = request.user
+	if "tutorial" in request.session:
+		return False
+	request.session["tutorial"] = True
+
+	if user.is_authenticated:
+		return UserHistory.objects.filter(user=user).count() == 0
+	else:
+		return False;
 
 def compare_parse_table_answer(gid, true_answer, answer):
 	grammar_obj = Grammar.objects.filter(gid=gid).first()
@@ -131,8 +142,9 @@ def give_up(request):
 	if 'gid' in request.session and 'curQ' in request.session:
 		gid = request.session['gid']
 		currentQ = request.session['curQ']
-		question = Question.objects.filter(gid__gid__contains=gid, qnum=currentQ).first()
+		question = Question.objects.filter(gid__gid__exact=gid, qnum=currentQ).first()
 		
+		score = ""
 		# TODO: fix the PT question handling
 		if question.category == 'PT':
 			ret = json.dumps(ast.literal_eval(question.answer))
@@ -141,18 +153,24 @@ def give_up(request):
 		elif question.category == 'LL':
 			ret = question.answer
 			request.session['curQ'] = currentQ + 1
-			stats.log_complete_grammar(request)
+			score = calc_score_log_grammar(request)
 		else:
 			ret = ','.join(question.answer)
 			request.session['curQ'] = currentQ + 1
 
 		return JsonResponse({
 			"answer": ret,
-			"category": question.category
+			"category": question.category,
+			"score": score
 		})
 
 	else:
-		raise Http404("Invalid request to give_up - no question in progress")
+		response = render(request, 'LL1_Academy/error.html', {
+			'title':'Oops, invalid request to give_up.',
+			'text':'There is no question in progress.'
+			})
+		response.status_code = 400
+		return response
 
 def last_question_reached():
 	print("last question --> do something")
@@ -160,18 +178,18 @@ def last_question_reached():
 # TODO: remove this function its pointless but the logic is useful for displaying stuff
 def calc_score_log_grammar(request):
 	gid = request.session['gid']
-	qcount = Question.objects.filter(gid__gid__contains=gid).count()
+	qcount = Question.objects.filter(gid__gid__exact=gid).count()
 	score = request.session['score']
-	scorestr = "{0:.0f}%".format((score * 100) / qcount)
-	print("Recorded score of " + scorestr + " or {} / {}".format(score,qcount))
+	# scorestr = "{0:.0f}%".format((score * 100) / qcount)
 	# print(qcount,request.session['score'])
 	stats.log_complete_grammar(request)
+	return "{}/{}".format(score,qcount)
 
 def check_answer(request):
 	if request.method == 'POST':
 		gid = request.session['gid']
 		currentQ = request.session['curQ']
-		question = Question.objects.filter(gid__gid__contains=gid, qnum=currentQ).first()
+		question = Question.objects.filter(gid__gid__exact=gid, qnum=currentQ).first()
 		category = question.get_category_display()
 
 		# TODO: actually check if answer is right
@@ -201,11 +219,13 @@ def check_answer(request):
 		# print(answer_set)
 		# print(answer_set == answers[category][symbol])
 
+		score = ""
+
 		if (isCorrect):
 			request.session['curQ'] = currentQ + 1
 			request.session['score'] = request.session['score'] + 1
 			if (category == 'isLL1'):
-				stats.log_complete_grammar(request)
+				score = calc_score_log_grammar(request)
 
 
 		if (category == 'parseTable'):
@@ -216,8 +236,14 @@ def check_answer(request):
 			})
 		else:
 			return JsonResponse({
-				"correct": isCorrect
+				"correct": isCorrect,
+				"score": score
 			})
 	else:
-		raise Http404("Cannot use GET method for check_answer")
+		response = render(request, 'LL1_Academy/error.html', {
+			'title':'Oops, invalid request to check_anser.',
+			'text':'Cannot use GET method for check_answer.'
+			})
+		response.status_code = 400
+		return response
 

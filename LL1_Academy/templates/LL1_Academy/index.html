@@ -13,12 +13,8 @@
             <p style="color:white;font-size:30px;">Welcome back <a href="profile" style="font-weight: bold;text-transform: capitalize;">{{ user.username }}</a>!</p>
             <a href="accounts/logout"><button class="button indexButtons">Logout</button></a>
             <p style="display:inline;color: white;margin-left:10px; margin-right:10px;">or</p>
-            <a href="learn"><button class="button indexButtons">Start Learning</button></a>
+            <a href="/learn"><button class="button indexButtons">Start Learning</button></a>
         {% else %}
-            <!--<a href="login"><button class="button indexButtons">Login</button></a>
-            <p style="display:inline;color: white;margin-left:10px; margin-right:10px;">or</p>
-            <a href="register"><button class="button indexButtons">Register</button></a>
-            <p style="color: white;font-size:20px;margin: 1rem 0 1rem 0;">Or continue without an account</p>-->
             {% block login_error %}
             {% endblock %}
             {% if messages %}
@@ -30,10 +26,16 @@
             {% endif %}
             {% load socialaccount %}
             {% providers_media_js %}
-            <div class="loginOption"><a href="{% provider_login_url "facebook" method="js_sdk" %}"><button class="button indexButtons" style="width:225px;">Login with Facebook</button></a></div>
-            <div class="loginOption"><p style="display:inline;color: white;margin:1rem 10px 1rem 10px;">or</p></div>
-            <div class="loginOption"><a href="{% provider_login_url "google" method="oauth2" %}"><button class="button indexButtons" style="width:225px;">Login with Google</button></a></div>
+            <div id="socialMediaLogin" style="margin-bottom:20px;">
+                <div class="loginOption" style="margin:0 15px 15px 0;"><a href="{% provider_login_url "facebook" method="js_sdk" %}"><button class="button indexButtons" style="width:225px;">Login with Facebook</button></a></div>
+                <div class="loginOption"><a href="{% provider_login_url "google" method="oauth2" %}"><button class="button indexButtons" style="width:225px;">Login with Google</button></a></div>
+            </div>
+            <a href="/learn" class="footerLinks index" style="font-size:20px;">or learn without an account</a>
         {% endif %}
+    </div>
+    <div id="indexFooter">
+        <a href="/about" class="footerLinks index" style="margin-right: 24px;">About</a>
+        <a href="https://github.com/vivz/LL1-Academy" class="footerLinks index">Github</a>
     </div>
 </div>
 {% endblock %}
