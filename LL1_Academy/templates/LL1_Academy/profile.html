@@ -103,7 +103,7 @@
 
 {% block pagescripts %} 
   <link href="{% static 'css/c3.css' %}" rel="stylesheet" type="text/css">
-  <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+  <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
   <script src="{% static 'js/c3.min.js' %}"></script>
 	<script src="{% static 'js/profile.js' %}"></script>
   <script> $(window).onload = create_chart( {{chart_stats|safe}} )</script>
