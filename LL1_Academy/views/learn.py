@@ -165,7 +165,12 @@ def give_up(request):
 		})
 
 	else:
-		return HttpResponseBadRequest("Invalid request to give_up - no question in progress")
+		response = render(request, 'LL1_Academy/error.html', {
+			'title':'Oops, invalid request to give_up.',
+			'text':'There is no question in progress.'
+			})
+		response.status_code = 400
+		return response
 
 def last_question_reached():
 	print("last question --> do something")
@@ -235,5 +240,10 @@ def check_answer(request):
 				"score": score
 			})
 	else:
-		return HttpResponseBadRequest("Cannot use GET method for check_answer")
+		response = render(request, 'LL1_Academy/error.html', {
+			'title':'Oops, invalid request to check_anser.',
+			'text':'Cannot use GET method for check_answer.'
+			})
+		response.status_code = 400
+		return response
 
