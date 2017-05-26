@@ -166,7 +166,7 @@ function query_for_question() {
 				    position : "s"
 				  },
 				  {
-				    sel : $('#navbarUser'),
+				    sel : $('#img-circle'),
 				    content : 'Click here to view your learning history <br> and manage your account',
 				    position : "s"
 				  },
@@ -183,6 +183,7 @@ function query_for_question() {
 				    prevLabel: "",
 				    skipLabel: "",
 				    showCloseBox : true,
+				    skipUndefinedTrip:true,
 				}
 				);
 			}
