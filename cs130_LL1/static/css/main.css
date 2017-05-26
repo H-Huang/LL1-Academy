@@ -238,9 +238,8 @@ h3 {
 }
 
 #question-answer {
-	width: 82%;
+	width: 100%;
 	display: inline;
-	margin-right: 5%;
 }
 
 #opt-char {
@@ -268,6 +267,7 @@ h3 {
 	display: inline;
 	color: #F6781D;
 	font-size: 12px !important;
+	margin-top: 7px;
 }
 
 .question {

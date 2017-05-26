@@ -3,7 +3,7 @@ import ast
 import json
 
 from django.shortcuts import render
-from django.http import JsonResponse, HttpRequest, HttpResponseRedirect, Http404
+from django.http import JsonResponse, HttpRequest, HttpResponseRedirect, Http404, HttpResponseBadRequest
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.forms.models import model_to_dict
@@ -98,9 +98,9 @@ def get_question(request):
 def is_new_user(request):
 	user = request.user
 	if "tutorial" in request.session:
-		return False;
+		return False
 	request.session["tutorial"] = True
-	
+
 	if user.is_authenticated:
 		return UserHistory.objects.filter(user=user).count() == 0
 	else:
@@ -144,6 +144,7 @@ def give_up(request):
 		currentQ = request.session['curQ']
 		question = Question.objects.filter(gid__gid__contains=gid, qnum=currentQ).first()
 		
+		score = ""
 		# TODO: fix the PT question handling
 		if question.category == 'PT':
 			ret = json.dumps(ast.literal_eval(question.answer))
@@ -152,18 +153,19 @@ def give_up(request):
 		elif question.category == 'LL':
 			ret = question.answer
 			request.session['curQ'] = currentQ + 1
-			stats.log_complete_grammar(request)
+			score = calc_score_log_grammar(request)
 		else:
 			ret = ','.join(question.answer)
 			request.session['curQ'] = currentQ + 1
 
 		return JsonResponse({
 			"answer": ret,
-			"category": question.category
+			"category": question.category,
+			"score": score
 		})
 
 	else:
-		raise Http404("Invalid request to give_up - no question in progress")
+		raise HttpResponseBadRequest("Invalid request to give_up - no question in progress")
 
 def last_question_reached():
 	print("last question --> do something")
@@ -173,10 +175,10 @@ def calc_score_log_grammar(request):
 	gid = request.session['gid']
 	qcount = Question.objects.filter(gid__gid__contains=gid).count()
 	score = request.session['score']
-	scorestr = "{0:.0f}%".format((score * 100) / qcount)
-	print("Recorded score of " + scorestr + " or {} / {}".format(score,qcount))
+	# scorestr = "{0:.0f}%".format((score * 100) / qcount)
 	# print(qcount,request.session['score'])
 	stats.log_complete_grammar(request)
+	return "{}/{}".format(score,qcount)
 
 def check_answer(request):
 	if request.method == 'POST':
@@ -212,11 +214,13 @@ def check_answer(request):
 		# print(answer_set)
 		# print(answer_set == answers[category][symbol])
 
+		score = ""
+
 		if (isCorrect):
 			request.session['curQ'] = currentQ + 1
 			request.session['score'] = request.session['score'] + 1
 			if (category == 'isLL1'):
-				stats.log_complete_grammar(request)
+				score = calc_score_log_grammar(request)
 
 
 		if (category == 'parseTable'):
@@ -227,8 +231,9 @@ def check_answer(request):
 			})
 		else:
 			return JsonResponse({
-				"correct": isCorrect
+				"correct": isCorrect,
+				"score": score
 			})
 	else:
-		raise Http404("Cannot use GET method for check_answer")
+		raise HttpResponseBadRequest("Cannot use GET method for check_answer")
 
