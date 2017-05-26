@@ -30,9 +30,14 @@
             {% endif %}
             {% load socialaccount %}
             {% providers_media_js %}
-            <div class="loginOption"><a href="{% provider_login_url "facebook" method="js_sdk" %}"><button class="button indexButtons" style="width:225px;">Login with Facebook</button></a></div>
-            <div class="loginOption"><p style="display:inline;color: white;margin:1rem 10px 1rem 10px;">or</p></div>
-            <div class="loginOption"><a href="{% provider_login_url "google" method="oauth2" %}"><button class="button indexButtons" style="width:225px;">Login with Google</button></a></div>
+            <div id="socialMediaLogin" style="margin-bottom:20px;">
+                <div class="loginOption"><a href="{% provider_login_url "facebook" method="js_sdk" %}"><button class="button indexButtons" style="width:225px;">Login with Facebook</button></a></div>
+                <div class="loginOption"><p style="display:inline;color: white;margin:1rem 10px 1rem 10px;">or</p></div>
+                <div class="loginOption"><a href="{% provider_login_url "google" method="oauth2" %}"><button class="button indexButtons" style="width:225px;">Login with Google</button></a></div>
+            </div>
+            <!--<p style="margin-bottom:10px;color:white;font-size:28px;">OR</p>-->
+            <!--<a href="learn"><button class="button indexButtons" style="width:275px;">Learn Without an Account</button></a>-->
+            <a href="learn" class="footerLinks index" style="font-size:20px;">or learn without an account</a>
         {% endif %}
     </div>
     <div id="indexFooter">

@@ -28,7 +28,9 @@
                         {% endif %}
                         <a href="/accounts/logout" style="justify-content:center;"><button class="button indexButtons navbarButton">Logout</button></a>
                     {% else %}
-                        <a href="learn"><button class="button indexButtons navbarButton">Learn</button></a>
+                        {% if request.path != '/learn' %}
+                            <a href="learn"><button class="button indexButtons navbarButton">Learn</button></a>
+                        {% endif %}
                         <a href="/index"><button class="button indexButtons navbarButton">Login</button></a>
                     {% endif %}
                 </div>
