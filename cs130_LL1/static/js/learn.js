@@ -202,7 +202,7 @@ function give_up() {
 		type: "GET",
 		url: "/give_up",
 		success: function(results) {
-			console.log(results)
+			//console.log(results)
 			if (results.category == 'PT') {
 				fill_parse_table_with_answer(results.answer)
 				submit_parse_table(true)
@@ -236,7 +236,6 @@ function correct_ans_form_question(ll1radio,input,giveup,lastQ,score) {
 	
 	// NEW LASTQ HANDLER
 	if (lastQ) {
-		console.log(score);
 		$('#question-input > .feedback').html("");
 		swal({
 			title: "Good Job!",

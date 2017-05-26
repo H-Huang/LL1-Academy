@@ -67,7 +67,7 @@ def learn(request):
 def get_question(request):
 	gid = request.session['gid']
 	currentQ = request.session['curQ']
-	question = Question.objects.filter(gid__gid__contains=gid, qnum=currentQ).first()
+	question = Question.objects.filter(gid__gid__exact=gid, qnum=currentQ).first()
 	category = question.get_category_display()
 	symbol = question.symbol
 	print(question.answer)
@@ -142,7 +142,7 @@ def give_up(request):
 	if 'gid' in request.session and 'curQ' in request.session:
 		gid = request.session['gid']
 		currentQ = request.session['curQ']
-		question = Question.objects.filter(gid__gid__contains=gid, qnum=currentQ).first()
+		question = Question.objects.filter(gid__gid__exact=gid, qnum=currentQ).first()
 		
 		score = ""
 		# TODO: fix the PT question handling
@@ -178,7 +178,7 @@ def last_question_reached():
 # TODO: remove this function its pointless but the logic is useful for displaying stuff
 def calc_score_log_grammar(request):
 	gid = request.session['gid']
-	qcount = Question.objects.filter(gid__gid__contains=gid).count()
+	qcount = Question.objects.filter(gid__gid__exact=gid).count()
 	score = request.session['score']
 	# scorestr = "{0:.0f}%".format((score * 100) / qcount)
 	# print(qcount,request.session['score'])
@@ -189,7 +189,7 @@ def check_answer(request):
 	if request.method == 'POST':
 		gid = request.session['gid']
 		currentQ = request.session['curQ']
-		question = Question.objects.filter(gid__gid__contains=gid, qnum=currentQ).first()
+		question = Question.objects.filter(gid__gid__exact=gid, qnum=currentQ).first()
 		category = question.get_category_display()
 
 		# TODO: actually check if answer is right
