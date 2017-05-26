@@ -239,6 +239,7 @@ function correct_ans_form_question(ll1radio,input,giveup,lastQ,score) {
 		$('#question-input > .feedback').html("");
 		swal({
 			title: "Good Job!",
+			text: "You got " + score + "!",
 			type: "success",
 			html:true,
 			confirmButtonText: "Next Question"
