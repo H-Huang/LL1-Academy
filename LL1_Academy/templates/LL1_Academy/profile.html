@@ -8,7 +8,7 @@
 <div class="small-12 medium-12 large-10 columns" id="wrapper">
 <div class="row">
   <div class="small-12 medium-4 columns" id="user-info-box">
-    <div class="row" style="margin-bottom: 0px;text-align:center;">
+    <div class="row" style="margin-bottom: 20px;text-align:center;">
       <div class="medium-5 columns">
         <img id="profileIcon" src="{{user.socialaccount_set.all.0.get_avatar_url}}" style="border-radius: 50%;">
       </div>
@@ -16,13 +16,13 @@
         <h2 id="userName" style="font-family: 'Lato', sans-serif;">{{ user_info.first_name }} {{user_info.last_name}}</h2>
       </div>
     </div>
-    <h5 class="status-text"> 
-      <i class="im im-users"></i> 
-      You beat <b>{{percentile}} % </b>of our users. 
-    </h5>
     <h5 class="status-text">
       <i class="im im-check-mark-circle-o"></i>
       You completed <b>{{completed_grammars|length}}</b> grammar{% if completed_grammars|length > 1 %}s{% endif %}.
+    </h5>
+    <h5 class="status-text"> 
+      <i class="im im-users"></i> 
+      You beat <b>{{percentile}} % </b>of our users. 
     </h5>
     <div id="accounts-manage">
       {% include "socialaccount/snippets/login_extra.html" %}
