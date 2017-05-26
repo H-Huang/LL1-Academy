@@ -327,18 +327,31 @@ h3 {
 		font-size:10vw;
 	}
 
-	#navbarTitle {
-		position:relative;
-		margin-bottom:10px;
-	}
-
 	#siteBanner {
 		font-size:50px;
 	}
 
-	.loginOption {
-		display:block;
-		width: 100%;
+	.button.navbarButton {
+		width:100% !important;
+	}
+	
+	#aboutContent {
+		padding: 15px;
+	}
+
+	.aboutSection {
+		padding: 20px;
+	}
+}
+
+@media screen and (max-width:945px) {
+	#grammarTitle {
+		flex-wrap:wrap;
+	}
+
+	#navbarTitle {
+		position:relative;
+		margin-bottom:10px;
 	}
 
 	#navbar {
@@ -351,45 +364,18 @@ h3 {
 	}
 
 	.button.navbarButton {
-		width:100%;
+		width:250px;
 		margin-top:10px;
 		font-size:16px;
 	}
 
 	#navbarUser {
 		width:100%;
+		text-align:center;
 	}
 
 	#navbarUser p {
-		text-align:center;
 		font-size:20px;
-	}
-	
-	#aboutContent {
-		padding: 15px;
-	}
-
-	.aboutSection {
-		padding: 20px;
-	}
-
-	/*#grammarTitle button {
-		width:100%;
-	}*/
-
-	#profileIcon {
-		width:50%;
-		margin: 0 auto 10px auto;
-	}
-
-	#userName {
-		font-size:30px;
-	}
-}
-
-@media screen and (max-width:945px) {
-	#grammarTitle {
-		flex-wrap:wrap;
 	}
 }
 
