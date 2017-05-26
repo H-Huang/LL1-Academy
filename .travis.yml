@@ -20,4 +20,4 @@ notifications:
       - vivianzhang61@gmail.com
       - julien.brundret@gmail.com
     on_success: never
-    on_failure: change
+    on_failure: always

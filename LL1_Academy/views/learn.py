@@ -165,7 +165,7 @@ def give_up(request):
 		})
 
 	else:
-		raise HttpResponseBadRequest("Invalid request to give_up - no question in progress")
+		return HttpResponseBadRequest("Invalid request to give_up - no question in progress")
 
 def last_question_reached():
 	print("last question --> do something")
@@ -235,5 +235,5 @@ def check_answer(request):
 				"score": score
 			})
 	else:
-		raise HttpResponseBadRequest("Cannot use GET method for check_answer")
+		return HttpResponseBadRequest("Cannot use GET method for check_answer")
 

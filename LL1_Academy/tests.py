@@ -53,7 +53,8 @@ class UrlTest(TestData):
     
     def test_check_answer(self):
         response = self.client.get('/check_answer')
-        self.assertEqual(response.status_code, 404)
+        print(response)
+        self.assertEqual(response.status_code, 400)
 
 class RenderingTest(TestData):
     def test_index1(self):
