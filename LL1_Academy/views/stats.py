@@ -2,7 +2,7 @@ import json
 
 from LL1_Academy.models import *
 from django.shortcuts import render
-from django.http import JsonResponse, HttpRequest, HttpResponseRedirect, Http404
+from django.http import JsonResponse, HttpRequest, HttpResponseRedirect, Http404, HttpResponseBadRequest
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -41,7 +41,7 @@ def log_complete_grammar(request):
 
 def log_skip_grammar(request):
 	if not request.method == 'POST':
-		raise Http404("Wrong request type for log_skip_grammar")
+		raise HttpResponseBadRequest("Wrong request type for log_skip_grammar")
 	gid = request.session['gid']
 	grammar_obj = Grammar.objects.filter(gid=gid).first()
 	grammar_obj.nSkip +=1

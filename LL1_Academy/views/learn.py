@@ -3,7 +3,7 @@ import ast
 import json
 
 from django.shortcuts import render
-from django.http import JsonResponse, HttpRequest, HttpResponseRedirect, Http404
+from django.http import JsonResponse, HttpRequest, HttpResponseRedirect, Http404, HttpResponseBadRequest
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.forms.models import model_to_dict
@@ -165,7 +165,7 @@ def give_up(request):
 		})
 
 	else:
-		raise Http404("Invalid request to give_up - no question in progress")
+		raise HttpResponseBadRequest("Invalid request to give_up - no question in progress")
 
 def last_question_reached():
 	print("last question --> do something")
@@ -235,5 +235,5 @@ def check_answer(request):
 				"score": score
 			})
 	else:
-		raise Http404("Cannot use GET method for check_answer")
+		raise HttpResponseBadRequest("Cannot use GET method for check_answer")
 
