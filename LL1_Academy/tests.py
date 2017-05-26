@@ -8,6 +8,10 @@ class TestData(TestCase):
 
     @classmethod
     def setUpTestData(cls):
+        g = Grammar(prods="{'A': ['xA', 'Bz'],'B': ['yB']}", nonTerminals="AB", terminals="xyz", startSymbol="A")
+        g.save()
+        q = Question(gid=g, qnum=0, category="FI", symbol="A", answer="xy")
+        q.save()
 
         cls.current_site = Site.objects.get_current()
 
@@ -27,11 +31,6 @@ class TestData(TestCase):
 
 
 class UrlTest(TestData):
-    def setUp(self):
-        g = Grammar(prods="{'A': ['xA', 'Bz'],'B': ['yB']}", nonTerminals="AB", terminals="xyz", startSymbol="A")
-        g.save()
-        q = Question(gid=g, qnum=0, category="FI", symbol="A", answer="xy")
-        q.save()
 
     def test_index1(self):
         response = self.client.get('/')
@@ -46,6 +45,9 @@ class UrlTest(TestData):
         self.assertEqual(response.status_code, 200)
     
     def test_get_question(self):
+        response = self.client.get('/learn')
+        session = self.client.session
+        session.save()
         response = self.client.get('/get_question')
         self.assertEqual(response.status_code, 200)
     
