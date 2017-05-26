@@ -38,3 +38,7 @@ urlpatterns = [
     url(r'^accounts/social/signup/$', user_profile.login_duplicate),
     url(r'^accounts/', include('allauth.urls')),
 ]
+
+handler404='LL1_Academy.views.views.handler404'
+handler500='LL1_Academy.views.views.handler500'
+handler400='LL1_Academy.views.views.handler400'
