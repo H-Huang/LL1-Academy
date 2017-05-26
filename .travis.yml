@@ -10,10 +10,14 @@ install:
 before_script:
   - psql -c "CREATE DATABASE travisci;" -U postgres
 script:
-  - python manage.py hello_world
+  - python manage.py test
 notifications:
   email:
     recipients:
       - howardhuang96@gmail.com
+      - vince.siu4@gmail.com
+      - skate4fun88@gmail.com
+      - vivianzhang61@gmail.com
+      - julien.brundret@gmail.com
     on_success: never
-    on_failure: change
+    on_failure: always
