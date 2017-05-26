@@ -88,14 +88,19 @@ def get_question(request):
 		"symbol": symbol,
 	}
 
-	if currentQ == 0 and is_new_user(request.user):
-		result["new_user"] = is_new_user(request.user)
+	if currentQ == 0 and is_new_user(request):
+		result["new_user"] = True
 	else:
 		result["new_user"] = False
 
 	return JsonResponse(result)
 
-def is_new_user(user):
+def is_new_user(request):
+	user = request.user
+	if "tutorial" in request.session:
+		return False;
+	request.session["tutorial"] = True
+	
 	if user.is_authenticated:
 		return UserHistory.objects.filter(user=user).count() == 0
 	else:
