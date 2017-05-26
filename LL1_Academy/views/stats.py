@@ -25,17 +25,18 @@ def log_complete_grammar(request):
 	grammar_obj.nComplete +=1
 	grammar_obj.save()
 
-	#Create a user history
-	history = UserHistory.objects.filter(user=request.user,grammar=grammar_obj).first()
-	if history == None:
-		newHistory = UserHistory(user=request.user,grammar=grammar_obj,complete=True,score=score)
-		newHistory.save()
-	else: 
-		history.complete = True
-		#save the highest score 
-		if history.score < score:
-			history.score = score
-		history.save()
+	#Create a user history if this is a logged in session
+	if request.user.is_authenticated:
+		history = UserHistory.objects.filter(user=request.user,grammar=grammar_obj).first()
+		if history == None:
+			newHistory = UserHistory(user=request.user,grammar=grammar_obj,complete=True,score=score)
+			newHistory.save()
+		else: 
+			history.complete = True
+			#save the highest score 
+			if history.score < score:
+				history.score = score
+			history.save()
 	return 
 
 def log_skip_grammar(request):
