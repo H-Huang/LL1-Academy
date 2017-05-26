@@ -13,8 +13,11 @@ from LL1_Academy.models import *
 
 
 def get_random_grammar(user):
-	completed_gids = UserHistory.objects.all().filter(user=user,complete=True).values_list('grammar',flat=True)
-	uncompleted_grammars = Grammar.objects.exclude(gid__in=completed_gids)
+	if not user.is_authenticated:
+		uncompleted_grammars = Grammar.objects.all()
+	else:
+		completed_gids = UserHistory.objects.all().filter(user=user,complete=True).values_list('grammar',flat=True)
+		uncompleted_grammars = Grammar.objects.exclude(gid__in=completed_gids)
 	size = uncompleted_grammars.count()
 	if size == 0:
 		#TODO: do something if someone finishes all the grammars LOL 
@@ -92,8 +95,11 @@ def get_question(request):
 
 	return JsonResponse(result)
 
-def is_new_user(uid):
-	return UserHistory.objects.filter(user=uid).count() == 0
+def is_new_user(user):
+	if user.is_authenticated:
+		return UserHistory.objects.filter(user=user).count() == 0
+	else:
+		return True;
 
 def compare_parse_table_answer(gid, true_answer, answer):
 	grammar_obj = Grammar.objects.filter(gid=gid).first()
