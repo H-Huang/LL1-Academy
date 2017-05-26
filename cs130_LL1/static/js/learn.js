@@ -207,9 +207,9 @@ function give_up() {
 				submit_parse_table(true)
 
 			} else if (results.category == 'LL') {
-				correct_ans_form_question(results.answer, "", true, true)
+				correct_ans_form_question(results.answer, "", true, true, results.score)
 			} else {
-				correct_ans_form_question("", results.answer, true, false)
+				correct_ans_form_question("", results.answer, true, false, null)
 			}
 		},
 		error: function(error) {
@@ -218,7 +218,7 @@ function give_up() {
 	});
 }
 
-function correct_ans_form_question(ll1radio,input,giveup,lastQ) {
+function correct_ans_form_question(ll1radio,input,giveup,lastQ,score) {
 	$('#question-input').remove()
 
 	var checkbox
@@ -235,6 +235,7 @@ function correct_ans_form_question(ll1radio,input,giveup,lastQ) {
 	
 	// NEW LASTQ HANDLER
 	if (lastQ) {
+		console.log(score);
 		$('#question-input > .feedback').html("");
 		swal({
 			title: "Good Job!",
@@ -410,7 +411,7 @@ function draw_question() {
 					// console.log(results)
 
 					if (results.correct) {
-						correct_ans_form_question(ll1radio,input_trimmed,false,lastQ);						
+						correct_ans_form_question(ll1radio,input_trimmed,false,lastQ,results.score);						
 					} else { // valid syntax, incorrect result
 						$('#question-input > .feedback').html("<p>Incorrect answer</p>")
 						$('#question-answer').css('border','1px solid #F6781D')
