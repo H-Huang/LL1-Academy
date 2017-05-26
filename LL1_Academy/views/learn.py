@@ -104,7 +104,7 @@ def is_new_user(request):
 	if user.is_authenticated:
 		return UserHistory.objects.filter(user=user).count() == 0
 	else:
-		return True;
+		return False;
 
 def compare_parse_table_answer(gid, true_answer, answer):
 	grammar_obj = Grammar.objects.filter(gid=gid).first()
