@@ -41,14 +41,23 @@ def log_complete_grammar(request):
 
 def log_skip_grammar(request):
 	if not request.method == 'POST':
-		raise HttpResponseBadRequest("Wrong request type for log_skip_grammar")
+		response = render(request, 'LL1_Academy/error.html', {
+			'title':'Oops, invalid request to log_skip_grammar.',
+			'text':'log_skip_grammar is not happy with how your request is formatted.'
+			})
+		response.status_code = 400
+		return response
+
 	gid = request.session['gid']
 	grammar_obj = Grammar.objects.filter(gid=gid).first()
 	grammar_obj.nSkip +=1
 	grammar_obj.save()
 
-	if not UserHistory.objects.filter(user=request.user, grammar=grammar_obj).exists():
-		newHistory = UserHistory(user=request.user,grammar=grammar_obj)
-		newHistory.save()
+	#only does this part if user is logged in
+	if request.user.is_authenticated:
+		if not UserHistory.objects.filter(user=request.user, grammar=grammar_obj).exists():
+			newHistory = UserHistory(user=request.user,grammar=grammar_obj)
+			newHistory.save()
+
 	return JsonResponse({})
 
