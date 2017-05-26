@@ -330,7 +330,7 @@ function draw_question() {
 
 	if (question_data.category == "first" || isParseTable) {
 		question_data.opt = "ε"
-	} else {
+	} else if (question_data.category == "follow") {
 		question_data.opt = "$"
 	}
 	

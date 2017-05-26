@@ -238,9 +238,8 @@ h3 {
 }
 
 #question-answer {
-	width: 82%;
+	width: 100%;
 	display: inline;
-	margin-right: 5%;
 }
 
 #opt-char {
