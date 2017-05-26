@@ -2,10 +2,33 @@ from django.test import TestCase, Client
 from django.urls import reverse
 from LL1_Academy.models import Grammar, Question
 
+from django.contrib.sites.models import Site
 
-class UrlTest(TestCase):
-    def setup(self):
-        g = Grammar(prods="{'A': ['xA', 'Bz'],'B': ['yB']}", nonTerminals="AB", terminals="xyz", startsymbol="A")
+class TestData(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+
+        cls.current_site = Site.objects.get_current()
+
+        cls.SocialApp1 = cls.current_site.socialapp_set.create(
+            provider="facebook",
+            name="facebook",
+            client_id="1234567890",
+            secret="0987654321",
+        )
+
+        cls.SocialApp2 = cls.current_site.socialapp_set.create(
+            provider="google",
+            name="google",
+            client_id="1234567890",
+            secret="0987654321",
+        )
+
+
+class UrlTest(TestData):
+    def setUp(self):
+        g = Grammar(prods="{'A': ['xA', 'Bz'],'B': ['yB']}", nonTerminals="AB", terminals="xyz", startSymbol="A")
         g.save()
         q = Question(gid=g, qnum=0, category="FI", symbol="A", answer="xy")
         q.save()
@@ -30,7 +53,7 @@ class UrlTest(TestCase):
         response = self.client.get('/check_answer')
         self.assertEqual(response.status_code, 404)
 
-class RenderingTest(TestCase):
+class RenderingTest(TestData):
     def test_index1(self):
         response = self.client.get('/')
         self.assertTemplateUsed(response, 'LL1_Academy/index.html')
