@@ -1,11 +1,12 @@
 from django.test import TestCase, Client
 from django.urls import reverse
-from LL1_Academy.models import Grammar, Question
+from LL1_Academy.models import Grammar, Question, UserHistory
 
 from django.contrib.sites.models import Site
 from django.contrib.auth.models import User
 
 class TestData(TestCase):
+
 
     @classmethod
     def setUpTestData(cls):
@@ -15,6 +16,7 @@ class TestData(TestCase):
 
         g = Grammar(prods="{'A': ['xA', 'Bz'],'B': ['yB']}", nonTerminals="AB", terminals="xyz", startSymbol="A")
         g.save()
+
         q = Question(gid=g, qnum=0, category="FI", symbol="A", answer="xy")
         q.save()
 
@@ -34,6 +36,44 @@ class TestData(TestCase):
             secret="0987654321",
         )
 
+class ModelTest(TestData):
+
+    def test_grammar(self):
+        g = Grammar(prods="{'A': ['xA', 'Bz'],'B': ['yB']}", nonTerminals="AB", terminals="xyz", startSymbol="A")
+        g.save()
+        t_grammar = Grammar.objects.get(pk=g.pk)
+        self.assertEqual(t_grammar.prods, "{'A': ['xA', 'Bz'],'B': ['yB']}")
+        self.assertEqual(t_grammar.nonTerminals, "AB")
+        self.assertEqual(t_grammar.terminals, "xyz")
+        self.assertEqual(t_grammar.startSymbol, "A")
+        self.assertEqual(t_grammar.nStart, 0)
+        self.assertEqual(t_grammar.nComplete, 0)
+        self.assertEqual(t_grammar.nSkip, 0)
+
+    def test_question(self):
+        g = Grammar(prods="{'A': ['xA', 'Bz'],'B': ['yB']}", nonTerminals="AB", terminals="xyz", startSymbol="A")
+        g.save()
+        q = Question(gid=g, qnum=0, category="FI", symbol="A", answer="xy")
+        q.save()
+        t_question = Question.objects.get(pk=q.pk)
+        self.assertEqual(t_question.gid, g)
+        self.assertEqual(t_question.qnum, 0)
+        self.assertEqual(t_question.category, "FI")
+        self.assertEqual(t_question.symbol, "A")
+        self.assertEqual(t_question.answer, "xy")
+        self.assertEqual(t_question.nCorrect, 0)
+        self.assertEqual(t_question.nWrong, 0)
+        self.assertEqual(t_question.nGiveUp, 0)
+
+    def test_user_history(self):
+        g = Grammar(prods="{'A': ['xA', 'Bz'],'B': ['yB']}", nonTerminals="AB", terminals="xyz", startSymbol="A")
+        g.save()
+        u = User.objects.get(username="test")
+        t_user_history = UserHistory(user=u, grammar=g)
+        self.assertEqual(t_user_history.user, u)
+        self.assertEqual(t_user_history.grammar, g)
+        self.assertEqual(t_user_history.complete, False)
+        self.assertEqual(t_user_history.score, -1)
 
 class RoutingTest(TestData):
     def test_index1(self):
