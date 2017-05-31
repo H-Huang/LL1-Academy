@@ -332,7 +332,7 @@ function draw_question() {
 	}
 
 	if (question_data.category == "first") {
-		question_data.terminals.push("ε")
+		question_data.terminals.push("Empty")
 	} else if (question_data.category == "follow") {
 		question_data.terminals.push("$")
 	}
@@ -353,7 +353,6 @@ function draw_question() {
 	}
 
 	$('#active').fadeIn({duration:800});
-	$('#question-answer').focus();
 
 	if (isParseTable) {
 		$('#opt-char-pt').click(function() {
@@ -363,13 +362,14 @@ function draw_question() {
 					placeCaretAtEnd(field.get(0));
 				}
 		});
-	} else {
-		$('#opt-char').click(function() {
-			var field = $('#question-answer')
-			field.val(field.val() + question_data.opt);
-			field.focus();
-		});
-	}
+	} 
+	// else {
+	// 	$('#opt-char').click(function() {
+	// 		var field = $('#question-answer')
+	// 		field.val(field.val() + question_data.opt);
+	// 		field.focus();
+	// 	});
+	// }
 
 	$('#giveup').click(give_up);
 
@@ -400,7 +400,11 @@ function draw_question() {
 			var ll1radio = $('input[name=ll1]:checked')[0].value
 		} else {
 			$("input[name=question-check]:checked").each(function() {
-			    answer = answer.concat($(this).val() + ",");
+				if ($(this).val() == "Empty") {
+					answer = answer.concat("ε,");
+				} else {
+			    	answer = answer.concat($(this).val() + ",");
+			    }
 			    // console.log($(this).val())()
 			})
 			answer = answer.substring(0, answer.length - 1);
