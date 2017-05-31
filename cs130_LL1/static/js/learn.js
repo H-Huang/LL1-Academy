@@ -328,16 +328,18 @@ function draw_question() {
 	else {
 		var isParseTable = false;
 		var lastQ = false;
+		question_data.terminals = terminals.slice();
 	}
 
-	if (question_data.category == "first" || isParseTable) {
-		question_data.opt = "ε"
+	if (question_data.category == "first") {
+		question_data.terminals.push("ε")
 	} else if (question_data.category == "follow") {
-		question_data.opt = "$"
+		question_data.terminals.push("$")
 	}
 	
 
 	if (isParseTable) {
+		question_data.opt = "ε"
 		question_data.terminals.push('$');
 		$('#questions-container').append(parseTable_template(question_data));
 
@@ -383,18 +385,28 @@ function draw_question() {
 	$('#question-input').on('submit', function() {
 		
 		// validate input before moving into the ajax request
-		var input_value = $('#question-answer').val();
+		// var input_value = $('#question-answer').val();
 		var valid = true
-		if (input_value != null){
-			var input_trimmed = input_value.replace(/\s/g,'')
-			valid = input_trimmed.match('^([a-zε$],)*[a-zε$],?$') != null;
-		}
+		// if (input_value != null){
+		// 	var input_trimmed = input_value.replace(/\s/g,'')
+		// 	valid = input_trimmed.match('^([a-zε$],)*[a-zε$],?$') != null;
+		// }
+		var answer = ""
 
 		// handle LL1 radio input
+		
 		var ll1radioActive = $('input[name=ll1]').length
 		if (ll1radioActive) {
 			var ll1radio = $('input[name=ll1]:checked')[0].value
+		} else {
+			$("input[name=question-check]:checked").each(function() {
+			    answer = answer.concat($(this).val() + ",");
+			    // console.log($(this).val())()
+			})
+			answer = answer.substring(0, answer.length - 1);
 		}
+
+		// new checkbox answers
 
 		if (valid) {
 			$.ajax({
@@ -405,14 +417,14 @@ function draw_question() {
 					'csrfmiddlewaretoken': csrfmiddlewaretoken,
 					'category': question_data.category,
 					'symbol': question_data.symbol,
-					'answer': $('#question-answer').val(),
+					'answer': answer,
 					'll1answer': ll1radio
 				},
 				success: function(results) {
 					// console.log(results)
 
 					if (results.correct) {
-						correct_ans_form_question(ll1radio,input_trimmed,false,lastQ,results.score);						
+						correct_ans_form_question(ll1radio,answer,false,lastQ,results.score);						
 					} else { // valid syntax, incorrect result
 						$('#question-input > .feedback').html("<p>Incorrect answer</p>")
 						$('#question-answer').css('border','1px solid #F6781D')

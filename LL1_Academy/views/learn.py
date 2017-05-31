@@ -51,7 +51,7 @@ def learn(request):
 		grammar_object.append({"nt": nt, "productions": prods[nt]})
 
 	#stringify terminals + non_terminals
-	terminals = "{" + ", ".join(terminals) + "}"
+	terminals = ", ".join(terminals)
 	non_terminals = "{" + ", ".join(non_terminals) + "}"
 
 	#prepare all items to be passed into the template

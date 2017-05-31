@@ -16,8 +16,11 @@
 	{{/if}}
     <form id="question-input" onsubmit="return false;">
 		{{#if symbol}}
-    		<input type="text" id="question-answer" placeholder="example: x,y,z" required>
-    		
+    		<!-- <input type="text" id="question-answer" placeholder="example: x,y,z" required> -->
+    		{{#each terminals}}
+	    		<input type="checkbox" name="question-check" id="{{this}}-check" value="{{this}}">
+	    		<label for="{{this}}-check">{{this}}</label>
+	    	{{/each}}
     	{{else}}
 			<input type="radio" name="ll1" value="True" id="input1" style="display:inline;" required> True
   			<input type="radio" name="ll1" value="False" id="input2" style="display:inline;margin-left:10px;"> False
@@ -104,7 +107,7 @@
 			<div id="explainer">
 				<p>{{ non_terminals }} is the set of nonterminal symbols</p>
 				<p>{{ start_symbol }} is the start symbol</p>
-				<p>{{ terminals }} is the set of terminal symbols</p>
+				<p>&#123;{{ terminals }}&#125; is the set of terminal symbols</p>
 				<p>&epsilon; denotes the empty string</p>
 				<p>$ denotes end of string</p>
 			</div>
@@ -123,5 +126,8 @@
 	<script src="{% static 'js/learn.js' %}"></script>
 	<link rel="stylesheet" type="text/css" href="https://oss.maxcdn.com/jquery.trip.js/3.3.3/trip.min.css"/>
 	<script src="https://oss.maxcdn.com/jquery.trip.js/3.3.3/trip.min.js"></script>
+	<script>
+		var terminals = "{{terminals}}".split(', ');
+	</script>
 		
 {% endblock %}
