@@ -6,6 +6,46 @@
 
 {% block templates %}
 {% verbatim %}
+<script id="grammar-template" type="text/x-handlebars-template">
+	
+		{{#each grammar}}
+		<div class="productions">
+			<p class="nt">{{ this.nt }}</p>
+			<p>:==</p>
+			{{#each this.productions}}
+				{{#if @last }}
+					<p class="t">{{ this }}</p>
+				{{else}}
+					<p class="t">{{ this }}</p>
+					<p>|</p>
+				{{/if}}
+			{{/each}}
+		</div>
+		{{/each}}
+</script>
+
+<script id="question-template" type="text/x-handlebars-template">
+  <div class="question" id="active" style="display: none">
+  	<p class="question-help">{{helptext}}</p>
+	<p class="question-title">{{question}}</p>
+    <form id="question-input" onsubmit="return false;">
+		{{#each terminals}}
+    		<input type="checkbox" name="question-check" id="{{this}}-check" value="{{this}}">
+    		<label for="{{this}}-check">{{this}}</label>
+    	{{/each}}
+    	<!-- TODO: make radio button question -->
+    	<!--
+			<input type="radio" name="ll1" value="True" id="input1" style="display:inline;" required> True
+  			<input type="radio" name="ll1" value="False" id="input2" style="display:inline;margin-left:10px;"> False
+		 -->
+		<div class="feedback"></div>
+		<div id="buttons-container">
+	    	<!-- <button type="button" class="button" id="giveup">Give Up</button> -->
+	    	<button type="submit" class="button" >Submit</button>
+	    </div>
+    </form>
+  </div>  
+</script>
 
 {% endverbatim %}
 {% endblock %}
@@ -24,6 +64,8 @@
 	<!-- two column content below -->
 	<div class="small-12 medium-6 columns" id="grammar-container">
 		<h3>Grammar will go here </h3>
+		<div id="grammar">
+		</div>
 	</div>
 
 	<div class="small-12 medium-6 columns" id="questions-container">
@@ -37,5 +79,76 @@
 <!--  -->
 
 {% block pagescripts %}
+<script>
+	var grammar_template_src   = $("#grammar-template").html();
+	var grammar_template = Handlebars.compile(grammar_template_src);
+	var question_template_src   = $("#question-template").html();
+	var question_template = Handlebars.compile(question_template_src);
 
+	var q1_grammar = {
+		grammar: [
+		{
+			nt: 'A',
+			productions: ['x','By','xyz']
+	    },
+	    {
+			nt: 'B',
+			productions: ['z']
+		}]
+	}
+
+	var questions = [
+		{
+			grammar: q1_grammar,
+			helptext: "this is the explainer text for question 1",
+			question: "What is the first set of A?",
+			answer: "x,y",
+			type: "checkbox",
+			terminals: ['x','y','z'],
+		}
+	]
+
+	var currentQ = 0
+
+	function load_next_question() {
+		if (currentQ == questions.length) {
+			console.log("out of questions do something")
+			return
+		}
+		curQ = questions[currentQ];
+		currentQ++;
+
+		console.log(curQ);
+
+		if (curQ.grammar)
+			$('#grammar').html(grammar_template(curQ.grammar))
+
+		if (curQ.type == "checkbox") {
+			$('#questions-container').append(question_template(curQ));
+			$('#active').fadeIn({duration:800});
+
+			// submit handler:
+			$('#question-input').on('submit', function() {
+				var answer = []
+				$("input[name=question-check]:checked").each(function() {
+					answer.push($(this).val());
+				});
+				// answer is right so:
+				if (answer.join(',') === curQ.answer) {
+					$('#question-input').remove()
+					$('#active').removeAttr('id')
+					load_next_question();
+				} else {
+					$('#question-input > .feedback').html("<p>Incorrect answer</p>")
+				}
+
+			});
+
+		} else {
+			console.log("non-checkbox questions not implemented yet")
+		}
+	}
+
+	load_next_question();	
+</script>
 {% endblock %}

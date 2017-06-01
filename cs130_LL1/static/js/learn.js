@@ -444,7 +444,7 @@ function draw_question() {
 						correct_ans_form_question(ll1radio,answer,false,lastQ,results.score);						
 					} else { // valid syntax, incorrect result
 						$('#question-input > .feedback').html("<p>Incorrect answer</p>")
-						$('#question-answer').css('border','1px solid #F6781D')
+						// $('#question-answer').css('border','1px solid #F6781D')
 					}
 				},
 				error: function(error) {
@@ -458,9 +458,9 @@ function draw_question() {
 			});
 		} else { // invalid syntax
 			$('#question-input > .feedback').html("<p>Invalid syntax</p>")
-			$('#question-answer').css('border','1px solid #F6781D')
+			// $('#question-answer').css('border','1px solid #F6781D')
 		}
-	});
+		});
 	}
 }
 
