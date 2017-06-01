@@ -17,6 +17,7 @@ from django.conf.urls import url,include
 from django.contrib import admin
 
 import LL1_Academy.views.learn as learn
+import LL1_Academy.views.tutorial as tutorial
 import LL1_Academy.views.views as views
 import LL1_Academy.views.stats as stats
 import LL1_Academy.views.userProfile as user_profile
@@ -28,6 +29,7 @@ urlpatterns = [
     url(r'^index', views.index),
     url(r'^about', views.about),
     url(r'^learn', learn.learn),
+    url(r'^tutorial', tutorial.tutorial),
     url(r'^get_question', learn.get_question),
     url(r'^check_answer', learn.check_answer),
     url(r'^give_up', learn.give_up),

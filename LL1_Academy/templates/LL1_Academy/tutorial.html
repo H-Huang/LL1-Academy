@@ -1,0 +1,41 @@
+{% extends "LL1_Academy/_navbarPages.html" %}
+{% load static %}
+{% block title %}Tutorial{% endblock %}
+
+<!--  -->
+
+{% block templates %}
+{% verbatim %}
+
+{% endverbatim %}
+{% endblock %}
+
+<!--  -->
+
+{% block content %}
+
+<div class="row">
+	<!-- full width explainer here -->
+	<div class="small-12 columns">
+		<h2>Welcome to the tutorial page</h2>
+		<p>Here you will learn to determine the first sets, follow sets and parse table of a grammar, and therefore you will be able to check if a grammar is LL(1) by hand. The motivation for this exercise is for LL(1) parsing of an input string. This means the grammar fits into a class of grammars for which we can build a parser which can unambiguously determine the derivation of a string in the grammar in a single pass with no backtracking. (rewrite / expand)</p>
+	</div>
+
+	<!-- two column content below -->
+	<div class="small-12 medium-6 columns" id="grammar-container">
+		<h3>Grammar will go here </h3>
+	</div>
+
+	<div class="small-12 medium-6 columns" id="questions-container">
+		<h3>Questions will go here</h3>
+	</div>
+
+</div>
+
+{% endblock %}
+
+<!--  -->
+
+{% block pagescripts %}
+
+{% endblock %}
