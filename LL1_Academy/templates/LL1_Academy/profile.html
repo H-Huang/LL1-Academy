@@ -60,7 +60,7 @@
         {% for grammar in completed_grammars %}
           <tr>
             <td>
-            	<a href="/learn/?gid={{grammar.gid}}">
+            	<a href="/practice/?gid={{grammar.gid}}">
                 {{grammar.prods}}
               </a>
             </td>
@@ -87,7 +87,7 @@
         {% for grammar in skipped_grammars %}
           <tr>
             <td>
-            	<a href="/learn/?gid={{grammar.gid}}">{{grammar.prods}}</a>
+            	<a href="/practice/?gid={{grammar.gid}}">{{grammar.prods}}</a>
             </td>
           </tr>
         {% endfor %}

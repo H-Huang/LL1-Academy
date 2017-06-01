@@ -291,7 +291,7 @@ function correct_ans_form_question(ll1radio,input,giveup,lastQ,score) {
 			confirmButtonText: "Next Question"
 		}, 
 		function() {
-			window.location.replace("/learn");
+			window.location.replace("/practice");
 		});
 	} else {
 		query_for_question();
@@ -308,7 +308,7 @@ function log_skip_grammar(completed){
 		},
 		success: function(results) {
 			//console.log(results)
-			window.location.replace("/learn");
+			window.location.replace("/practice");
 		},
 		error: function(error) {
 			console.log(error)
