@@ -1,6 +1,6 @@
 // Handlebars helpers
 Handlebars.registerHelper("printParseTableCells", function(non_terminal) {
-	console.log(non_terminal)
+	//console.log(non_terminal)
 	var ret = ""
 	for (var i = 0; i < question_data.terminals.length; i++) {
 		ret = ret.concat('<td nt="'+non_terminal+'" onclick="get_pt_chars(this)"></td>');
@@ -27,16 +27,21 @@ function get_pt_chars(obj){
 	var cell_nt = $(obj).attr('nt');
 	var buttons = ""
 	var actives = $(obj).html().split(',');
-	console.log(actives);
+	//console.log(actives);
 	for (var i = grammar.grammar.length - 1; i >= 0; i--) {
 		var line = grammar.grammar[i]
 		if (line.nt == cell_nt) {
 			for (var j = 0; j < line.productions.length; j++){
+				var checked = "";
 				if ($.inArray(line.productions[j],actives) > -1)
-					buttons +='<button class="button prod-button button-active" type="button" onclick="click_pt_button(this)">'+line.productions[j]+'</button>';
-					//buttons += '<div class="pretty pretty info"><input type="checkbox"/><label><i class="mdi mdi-close">+</i>'+ine.productions[j]+'</label></div>'
-				else
-					buttons +='<button class="button prod-button button-inactive" type="button" onclick="click_pt_button(this)">'+line.productions[j]+'</button>';
+					checked = "checked";
+				cb = '<div class="pretty info smooth">'
+						+'<input type="checkbox" '+ checked 
+						+'onchange="click_pt_button(this)" value='
+						+ line.productions[j]+'><label>'
+						+ '<i class="im im-check-mark"></i>'
+						+ line.productions[j] +'</label></div>';
+				buttons += cb;
 			}
 			break;
 		}
@@ -45,26 +50,13 @@ function get_pt_chars(obj){
 }
 
 function click_pt_button(obj) {
-	// var btnText = $(obj).html();
-	// curText = prevClickedCell.html();
-
-	if ($(obj).hasClass("button-active")) {
-		$(obj).removeClass("button-active");
-		$(obj).addClass("button-inactive");
-	} else {
-		$(obj).addClass("button-active");
-		$(obj).removeClass("button-inactive");
-	}
-	
 	var activebtns = ""
-	$(".button-active").each(function() {
-	    activebtns = activebtns.concat($(this).html() + ",");
+	var checkedBoxes = document.querySelectorAll('input[type="checkbox"]:checked');
+	checkedBoxes.forEach(function(box) {
+	    activebtns = activebtns.concat($(box).attr('value') + ",");
 	})
 	activebtns = activebtns.slice(0, -1); // strip last comma
-
 	prevClickedCell.html(activebtns);
-	
-	// console.log($(obj).html());
 }
 
 function get_data_from_table() {
@@ -286,10 +278,10 @@ function correct_ans_form_question(ll1radio,input,giveup,lastQ,score) {
 		var t
 		if (score[0] == "0") {
 			t = "Nice try!"
-			console.log("test1")
+			//console.log("test1")
 		} else {
 			t = "Good job!"
-			console.log("test2")
+			//console.log("test2")
 		}
 			
 		$('#question-input > .feedback').html("");
