@@ -132,7 +132,7 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
-LOGIN_REDIRECT_URL = "/learn"
+LOGIN_REDIRECT_URL = "/tutorial"
 ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_EMAIL_REQUIRED = False
 SOCIALACCOUNT_EMAIL_REQUIRED = True
