@@ -36,10 +36,10 @@ function get_pt_chars(obj){
 				if ($.inArray(line.productions[j],actives) > -1)
 					checked = "checked";
 				cb = '<div class="pretty info smooth">'
-						+'<input type="checkbox" '+ checked 
-						+'onchange="click_pt_button(this)" value='
-						+ line.productions[j]+'><label>'
-						+ '<i class="im im-check-mark"></i>'
+						+'<input type="checkbox" '+ checked +
+						' onchange="click_pt_button(this)" value='
+						+line.productions[j]+'><label>'
+						+'<i class="im im-check-mark"></i>'
 						+ line.productions[j] +'</label></div>';
 				buttons += cb;
 			}
