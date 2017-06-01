@@ -121,7 +121,7 @@ class RenderingTest(TestData):
     
     def test_learn(self):
         response = self.client.get('/learn')
-        self.assertTemplateUsed(response, 'LL1_Academy/learn.html')
+        self.assertTemplateUsed(response, 'LL1_Academy/practice.html')
 
     def test_error_page(self):
         response = self.client.get('/get_404_page')
