@@ -23,13 +23,19 @@ var question_data;
 function get_pt_chars(obj){
 	prevClickedCell = $(obj);
 	var cell_nt = $(obj).attr('class');
-
+	var buttons = ""
+	console.log("hi")
 	for (var i = grammar.grammar.length - 1; i >= 0; i--) {
 		var line = grammar.grammar[i]
 		if (line.nt == cell_nt) {
-			console.log(line.productions)
+			for (var j = 0; j < line.productions.length; j++){
+				buttons +='<button class="button prod-button" type="button">'+line.productions[j]+'</button>';
+			}
+			break;
 		}
 	}
+	console.log(buttons);
+	$('#production-options').html(buttons);
 }
 
 function get_data_from_table() {

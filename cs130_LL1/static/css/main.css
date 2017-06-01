@@ -23,6 +23,14 @@ a {
 		color: #CC6318;
 	}
 
+
+/* Parse table styling */
+
+.prod-button {
+	margin-right: 0.5rem;
+}
+
+
 /* Landing Page styling */
 #siteTitle {
 	text-align: center;
