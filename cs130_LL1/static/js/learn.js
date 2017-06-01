@@ -1,8 +1,9 @@
 // Handlebars helpers
-Handlebars.registerHelper("printParseTableCells", function(terminals) {
+Handlebars.registerHelper("printParseTableCells", function(non_terminal) {
+	console.log(non_terminal)
 	var ret = ""
 	for (var i = 0; i < question_data.terminals.length; i++) {
-		ret = ret.concat('<td contenteditable="true"></td>');
+		ret = ret.concat('<td class="'+non_terminal+'" onclick="get_pt_chars(this)"></td>');
 	}
 	return new Handlebars.SafeString(ret);
 })
@@ -18,6 +19,18 @@ var parseTable_template = Handlebars.compile(parseTable_template_src);
 // Global vars
 var question_data;
 
+
+function get_pt_chars(obj){
+	prevClickedCell = $(obj);
+	var cell_nt = $(obj).attr('class');
+
+	for (var i = grammar.grammar.length - 1; i >= 0; i--) {
+		var line = grammar.grammar[i]
+		if (line.nt == cell_nt) {
+			console.log(line.productions)
+		}
+	}
+}
 
 function get_data_from_table() {
 	var $ROWS = $("#pt").find('tr');
@@ -454,6 +467,7 @@ function draw_question() {
 
 // Focus tracking helper for opt-char in parse table input
 var prevFocus = null;
+var prevClickedCell = null;
 
 // moves cursor to end of contenteditable td --> ridiculous that this is even needed
 // cross platform, comes from StackOverflow credit to Tim Down

@@ -59,7 +59,8 @@ def learn(request):
 		"grammar_object": grammar_object,
 		"terminals": terminals,
 		"non_terminals": non_terminals,
-		"start_symbol": 'A'
+		"start_symbol": 'A',
+		"grammar_json": json.dumps({"grammar": grammar_object}),
 	}
 	
 	return render(request, 'LL1_Academy/learn.html', context)

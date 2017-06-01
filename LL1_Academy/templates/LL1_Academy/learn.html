@@ -49,7 +49,7 @@
 		{{#each non_terminals}}
 		<tr>
 			<td>{{this}}</td>
-			{{printParseTableCells}}
+			{{printParseTableCells this}}
 		</tr>
 		{{/each}}
 	</table>
@@ -123,6 +123,6 @@
 	<script src="https://oss.maxcdn.com/jquery.trip.js/3.3.3/trip.min.js"></script>
 	<script>
 		var terminals = "{{terminals}}".split(', ');
+		var grammar = JSON.parse('{{ grammar_json|safe }}');
 	</script>
-		
 {% endblock %}
