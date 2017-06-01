@@ -282,9 +282,18 @@ function correct_ans_form_question(ll1radio,input,giveup,lastQ,score) {
 	
 	// NEW LASTQ HANDLER
 	if (lastQ) {
+		var t
+		if (score[0] == "0") {
+			t = "Nice try!"
+			console.log("test1")
+		} else {
+			t = "Good job!"
+			console.log("test2")
+		}
+			
 		$('#question-input > .feedback').html("");
 		swal({
-			title: "Good Job!",
+			title: t,
 			text: "You got " + score + "!",
 			type: "success",
 			html:true,
