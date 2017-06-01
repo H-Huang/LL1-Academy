@@ -84,7 +84,8 @@ class RoutingTest(TestData):
         response = self.client.get('/index')
         self.assertEqual(response.status_code, 200)
 
-    def test_learn(self):
+
+    def test_practice(self):
         response = self.client.get('/practice')
         self.assertEqual(response.status_code, 200)
     
@@ -119,7 +120,8 @@ class RenderingTest(TestData):
         response = c.get('/profile')
         self.assertTemplateUsed(response, 'LL1_Academy/profile.html')
     
-    def test_learn(self):
+
+    def test_practice(self):
         response = self.client.get('/practice')
         self.assertTemplateUsed(response, 'LL1_Academy/practice.html')
 
