@@ -16,7 +16,7 @@ Including another URLconf
 from django.conf.urls import url,include
 from django.contrib import admin
 
-import LL1_Academy.views.learn as learn
+import LL1_Academy.views.practice as practice
 import LL1_Academy.views.tutorial as tutorial
 import LL1_Academy.views.views as views
 import LL1_Academy.views.stats as stats
@@ -28,11 +28,11 @@ urlpatterns = [
     url(r'^$', views.index),
     url(r'^index', views.index),
     url(r'^about', views.about),
-    url(r'^learn', learn.learn),
+    url(r'^practice', practice.practice),
     url(r'^tutorial', tutorial.tutorial),
-    url(r'^get_question', learn.get_question),
-    url(r'^check_answer', learn.check_answer),
-    url(r'^give_up', learn.give_up),
+    url(r'^get_question', practice.get_question),
+    url(r'^check_answer', practice.check_answer),
+    url(r'^give_up', practice.give_up),
     url(r'^log_skip_grammar', stats.log_skip_grammar),
     url(r'^profile$', user_profile.profile),
     url(r'^accounts/disconnect_account$', user_profile.disconnect_account),

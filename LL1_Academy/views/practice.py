@@ -26,7 +26,7 @@ def get_random_grammar(user):
 	g=uncompleted_grammars[randid]
 	return g
 
-def learn(request):
+def practice(request):
 	# on page load we start the session over
 
 	#if 'gid' not in request.session or request.session['gid']==None
@@ -63,7 +63,7 @@ def learn(request):
 		"grammar_json": json.dumps({"grammar": grammar_object}),
 	}
 	
-	return render(request, 'LL1_Academy/learn.html', context)
+	return render(request, 'LL1_Academy/practice.html', context)
 
 def get_question(request):
 	gid = request.session['gid']
