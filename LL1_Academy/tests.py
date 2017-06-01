@@ -85,11 +85,11 @@ class RoutingTest(TestData):
         self.assertEqual(response.status_code, 200)
 
     def test_learn(self):
-        response = self.client.get('/learn')
+        response = self.client.get('/practice')
         self.assertEqual(response.status_code, 200)
     
     def test_get_question(self):
-        response = self.client.get('/learn')
+        response = self.client.get('/practice')
         session = self.client.session
         session.save()
         response = self.client.get('/get_question')
