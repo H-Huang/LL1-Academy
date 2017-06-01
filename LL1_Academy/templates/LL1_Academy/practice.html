@@ -24,8 +24,14 @@
 				</div>
 	    	{{/each}}
     	{{else}}
-			<input type="radio" name="ll1" value="True" id="input1" style="display:inline;" required> True
-  			<input type="radio" name="ll1" value="False" id="input2" style="display:inline;margin-left:10px;"> False
+    		<div class="pretty circle info">
+			  <input type="radio" name="ll1" value="True" id="input1" style="display:inline;"> 
+			  <label><i class="im im-radio-button-circle"></i> True</label>
+			</div>
+			<div class="pretty circle info">
+			  <input type="radio" name="ll1" value="False" id="input2" style="display:inline; margin-left:10px;"> 
+			  <label><i class="im im-radio-button-circle" ></i> False</label>
+			</div>
 		{{/if}}
 		<div class="feedback"></div>
 		<div id="buttons-container">
