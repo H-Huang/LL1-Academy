@@ -56,20 +56,26 @@
 
 <div class="row">
 	<!-- full width explainer here -->
-	<div class="small-12 columns">
-		<h2>Welcome to the Tutorial Page!</h2>
-		<p>Here you will learn to determine the first sets, follow sets and parse table of a grammar, and therefore you will be able to check if a grammar is LL(1) by hand. The motivation for this exercise is for LL(1) parsing of an input string. This means the grammar fits into a class of grammars for which we can build a parser which can unambiguously determine the derivation of a string in the grammar in a single pass with no backtracking. (rewrite / expand)</p>
+	<div class="small-12 columns" style="color: grey;">
+		<div id="tutorialOptions" style="text-align:center;margin-bottom:15px;font-size:20px;">
+			<a href="#" id="firstTutorial" style="margin: 0 15px 0 0;">First Set Tutorial</a>
+			|<a href="#" id="followTutorial" style="margin: 0 15px 0 15px;">Follow Set Tutorial</a>
+			|<a href="#" id="parseTutorial" style="margin: 0 0 0 15px;">Parse Table Tutorial</a>
+		</div>
+		<h3 style="font-family: 'Lato', sans-serif;">Welcome to the Tutorial Page!</h2>
+		<p style="font-size:14px">Here you will learn how to determine the first sets, follow sets and parse table of a grammar, and therefore you will be able to check if a grammar is LL(1) by hand. The motivation for this exercise is for LL(1) parsing of an input string. This means the grammar fits into a class of grammars for which we can build a parser which can unambiguously determine the derivation of a string in the grammar in a single pass with no backtracking. (rewrite / expand)</p>
+		<p style="font-size:14px">Already an expert? <a href="/practice">Start practicing!</a></p>
 	</div>
 
 	<!-- two column content below -->
 	<div class="small-12 medium-6 columns" id="grammar-container">
-		<h3>Grammar will go here </h3>
+		<h3>Grammar to Learn First Sets</h3>
 		<div id="grammar">
 		</div>
 	</div>
 
 	<div class="small-12 medium-6 columns">
-		<h3>Questions will go here</h3>
+		<h3>Questions</h3>
 		<div id="questions-container"></div>
 	</div>
 
@@ -85,6 +91,15 @@
 	var grammar_template = Handlebars.compile(grammar_template_src);
 	var question_template_src   = $("#question-template").html();
 	var question_template = Handlebars.compile(question_template_src);
+
+	var questions;
+	var currentQ;
+
+	$(document).ready(function() {
+		questions = firstQuestions;
+		currentQ = 0;
+		load_next_question();
+	})
 
 	var q1_grammar = {
 		grammar: [
@@ -115,7 +130,7 @@
 		}]
 	}
 
-	var questions = [
+	var firstQuestions = [
 		{
 			grammar: q1_grammar,
 			helptext: "To calculate the first set, we find the first nonterminal of the production. Here, “x” is the first character of the production “xy”.",
@@ -150,11 +165,36 @@
 		}
 	]
 
-	var currentQ = 0
+	var followQuestions = [
+
+	]
+
+	var parseQuestions = [
+
+	]
+
+	
+	$('#firstTutorial').click(function() {
+		questions = firstQuestions
+		currentQ = 0;
+		load_next_question()
+	});
+	$('#followTutorial').click(function() {
+		questions = followQuestions
+		currentQ = 0;
+		load_next_question()
+	});
+	$('#parseTutorial').click(function() {
+		questions = parseQuestions
+		currentQ = 0;
+		load_next_question();
+	});
 
 	function load_next_question() {
 		if (currentQ == questions.length) {
 			console.log("out of questions do something")
+			$('#grammar').html("");
+			$('#questions-container').html("");
 			return
 		}
 		curQ = questions[currentQ];
@@ -190,7 +230,5 @@
 			console.log("non-checkbox questions not implemented yet")
 		}
 	}
-
-	load_next_question();	
 </script>
 {% endblock %}
