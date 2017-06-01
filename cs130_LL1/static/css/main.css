@@ -36,6 +36,10 @@ a {
 	/*border: 2px solid #F6781D;*/
 }
 
+#buttons-container{
+	margin-top: 0.5rem;
+}
+
 .button-inactive {
 	background-color: white !important;
 	border: 2px solid #37BCDA !important;
@@ -47,6 +51,14 @@ a {
 	color: #37BCDA !important;
 }
 
+.im-check-mark{
+	padding: 2px 0px 0px 2px !important;
+	margin-right: 0.5rem !important;
+}
+
+label{
+	font-size: 15px;
+}
 
 /* Landing Page styling */
 #siteTitle {

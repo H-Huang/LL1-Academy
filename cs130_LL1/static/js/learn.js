@@ -34,6 +34,7 @@ function get_pt_chars(obj){
 			for (var j = 0; j < line.productions.length; j++){
 				if ($.inArray(line.productions[j],actives) > -1)
 					buttons +='<button class="button prod-button button-active" type="button" onclick="click_pt_button(this)">'+line.productions[j]+'</button>';
+					//buttons += '<div class="pretty pretty info"><input type="checkbox"/><label><i class="mdi mdi-close">+</i>'+ine.productions[j]+'</label></div>'
 				else
 					buttons +='<button class="button prod-button button-inactive" type="button" onclick="click_pt_button(this)">'+line.productions[j]+'</button>';
 			}

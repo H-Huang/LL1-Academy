@@ -18,8 +18,10 @@
 		{{#if symbol}}
     		<!-- <input type="text" id="question-answer" placeholder="example: x,y,z" required> -->
     		{{#each terminals}}
-	    		<input type="checkbox" name="question-check" id="{{this}}-check" value="{{this}}">
-	    		<label for="{{this}}-check">{{this}}</label>
+	    		<div class="pretty info smooth">
+				  <input type="checkbox" name="question-check" id="{{this}}-check" value="{{this}}"> 
+				  <label for="{{this}}-check"><i class="im im-check-mark"></i>{{this}}</label>
+				</div>
 	    	{{/each}}
     	{{else}}
 			<input type="radio" name="ll1" value="True" id="input1" style="display:inline;" required> True
