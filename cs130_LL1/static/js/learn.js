@@ -3,7 +3,7 @@ Handlebars.registerHelper("printParseTableCells", function(non_terminal) {
 	console.log(non_terminal)
 	var ret = ""
 	for (var i = 0; i < question_data.terminals.length; i++) {
-		ret = ret.concat('<td class="'+non_terminal+'" onclick="get_pt_chars(this)"></td>');
+		ret = ret.concat('<td nt="'+non_terminal+'" onclick="get_pt_chars(this)"></td>');
 	}
 	return new Handlebars.SafeString(ret);
 })
@@ -19,23 +19,51 @@ var parseTable_template = Handlebars.compile(parseTable_template_src);
 // Global vars
 var question_data;
 
-
 function get_pt_chars(obj){
+	if (prevClickedCell)
+		prevClickedCell.css("border", "")
 	prevClickedCell = $(obj);
-	var cell_nt = $(obj).attr('class');
+	prevClickedCell.css("border", "1px solid #30A7C1")
+	var cell_nt = $(obj).attr('nt');
 	var buttons = ""
-	console.log("hi")
+	var actives = $(obj).html().split(',');
+	console.log(actives);
 	for (var i = grammar.grammar.length - 1; i >= 0; i--) {
 		var line = grammar.grammar[i]
 		if (line.nt == cell_nt) {
 			for (var j = 0; j < line.productions.length; j++){
-				buttons +='<button class="button prod-button" type="button">'+line.productions[j]+'</button>';
+				if ($.inArray(line.productions[j],actives) > -1)
+					buttons +='<button class="button prod-button button-active" type="button" onclick="click_pt_button(this)">'+line.productions[j]+'</button>';
+				else
+					buttons +='<button class="button prod-button button-inactive" type="button" onclick="click_pt_button(this)">'+line.productions[j]+'</button>';
 			}
 			break;
 		}
 	}
-	console.log(buttons);
 	$('#production-options').html(buttons);
+}
+
+function click_pt_button(obj) {
+	// var btnText = $(obj).html();
+	// curText = prevClickedCell.html();
+
+	if ($(obj).hasClass("button-active")) {
+		$(obj).removeClass("button-active");
+		$(obj).addClass("button-inactive");
+	} else {
+		$(obj).addClass("button-active");
+		$(obj).removeClass("button-inactive");
+	}
+	
+	var activebtns = ""
+	$(".button-active").each(function() {
+	    activebtns = activebtns.concat($(this).html() + ",");
+	})
+	activebtns = activebtns.slice(0, -1); // strip last comma
+
+	prevClickedCell.html(activebtns);
+	
+	// console.log($(obj).html());
 }
 
 function get_data_from_table() {
@@ -225,7 +253,6 @@ function give_up() {
 			if (results.category == 'PT') {
 				fill_parse_table_with_answer(results.answer)
 				submit_parse_table(true)
-
 			} else if (results.category == 'LL') {
 				correct_ans_form_question(results.answer, "", true, true, results.score)
 			} else {
@@ -294,7 +321,16 @@ function log_skip_grammar(completed){
 	});
 }
 
+function deselect_pt_cell() {
+	if (prevClickedCell)
+		prevClickedCell.css("border", "");
+	prevClickedCell = null;
+	$("#production-options").html("");
+}
+
 function submit_parse_table(giveup) {
+	deselect_pt_cell();
+
 	$.ajax({
 		type: "POST",
 		url: "/check_answer",
@@ -310,6 +346,9 @@ function submit_parse_table(giveup) {
 			display_parse_table_feedback(results.feedback);
 
 			if (results.correct) {
+				$("td").each(function() {
+					$(this).prop('onclick',null).off('click');
+				});
 				if (giveup)
 					checkbox = '<i class="im im im-x-mark badanswercheck"></i>'
 				else
