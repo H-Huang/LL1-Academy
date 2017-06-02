@@ -109,11 +109,22 @@
 				{% endfor %}
 			</div>
 			<div id="explainer">
-				<p>{{ non_terminals }} is the set of nonterminal symbols</p>
-				<p>{{ start_symbol }} is the start symbol</p>
-				<p>&#123;{{ terminals }}&#125; is the set of terminal symbols</p>
-				<p>&epsilon; denotes the empty string</p>
-				<p>$ denotes end of string</p>
+				<div id="explainer-flex">
+					<div id="explainer-text">
+						<p>{{ non_terminals }} is the set of nonterminal symbols</p>
+						<p>{{ start_symbol }} is the start symbol</p>
+						<p>&#123;{{ terminals }}&#125; is the set of terminal symbols</p>
+						<p>&epsilon; denotes the empty string</p>
+						<p>$ denotes end of string</p>
+					</div>
+					<div>
+						<button class="button" id="hideexplainer" onclick="hideexplainer()">Hide</button>
+					</div>
+				</div>
+				
+			</div>
+			<div id="explainer-hidden" style="display: none;" onclick="showexplainer()">
+				<p>Click here to show explainer.</p>
 			</div>
 		</div>
 

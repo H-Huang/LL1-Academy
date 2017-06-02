@@ -19,6 +19,16 @@ var parseTable_template = Handlebars.compile(parseTable_template_src);
 // Global vars
 var question_data;
 
+function hideexplainer() {
+	$("#explainer").hide();
+	$("#explainer-hidden").show();
+}
+
+function showexplainer() {
+	$("#explainer").show();
+	$("#explainer-hidden").hide();
+}
+
 function get_pt_chars(obj){
 	if (prevClickedCell)
 		prevClickedCell.css("border", "")

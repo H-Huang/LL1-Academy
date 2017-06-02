@@ -258,8 +258,23 @@ label{
 	font-family: 'Lato', sans-serif;
 }
 
-#explainer > p {
+div#explainer-text > p {
 	margin-bottom: 0.3rem;
+}
+
+div#explainer {
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+    border: 3px solid #37BCDA;
+}
+
+div#explainer-flex {
+    display: flex;
+    align-items: top;
+    justify-content: space-between;
+}
+
+#hideexplainer {
+	padding: 6px 8px 6px 8px;
 }
 
 .productions > p {
