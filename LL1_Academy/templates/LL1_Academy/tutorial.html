@@ -124,7 +124,7 @@
 		grammar: [
 	    {
 			nt: 'A',
-			productions: ['x','y']
+			productions: ['xy','yz']
 		}]
 	}
 
@@ -139,11 +139,27 @@
 			productions: ['y']
 		}]
 	}
+
+	var q4_grammar = {
+		grammar: [
+		{
+			nt: 'A',
+			productions: ['BC', 'zC']
+	    },
+	    {
+			nt: 'B',
+			productions: ['Cx','yBy']
+		},
+		{
+			nt: 'C',
+			productions: ['xz']
+		}]
+	}
 	
 	var firstQuestions = [
 		{
 			grammar: q1_grammar,
-			helptext: "To calculate the first set, we find the first nonterminal of the production. Here, “x” is the first character of the production “xy”.",
+			helptext: "To calculate the First Set of A, we need to calculate the First Set for the production “xy”. For this case, we just find first terminal symbol of the production. What is the first terminal symbol of “xy”?",
 			question: "What is the first set of A?",
 			answer: "x",
 			type: "checkbox",
@@ -151,15 +167,15 @@
 		},
 		{
 			grammar: q2_grammar,
-			helptext: "When there are multiple productions, we add the first symbol for each of the productions to the First Set. The first symbols for the first production is “x”, and the first symbol for the second production is “y”.",
+			helptext: "When there are multiple productions, we calculate the First Set of each production individually, and add each of them to the First Set. The First Set of A are the First Sets of “xy” and “yz” combined.",
 			question: "What is the first set of A?",
 			answer: "x,y",
 			type: "checkbox",
-			terminals: ['x','y'],
+			terminals: ['x','y','z'],
 		},
 		{
 			grammar: q3_grammar,
-			helptext: "When there is a nonterminal as the first symbol of a production, then we add the First Set of that symbol to the First Set. So here, we need to calculate the First Set of B, and then add it to the First Set of A.",
+			helptext: "When there is a nonterminal as the first symbol of a production, then the First Set of that symbol is the First Set of that production. In this case, the First Set of A is “z”, and the First Set of B. Hint: It would be good to calculate First Set of B first, and then substitute it into the First Set of A.",
 			question: "What is the first set of B?",
 			answer: "y",
 			type: "checkbox",
@@ -167,9 +183,33 @@
 		},
 		{
 			grammar: q3_grammar,
-			helptext: "When there is a nonterminal as the first symbol of a production, then we add the First Set of that symbol to the First Set. So here, we need to calculate the First Set of B, and then add it to the First Set of A.",
+			helptext: "When there is a nonterminal as the first symbol of a production, then the First Set of that symbol is the First Set of that production. In this case, the First Set of A is “z”, and the First Set of B. Hint: It would be good to calculate First Set of B first, and then substitute it into the First Set of A.",
 			question: "What is the first set of A?",
 			answer: "y,z",
+			type: "checkbox",
+			terminals: ['x','y','z'],
+		},
+		{
+			grammar: q4_grammar,
+			helptext: "This is a challenge problem",
+			question: "What is the first set of A?",
+			answer: "x,y,z",
+			type: "checkbox",
+			terminals: ['x','y','z'],
+		},
+		{
+			grammar: q4_grammar,
+			helptext: "This is a challenge problem",
+			question: "What is the first set of B?",
+			answer: "x,z",
+			type: "checkbox",
+			terminals: ['x','y','z'],
+		},
+		{
+			grammar: q4_grammar,
+			helptext: "This is a challenge problem",
+			question: "What is the first set of C?",
+			answer: "x",
 			type: "checkbox",
 			terminals: ['x','y','z'],
 		}
