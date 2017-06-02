@@ -35,8 +35,6 @@ function switchSection(section) {
 		$("#" + currentSection + "Tutorial").removeClass("active");
 	} else { // on first page laod
 		$("#initialExplainer").hide();
-		$("#grammar-container").fadeIn();
-		$("#questions-wrapper").fadeIn();
 	}
 	currentSection = section;
 	$("#" + currentSection + "Tutorial").addClass("active");
@@ -117,11 +115,16 @@ function load_next_question() {
 	currentQ++;
 	
 	// console.log(curQ);
-
-	if (curQ.grammar)
-		$('#grammar').html(grammar_template(curQ.grammar))
-
 	if (curQ.type == "checkbox") {
+		if (!$("#grammar-container").is(':visible')) {
+			$("#full-explanation-container").hide();
+			$("#grammar-container").fadeIn();
+			$("#questions-wrapper").fadeIn();
+		}
+
+		if (curQ.grammar)
+			$('#grammar').html(grammar_template(curQ.grammar))
+
 		$('#questions-container').html(question_template(curQ));
 		$('#active').fadeIn({duration:800});
 
@@ -142,7 +145,19 @@ function load_next_question() {
 
 		});
 
+	} else if (curQ.type == "text") {
+		if (!$("#full-explanation-container").is(':visible')) {
+			$("#grammar-container").hide();
+			$("#questions-wrapper").hide();
+			$("#full-explanation-container").fadeIn();
+		}
+		$("#full-explanation-text").html('');
+		for (var i =  0; i < curQ.text.length; i++) {
+			$("#full-explanation-text").append('<p>' + curQ.text[i] + '</p>');
+		}
+
+		$("#full-explanation-container").show();
 	} else {
-		console.log("non-checkbox questions not implemented yet")
+		console.log("this question type not yet implemented");
 	}
 }

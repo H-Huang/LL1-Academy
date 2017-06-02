@@ -45,6 +45,13 @@ var q4_grammar = {
 
 var firstQuestions = [
 	{
+		type: "text",
+		text: [
+			"example of a paragraph in a full column text explaine rthing example of a paragraph in a full column text explaine rthing example of a paragraph in a full column text explaine rthing example of a paragraph in a full column text explaine rthing example of a paragraph in a full column text explaine rthing example of a paragraph in a full column text explaine rthing example of a paragraph in a full column text explaine rthing example of a paragraph in a full column text explaine rthing example of a paragraph in a full column text explaine rthing ",
+			"here is paragraph 2, have I mentioned i think vincent is dumb here is paragraph 2, have I mentioned i think vincent is dumb here is paragraph 2, have I mentioned i think vincent is dumb here is paragraph 2, have I mentioned i think vincent is dumb here is paragraph 2, have I mentioned i think vincent is dumb here is paragraph 2, have I mentioned i think vincent is dumb "
+		],
+	},
+	{
 		grammar: q1_grammar,
 		helptext: "To calculate the First Set of A, we need to calculate the First Set for the production “xy”. For this case, we just find first terminal symbol of the production. What is the first terminal symbol of “xy”?",
 		question: "What is the first set of A?",

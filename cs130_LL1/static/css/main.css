@@ -443,6 +443,10 @@ h3 {
 		width:50%;
 		margin: 0 auto 10px auto;
 	}
+
+	h3 {
+		font-size: 1.4rem;
+	}
 }
 
 /* Profile page styling */
