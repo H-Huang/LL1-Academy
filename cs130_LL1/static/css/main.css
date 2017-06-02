@@ -11,18 +11,26 @@ button {
 	margin-bottom: 0 !important;
 }
 
-	button:hover {
-		background-color: #30A7C1 !important;
-	}
+button:hover {
+	background-color: #30A7C1 !important;
+}
 
 a {
 	color: #F6781D;
 }
 
-	a:hover {
-		color: #CC6318;
-	}
+a:hover {
+	color: #CC6318;
+}
 
+/* Practice page styling lol */
+#sectionTitle {
+	font-family: 'Lato', sans-serif;
+}
+
+.tutTitle.active {
+	color: black;
+}
 
 /* Parse table styling */
 
