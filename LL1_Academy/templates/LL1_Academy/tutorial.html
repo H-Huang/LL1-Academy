@@ -30,8 +30,10 @@
 	<p class="question-title">{{question}}</p>
     <form id="question-input" onsubmit="return false;">
 		{{#each terminals}}
-    		<input type="checkbox" name="question-check" id="{{this}}-check" value="{{this}}">
-    		<label for="{{this}}-check">{{this}}</label>
+			<div class="pretty info smooth">
+				  <input type="checkbox" name="question-check" id="{{this}}-check" value="{{this}}"> 
+				  <label for="{{this}}-check"><i class="im im-check-mark"></i>{{this}}</label>
+				</div>
     	{{/each}}
     	<!-- TODO: make radio button question -->
     	<!--
@@ -71,6 +73,12 @@
 	<div class="small-12 medium-6 columns" id="grammar-container">
 		<h3>Grammar to Learn First Sets</h3>
 		<div id="grammar">
+		</div>
+		<div style="display:flex; justify-content:space-between;">
+			<div>
+				<button class="button prevQ"><< Previous</button>
+			</div>
+			<button class="button nextQ">Next >></button>
 		</div>
 	</div>
 
@@ -129,7 +137,7 @@
 			productions: ['y']
 		}]
 	}
-
+	
 	var firstQuestions = [
 		{
 			grammar: q1_grammar,
@@ -190,16 +198,41 @@
 		load_next_question();
 	});
 
+
+	$('.button.prevQ').click(function() {
+		currentQ -= 2;
+		load_next_question(); 
+	});
+	$('.button.nextQ').click(function() {
+		load_next_question(); 
+	});
+
 	function load_next_question() {
+		if (currentQ < 0){
+			currentQ = 0;
+		}
+
+		if (currentQ == 0) {
+			$('.button.prevQ').hide();
+		} else {
+			$('.button.prevQ').show();
+		}
+
 		if (currentQ == questions.length) {
 			console.log("out of questions do something")
-			$('#grammar').html("");
-			$('#questions-container').html("");
+			swal({
+				title: "Nice job!",
+				type: "success",
+				html:true,
+				confirmButtonText: "Next Tutorial"
+			});
+			
 			return
 		}
 		curQ = questions[currentQ];
+		console.log(currentQ);
 		currentQ++;
-
+		
 		console.log(curQ);
 
 		if (curQ.grammar)
