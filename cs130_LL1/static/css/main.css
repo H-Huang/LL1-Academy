@@ -383,33 +383,6 @@ h3 {
 }
 
 /* media screen styling */
-@media screen and (max-width:640px) {
-	#siteTitle {
-		font-size:10vw;
-	}
-
-	#siteBanner {
-		font-size:50px;
-	}
-
-	.button.navbarButton {
-		width:100% !important;
-	}
-	
-	#aboutContent {
-		padding: 15px;
-	}
-
-	.aboutSection {
-		padding: 20px;
-	}
-
-	#profileIcon {
-		width:50%;
-		margin: 0 auto 10px auto;
-	}
-}
-
 @media screen and (max-width:945px) {
 	#grammarTitle {
 		flex-wrap:wrap;
@@ -442,6 +415,33 @@ h3 {
 
 	#navbarUser p {
 		font-size:20px;
+	}
+}
+
+@media screen and (max-width:640px) {
+	#siteTitle {
+		font-size:10vw;
+	}
+
+	#siteBanner {
+		font-size: 2.3rem;
+	}
+
+	.button.navbarButton {
+		width: 49%;
+	}
+	
+	#aboutContent {
+		padding: 15px;
+	}
+
+	.aboutSection {
+		padding: 20px;
+	}
+
+	#profileIcon {
+		width:50%;
+		margin: 0 auto 10px auto;
 	}
 }
 
