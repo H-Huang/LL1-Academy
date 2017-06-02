@@ -64,14 +64,16 @@
 			|<a href="#" id="followTutorial" style="margin: 0 15px 0 15px;">Follow Set Tutorial</a>
 			|<a href="#" id="parseTutorial" style="margin: 0 0 0 15px;">Parse Table Tutorial</a>
 		</div>
-		<h3 style="font-family: 'Lato', sans-serif;">Welcome to the Tutorial Page!</h2>
+		<h3 style="font-family: 'Lato', sans-serif;">Welcome to the Tutorial Page!</h3>
 		<p style="font-size:14px">Here you will learn how to determine the first sets, follow sets and parse table of a grammar, and therefore you will be able to check if a grammar is LL(1) by hand. The motivation for this exercise is for LL(1) parsing of an input string. This means the grammar fits into a class of grammars for which we can build a parser which can unambiguously determine the derivation of a string in the grammar in a single pass with no backtracking. (rewrite / expand)</p>
 		<p style="font-size:14px">Already an expert? <a href="/practice">Start practicing!</a></p>
 	</div>
-
+	<div class="small-12 columns">
+		<h3 style="font-family: 'Lato', sans-serif;">!! FIRST SET TUTORIAL/FOLLOW SET TUTORIAL/PARSE TABLE TUTORIAL !!</h3>
+	</div>
 	<!-- two column content below -->
 	<div class="small-12 medium-6 columns" id="grammar-container">
-		<h3>Grammar to Learn First Sets</h3>
+		<h3>Grammar</h3>
 		<div id="grammar">
 		</div>
 		<div style="display:flex; justify-content:space-between;">
@@ -174,13 +176,28 @@
 	]
 
 	var followQuestions = [
-
+		// filler code
+		{
+			grammar: q3_grammar,
+			helptext: "THIS IS FILLER CODE FOR FOLLOW QUESTIONS",
+			question: "THIS IS FILLER CODE FOR FOLLOW QUESTIONS",
+			answer: "y,z",
+			type: "checkbox",
+			terminals: ['x','y','z'],
+		}
 	]
 
 	var parseQuestions = [
-
+		// filler code
+		{
+			grammar: q3_grammar,
+			helptext: "THIS IS FILLER CODE FOR PARSE TABLE QUESTIONS",
+			question: "THIS IS FILLER CODE FOR PARSE TABLE QUESTIONS",
+			answer: "y",
+			type: "checkbox",
+			terminals: ['x','y','z'],
+		}
 	]
-
 	
 	$('#firstTutorial').click(function() {
 		questions = firstQuestions
@@ -198,7 +215,6 @@
 		load_next_question();
 	});
 
-
 	$('.button.prevQ').click(function() {
 		currentQ -= 2;
 		load_next_question(); 
@@ -212,23 +228,55 @@
 			currentQ = 0;
 		}
 
+		if (currentQ == questions.length) {
+			console.log("out of questions do something")
+			if (questions[0] == firstQuestions[0]){
+				swal({
+					title: "Tutorial Complete!",
+					text: "Congratuations on completing the First Set tutorial!",
+					type: "success",
+					html:true,
+					confirmButtonText: "Continue to Follow Set Tutorial"
+				},
+				function() {
+					questions = followQuestions;
+					currentQ = 0;
+					load_next_question();
+				});
+			} else if (questions[0] == followQuestions[0]){
+				swal({
+					title: "Tutorial Complete!",
+					text: "Congratuations on completing the Follow Set tutorial!",
+					type: "success",
+					html:true,
+					confirmButtonText: "Continue to Parse Table Tutorial"
+				}, 
+				function() {
+					questions = parseQuestions;
+					currentQ = 0;
+					load_next_question();
+				});
+			} else if (questions[0] == parseQuestions[0]){
+				swal({
+					title: "Tutorial Complete!",
+					text: "Congratuations on completing the Parse Table tutorial!",
+					type: "success",
+					html:true,
+					confirmButtonText: "Start Practicing"
+				},
+				function() {
+					window.location.href = '/practice';
+				});
+			}
+			return
+		}
+
 		if (currentQ == 0) {
 			$('.button.prevQ').hide();
 		} else {
 			$('.button.prevQ').show();
 		}
 
-		if (currentQ == questions.length) {
-			console.log("out of questions do something")
-			swal({
-				title: "Nice job!",
-				type: "success",
-				html:true,
-				confirmButtonText: "Next Tutorial"
-			});
-			
-			return
-		}
 		curQ = questions[currentQ];
 		console.log(currentQ);
 		currentQ++;
