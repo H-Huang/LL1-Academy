@@ -66,7 +66,6 @@ function load_next_question() {
 	}
 
 	if (currentQ == questions.length) {
-		console.log("out of questions do something")
 		if (questions[0] == firstQuestions[0]){
 			swal({
 				title: "Tutorial Complete!",
@@ -111,10 +110,8 @@ function load_next_question() {
 	}
 
 	curQ = questions[currentQ];
-	// console.log(currentQ);
 	currentQ++;
 	
-	// console.log(curQ);
 	if (curQ.type == "checkbox") {
 		if (!$("#grammar-container").is(':visible')) {
 			$("#full-explanation-container").hide();
@@ -155,8 +152,6 @@ function load_next_question() {
 		for (var i =  0; i < curQ.text.length; i++) {
 			$("#full-explanation-text").append('<p>' + curQ.text[i] + '</p>');
 		}
-
-		$("#full-explanation-container").show();
 	} else {
 		console.log("this question type not yet implemented");
 	}
