@@ -1,0 +1,13 @@
+ version: "3"
+ services:
+   seleniumserver:
+     image: selenium/standalone-chrome:3.4.0
+     ports:
+       - "4444:4444"
+   seleniumclient:
+     build: .
+     command: bash -c "echo "hello world"
+     ports:
+       - "8000:8000"
+     depends_on:
+       - seleniumserver
