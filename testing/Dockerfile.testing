@@ -5,5 +5,4 @@ RUN mkdir /code
 WORKDIR /code
 ADD requirements.txt /code/
 RUN pip install -r requirements.txt
-ADD testing.py /code/
-CMD ["python", "testing.py"]
+#ENTRYPOINT ["python", "testing.py"]

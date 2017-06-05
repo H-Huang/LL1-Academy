@@ -5,8 +5,12 @@
      ports:
        - "4444:4444"
    seleniumclient:
-     build: .
-     command: bash -c "echo "hello world"
+     build:
+       context: .
+       dockerfile: Dockerfile.testing
+     command: python testing.py testing_seleniumserver_1 https://sheltered-sands-11346.herokuapp.com
+     volumes:
+       - .:/code
      ports:
        - "8000:8000"
      depends_on:
