@@ -49,6 +49,42 @@
   </div>  
 </script>
 
+<script id="parseTable-template" type="text/x-x-handlebars-template">
+	<div class="question" id="active" style="display: none">
+	<p class="question-title">What is the LL(1) parsing table of this grammar?</p>
+
+	<table class="table" id="pt">
+		<tr>
+			<th></th>
+			{{#each terminals}}
+				<th>{{this}}</th>
+			{{/each}}
+		</tr>
+
+		{{#each non_terminals}}
+		<tr>
+			<td>{{this}}</td>
+			{{printParseTableCells this}}
+		</tr>
+		{{/each}}
+	</table>
+
+    <form id="question-input" onsubmit="return false;">
+		<div class="feedback"></div>
+		<div id="buttons-container">
+			<div id="production-options"> </div>
+			<!-- {{#if opt}}
+	    		<button class="button" type="button" id="opt-char-pt">{{opt}}</button>
+		    {{/if}} -->
+		    <div id="right-buttons" style="float: right;">
+	    	<!-- <button type="button" class="button" id="giveup">Give Up</button> -->
+	    	<button type="submit" class="button" >Submit</button>
+	    	</div>
+	    </div>
+    </form>
+  </div>  
+</script>
+
 {% endverbatim %}
 {% endblock %}
 
