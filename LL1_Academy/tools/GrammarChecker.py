@@ -60,8 +60,10 @@ class GrammarChecker:
         GrammarChecker.buildParsingTable(self)
         
         returnFirstSets = {}
+        returnFollowSets = {}
         for nt in self.nonterminals:
-            returnFirstSets[nt] = self.firstSets[nt]
+            returnFirstSets[nt] = sorted(list(self.firstSets[nt]))
+            returnFollowSets[nt] = sorted(list(self.followSets[nt]))
         
         status = -1 if self.leftRecursionFound else (0 if self.isLL1 else 1)
         if self.verbose:
