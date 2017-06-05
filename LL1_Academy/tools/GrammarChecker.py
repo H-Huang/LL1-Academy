@@ -74,7 +74,7 @@ class GrammarChecker:
                     print("grammar is LL(1)") 
                 else:
                     print("grammar is NOT LL(1)")
-        return((returnFirstSets,self.followSets,self.parsingTable,status,GrammarChecker.reachability(self),sorted(list(self.terminals))))
+        return((returnFirstSets,returnFollowSets,self.parsingTable,status,GrammarChecker.reachability(self),sorted(list(self.terminals))))
     
     def getSymbols(self, grammar):
         self.grammar = grammar
