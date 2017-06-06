@@ -5,8 +5,10 @@ from LL1_Academy.models import Grammar, Question, UserHistory
 from django.contrib.sites.models import Site
 from django.contrib.auth.models import User
 
-class TestData(TestCase):
+# import the functions that we need to test
+import LL1_Academy.views.stats as stats
 
+class TestData(TestCase):
 
     @classmethod
     def setUpTestData(cls):
@@ -98,7 +100,6 @@ class RoutingTest(TestData):
     
     def test_check_answer(self):
         response = self.client.get('/check_answer')
-        print(response)
         self.assertEqual(response.status_code, 400)
 
 class RenderingTest(TestData):
@@ -128,3 +129,25 @@ class RenderingTest(TestData):
         response = self.client.get('/get_404_page')
         self.assertTemplateUsed(response, 'LL1_Academy/error.html')
 
+class StatsTest(TestData):
+    
+    # we can parse this content with BS4???
+    def test_stats_page(self):
+        c = Client()
+        c.login(username='test', password='test')
+        response = c.get('/profile')
+        # print(response.content)
+    
+    def test_log_start_grammar_unit_test(self):
+        g = Grammar(prods="{'A': ['xA', 'Bz'],'B': ['yB']}", nonTerminals="AB", terminals="xyz", startSymbol="A")
+        g.save()
+        g = Grammar.objects.get(pk=g.pk)
+        before_nStart = g.nStart
+        stats.log_start_grammar(g.pk)
+        g = Grammar.objects.get(pk=g.pk)
+        self.assertEqual(before_nStart + 1, g.nStart)
+
+    def log_complete_grammar_unit_test(self):
+        response = self.client.get('/profile')
+        session = self.client.session
+        session.save()
