@@ -23,6 +23,11 @@ a:hover {
 	color: #CC6318;
 }
 
+#tutorial-title {
+	color: #37BCDA; 
+	font-family: 'Lato', sans-serif;
+}
+
 /* Practice page styling lol */
 #sectionTitle {
 	font-family: 'Lato', sans-serif;

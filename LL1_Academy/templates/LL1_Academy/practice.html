@@ -137,6 +137,7 @@
 
 {% endblock %}
 
+
 {% block pagescripts %}
 	<script> var csrfmiddlewaretoken = "{{ csrf_token }}"; </script>
 	<script src="{% static 'js/practice.js' %}"></script>
@@ -145,5 +146,9 @@
 	<script>
 		var terminals = "{{terminals}}".split(', ');
 		var grammar = JSON.parse('{{ grammar_json|safe }}');
+		var user_authenticated = false;
+		{% if user_authenticated %}
+			user_authenticated = true;
+		{% endif %}
 	</script>
 {% endblock %}

@@ -20,8 +20,7 @@ def get_random_grammar(user):
 		uncompleted_grammars = Grammar.objects.exclude(gid__in=completed_gids)
 	size = uncompleted_grammars.count()
 	if size == 0:
-		#TODO: do something if someone finishes all the grammars LOL 
-		pass
+		return None
 	randid = random.randint(0,size-1)
 	g=uncompleted_grammars[randid]
 	return g
@@ -34,6 +33,13 @@ def practice(request):
 
 	if request.GET.get('gid') == None:
 		random_grammar = get_random_grammar(request.user)
+		if random_grammar == None:
+			context = {
+				"title": "You finished all our grammars!",
+				"text": "Click on your username to visit your profile page. You will be able to continue practicing on grammars you have already completed or skipped."
+			}
+			return render(request, 'LL1_Academy/error.html', context)
+
 		request.session['gid'] = random_grammar.gid
 	else:
 		request.session['gid'] = request.GET.get('gid')
@@ -42,7 +48,7 @@ def practice(request):
 	request.session['curQ'] = 0
 	request.session['score'] = 0
 	if not 'hide_explainer' in request.session: 
-		request.session['hide_explainer'] = False;
+		request.session['hide_explainer'] = False
 
 	grammar_obj = Grammar.objects.filter(gid=request.session['gid']).first()
 	non_terminals = list(grammar_obj.nonTerminals)
@@ -63,9 +69,10 @@ def practice(request):
 		"non_terminals": non_terminals,
 		"start_symbol": 'A',
 		"hide_explainer": request.session['hide_explainer'],
-		"grammar_json": json.dumps({"grammar": grammar_object}),
+		"user_authenticated": request.user.is_authenticated,
+		"grammar_json": json.dumps({"grammar": grammar_object})
 	}
-	
+
 	return render(request, 'LL1_Academy/practice.html', context)
 
 def get_question(request):

@@ -14,6 +14,20 @@ $(document).ready(function() {
 	// switchSection("first");
 })
 
+function tut_title_click() {
+	if (currentSection) {
+		$("#grammar-container").hide();
+		$("#questions-wrapper").hide();
+		$("#full-explanation-container").hide();
+
+		$("#" + currentSection + "Tutorial").removeClass("active");
+		$("#vocabularyTitle").addClass("active");
+		currentSection = null;
+
+		$("#initialExplainer").fadeIn();
+	}
+}
+
 function switchSection(section) {
 	if (section == currentSection)
 		return;
@@ -36,6 +50,7 @@ function switchSection(section) {
 	if (currentSection) { // if statement needed for first page load case
 		$("#" + currentSection + "Tutorial").removeClass("active");
 	} else { // on first page laod
+		$("#vocabularyTitle").removeClass("active");
 		$("#initialExplainer").hide();
 	}
 	currentSection = section;
@@ -150,10 +165,10 @@ function load_next_question() {
 			$("#questions-wrapper").hide();
 			$("#full-explanation-container").fadeIn();
 		}
-		$("#full-explanation-text").html('');
-		for (var i =  0; i < curQ.text.length; i++) {
-			$("#full-explanation-text").append('<p>' + curQ.text[i] + '</p>');
-		}
+		$("#full-explanation-text").html(curQ.text);
+		// for (var i =  0; i < curQ.text.length; i++) {
+		// 	$("#full-explanation-text").append('<p>' + curQ.text[i] + '</p>');
+		// }
 	} else if (curQ.type == "parse") {
 		if (!$("#grammar-container").is(':visible')) {
 			$("#full-explanation-container").hide();
