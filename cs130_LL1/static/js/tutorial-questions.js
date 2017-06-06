@@ -322,15 +322,15 @@ var parse_challenge_grammar = {
 var parse_challenge_grammar_2 = {
 	grammar: [
 	{
-		nt: "A" 
+		nt: "A",
 		productions: [ "ε", "yAB"]
 	},
 	{
-		nt: "B" 
+		nt: "B", 
 		productions: [ "xC", "ε"]
 	},
 	{
-		nt: "C" 
+		nt: "C", 
 		productions: [ "AwB", "ywwz", "Bx" ]
 	}
 ]
