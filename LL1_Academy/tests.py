@@ -1,12 +1,31 @@
+# test case base class
 from django.test import TestCase, Client
-from django.urls import reverse
-from LL1_Academy.models import Grammar, Question, UserHistory
 
+# routing
+from django.http import HttpRequest
+from django.urls import reverse
+
+# models
+from LL1_Academy.models import Grammar, Question, UserHistory
 from django.contrib.sites.models import Site
 from django.contrib.auth.models import User
 
-class TestData(TestCase):
+# sessions
+from django.conf import settings
+from importlib import import_module
 
+# import the functions that we need to test
+import LL1_Academy.views.practice as practice
+import LL1_Academy.views.tutorial as tutorial
+import LL1_Academy.views.views as views
+import LL1_Academy.views.stats as stats
+import LL1_Academy.views.userProfile as user_profile
+import LL1_Academy.tools.GrammarChecker as grammar_checker
+import LL1_Academy.tools.MassGrammarGenerator as mass_grammar_generator
+import LL1_Academy.tools.SingleGrammarGenerator as single_grammar_generator
+import LL1_Academy.tools.SvmLearn as svm_learn
+
+class TestData(TestCase):
 
     @classmethod
     def setUpTestData(cls):
@@ -75,6 +94,72 @@ class ModelTest(TestData):
         self.assertEqual(t_user_history.complete, False)
         self.assertEqual(t_user_history.score, -1)
 
+# TODO: add more tests
+class PracticeTest(TestData):
+
+    def test_get_random_grammar_unit_test(self):
+        sample_g = Grammar(prods="{'A': ['xA', 'Bz'],'B': ['yB']}", nonTerminals="AB", terminals="xyz", startSymbol="A")
+        user = User.objects.get(username="test")
+        g = practice.get_random_grammar(user)
+        self.assertEqual(g.prods, sample_g.prods)
+        self.assertEqual(g.nonTerminals, sample_g.nonTerminals)
+        self.assertEqual(g.terminals, sample_g.terminals)
+        self.assertEqual(g.startSymbol, sample_g.startSymbol)
+
+class UserProfileTest(TestData):
+
+    def test_hi(self):
+        pass
+    
+class StatsTest(TestData):
+    
+    # we can parse this content with BS4???
+    def test_stats_page(self):
+        c = Client()
+        c.login(username='test', password='test')
+        response = c.get('/profile')
+        # print(response.content)
+    
+    def test_log_start_grammar_unit_test(self):
+        g = Grammar(prods="{'A': ['xA', 'Bz'],'B': ['yB']}", nonTerminals="AB", terminals="xyz", startSymbol="A")
+        g.save()
+        g = Grammar.objects.get(pk=g.pk)
+        before_nStart = g.nStart
+        stats.log_start_grammar(g.pk)
+        g = Grammar.objects.get(pk=g.pk)
+        self.assertEqual(before_nStart + 1, g.nStart)
+
+    def test_log_complete_grammar_unit_test(self):
+        g = Grammar(prods="{'A': ['xA', 'Bz'],'B': ['yB']}", nonTerminals="AB", terminals="xyz", startSymbol="A")
+        g.save()
+        request = HttpRequest()
+        engine = import_module(settings.SESSION_ENGINE)
+        session_key = None
+        request.session = engine.SessionStore(session_key)
+        request.session['gid'] = g.pk
+        request.session['score'] = 5
+        request.user = User.objects.get(username="test")
+        before_nComplete = g.nComplete
+        stats.log_complete_grammar(request)
+        g = Grammar.objects.get(pk=g.pk)
+        self.assertEqual(before_nComplete + 1, g.nComplete)
+    
+    # this test needs to be tested more thoroughly
+    def test_log_skip_grammar_unit_test(self):
+        g = Grammar(prods="{'A': ['xA', 'Bz'],'B': ['yB']}", nonTerminals="AB", terminals="xyz", startSymbol="A")
+        g.save()
+        request = HttpRequest()
+        engine = import_module(settings.SESSION_ENGINE)
+        session_key = None
+        request.session = engine.SessionStore(session_key)
+        request.session['gid'] = g.pk
+        request.session['hide_explainer'] = False
+        request.user = User.objects.get(username="test")
+        before_nSkip = g.nSkip
+        stats.log_skip_grammar(request)
+        g = Grammar.objects.get(pk=g.pk)
+        self.assertEqual(before_nSkip, g.nSkip)
+
 class RoutingTest(TestData):
     def test_index1(self):
         response = self.client.get('/')
@@ -84,9 +169,12 @@ class RoutingTest(TestData):
         response = self.client.get('/index')
         self.assertEqual(response.status_code, 200)
 
-
     def test_practice(self):
         response = self.client.get('/practice')
+        self.assertEqual(response.status_code, 200)
+
+    def test_tutorial(self):
+        response = self.client.get('/tutorial')
         self.assertEqual(response.status_code, 200)
     
     def test_get_question(self):
@@ -98,7 +186,6 @@ class RoutingTest(TestData):
     
     def test_check_answer(self):
         response = self.client.get('/check_answer')
-        print(response)
         self.assertEqual(response.status_code, 400)
 
 class RenderingTest(TestData):
@@ -120,13 +207,14 @@ class RenderingTest(TestData):
         response = c.get('/profile')
         self.assertTemplateUsed(response, 'LL1_Academy/profile.html')
     
-
     def test_practice(self):
         response = self.client.get('/practice')
         self.assertTemplateUsed(response, 'LL1_Academy/practice.html')
 
+    def test_tutorial(self):
+        response = self.client.get('/tutorial')
+        self.assertTemplateUsed(response, 'LL1_Academy/tutorial.html')
+
     def test_error_page(self):
         response = self.client.get('/get_404_page')
         self.assertTemplateUsed(response, 'LL1_Academy/error.html')
-
-# class GrammarTest(TestData):
