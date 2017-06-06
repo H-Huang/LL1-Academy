@@ -226,7 +226,7 @@ var firstQuestions = [
 	},
 	{
 		grammar: first8_grammar,
-		helptext: "When we look at the first production of A, we see that B is the first symbol, so we want to add the First Set of B to the First Set of A. However, this is incorrect! If we see that B has a ε in its First Set and is nullable, we will add everything EXCEPT the ε from B to First Set of A, and then look at the first set of the rest of the production. So, in this case, we would see that B is nullable, and add only “y” to the First Set of A, and then look at the First Set of everything after B, which is just “x”.",
+		helptext: "Expanding on the previous example, now B now has two productions, and does not just go to ε. In this case, we want to first add everything in First(B) except for ε to the First Set of that production, and then calculate the First Set of the rest of the string. In this case, for A = Bx, add First(B) except for ε, and then add “x”.",
 		question: "What is the first set of A?",
 		answer: "x,z",
 		type: "checkbox",
@@ -234,7 +234,7 @@ var firstQuestions = [
 	},
 	{
 		grammar: first8_grammar,
-		helptext: "When we look at the first production of A, we see that B is the first symbol, so we want to add the First Set of B to the First Set of A. However, this is incorrect! If we see that B has a ε in its First Set and is nullable, we will add everything EXCEPT the ε from B to First Set of A, and then look at the first set of the rest of the production. So, in this case, we would see that B is nullable, and add only “y” to the First Set of A, and then look at the First Set of everything after B, which is just “x”.",
+		helptext: "Expanding on the previous example, now B now has two productions, and does not just go to ε. In this case, we want to first add everything in First(B) except for ε to the First Set of that production, and then calculate the First Set of the rest of the string. In this case, for A = Bx, add First(B) except for ε, and then add “x”.",
 		question: "What is the first set of B?",
 		answer: "y,ε",
 		type: "checkbox",
@@ -242,7 +242,7 @@ var firstQuestions = [
 	},
 	{
 		grammar: first9_grammar,
-		helptext: "For the first production of A, we see that it only consists of B. Since B is nullable and can go to null string, we now know that A is also nullable, and add ε to the First Set of A.",
+		helptext: "Whenever we see a production where all the nonterminals are nullable, we add ε to the First Set of that production. In this case, for the first production of A, we see that it only consists of B. Since B is nullable and can go to null string, we now know that A is also nullable, and add ε to the First Set of A.",
 		question: "What is the first set of A?",
 		answer: "x,ε",
 		type: "checkbox",
@@ -250,7 +250,7 @@ var firstQuestions = [
 	},
 	{
 		grammar: first9_grammar,
-		helptext: "For the first production of A, we see that it only consists of B. Since B is nullable and can go to null string, we now know that A is also nullable, and add ε to the First Set of A.",
+		helptext: "Whenever we see a production where all the nonterminals are nullable, we add ε to the First Set of that production. In this case, for the first production of A, we see that it only consists of B. Since B is nullable and can go to null string, we now know that A is also nullable, and add ε to the First Set of A.",
 		question: "What is the first set of B?",
 		answer: "ε",
 		type: "checkbox",
