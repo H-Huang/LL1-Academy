@@ -95,16 +95,16 @@
 <div class="row">
 	<!-- full width explainer here -->
 	<div class="small-12 columns" style="color: grey;">
-		<h3 style="font-family: 'Lato', sans-serif;">Welcome to the Tutorial Page!</h3>
-		<p style="font-size:14px">Here you will learn how to determine the first sets, follow sets and parse table of a grammar, and therefore you will be able to check if a grammar is LL(1) by hand. The motivation for this exercise is for LL(1) parsing of an input string. This means the grammar fits into a class of grammars for which we can build a parser which can unambiguously determine the derivation of a string in the grammar in a single pass with no backtracking. (rewrite / expand)</p>
-		<p style="font-size:14px">Already an expert? <a href="/practice">Start practicing!</a></p>
-	</div>
-	<div class="small-12 columns">
 		<div id="tutorialOptions" style="text-align:center;margin-bottom:15px;font-size:20px;">
 			<a href="#" class="tutTitle" id="firstTutorial" style="margin: 0 15px 0 0;">First Set Tutorial</a>
 			|<a href="#" class="tutTitle" id="followTutorial" style="margin: 0 15px 0 15px;">Follow Set Tutorial</a>
 			|<a href="#" class="tutTitle" id="parseTutorial" style="margin: 0 0 0 15px;">Parse Table Tutorial</a>
 		</div>
+		<h3 id="tutorial-title" onclick="tut_title_click()">Welcome to the Tutorial!</h3>
+		<p style="font-size:14px">Here you will learn how to calculate the first set, follow set and parse table of a grammar.</p>
+		<p style="font-size:14px">Already an expert? <a href="/practice">Start practicing!</a></p>
+	</div>
+	<div class="small-12 columns">
 		<div id="initialExplainer">
 			<p>Please select from the options above. We recommend starting from the First Set Tutorial.</p>
 			<p><b><p style="font-size:20px;">Vocabulary</p></b>
