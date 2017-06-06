@@ -122,7 +122,7 @@ var first10_grammar = {
 var firstQuestions = [
 	{
 		grammar: first1_grammar,
-		helptext: "To calculate the First Set of A, we need to calculate the First Set for the production “xy”. For this case, we just find first terminal symbol of the production. What is the first terminal symbol of “xy”?",
+		helptext: "To calculate the First Set of the nonterminals for simple grammars, find the first terminal symbol in the production. For this case, to find the First Set of A we just find first terminal symbol of the production “xy”.",
 		question: "What is the first set of A?",
 		answer: "x",
 		type: "checkbox",
@@ -130,7 +130,7 @@ var firstQuestions = [
 	},
 	{
 		grammar: first2_grammar,
-		helptext: "When there are multiple productions, we calculate the First Set of each production individually, and add each of them to the First Set. The First Set of A are the First Sets of “xy” and “yz” combined.",
+		helptext: "When there are multiple productions, we calculate the First Set of each production individually, and add each of them to the First Set. In this case, the First Set of A includes the First Set of “xy” and the First Set of “yz”.",
 		question: "What is the first set of A?",
 		answer: "x,y",
 		type: "checkbox",
@@ -138,7 +138,7 @@ var firstQuestions = [
 	},
 	{
 		grammar: first3_grammar,
-		helptext: "When there is a nonterminal as the first symbol of a production, then the First Set of that symbol is the First Set of that production. In this case, the First Set of A is “z”, and the First Set of B. Hint: It would be good to calculate First Set of B first, and then substitute it into the First Set of A.",
+		helptext: "When there is a nonterminal as the first symbol of a production, we calculate the First Set of that non terminal first, and then add it to the First Set of that production. In this case, we would want to calculate the First(B), and then add that to the First(A).",
 		question: "What is the first set of B?",
 		answer: "y",
 		type: "checkbox",
@@ -146,7 +146,7 @@ var firstQuestions = [
 	},
 	{
 		grammar: first3_grammar,
-		helptext: "When there is a nonterminal as the first symbol of a production, then the First Set of that symbol is the First Set of that production. In this case, the First Set of A is “z”, and the First Set of B. Hint: It would be good to calculate First Set of B first, and then substitute it into the First Set of A.",
+		helptext: "When there is a nonterminal as the first symbol of a production, we calculate the First Set of that non terminal first, and then add it to the First Set of that production. In this case, we would want to calculate the First(B), and then add that to the First(A).",
 		question: "What is the first set of A?",
 		answer: "y,z",
 		type: "checkbox",
@@ -202,7 +202,7 @@ var firstQuestions = [
 	},
 	{
 		grammar: first6_grammar,
-		helptext: "Here, we introduce the concept of ε, which is can be considered a “null” string. In other words, A’s ε production converts the Nonterminal symbol to nothing. If there exists an epsilon production, we add ε to the First Set of A, and A is now considered a “nullable” nonterminal.",
+		helptext: "Here, we introduce the concept of ε, which is can be considered a “null” string. In other words, A’s ε production converts the nonterminal symbol to nothing. If there exists an epsilon production, we add ε to the First Set of A, and A is now considered a “nullable” nonterminal.",
 		question: "What is the first set of A?",
 		answer: "x,ε",
 		type: "checkbox",
@@ -210,7 +210,7 @@ var firstQuestions = [
 	},
 	{
 		grammar: first7_grammar,
-		helptext: "UNFINISHED",
+		helptext: "In a production, if the first symbol can only go to ε, compute the First Set of the rest of the string. When looking at the production A = Bx, since B is only nullable, the First Set of this production is just “x”.",
 		question: "What is the first set of A?",
 		answer: "x,z",
 		type: "checkbox",
@@ -218,7 +218,7 @@ var firstQuestions = [
 	},
 	{
 		grammar: first7_grammar,
-		helptext: "UNFINISHED",
+		helptext: "In a production, if the first symbol can only go to ε, compute the First Set of the rest of the string. When looking at the production A = Bx, since B is only nullable, the First Set of this production is just “x”.",
 		question: "What is the first set of B?",
 		answer: "ε",
 		type: "checkbox",
