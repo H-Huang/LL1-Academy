@@ -323,8 +323,18 @@ var parseQuestions = [
 		grammar: first3_grammar,
 		helptext: "THIS IS FILLER CODE FOR PARSE TABLE QUESTIONS",
 		question: "THIS IS FILLER CODE FOR PARSE TABLE QUESTIONS",
-		answer: "y",
-		type: "checkbox",
+		answer: '{"A":{"y":["Bx"],"z":["z"]},"B":{"y":["y"]}}',
+		type: "parse",
 		terminals: ['x','y','z'],
+		non_terminals: ['A','B']
+	},
+	{
+		grammar: follow1_grammar,
+		helptext: "THIS IS FILLER CODE FOR PARSE TABLE QUESTIONS",
+		question: "THIS IS FILLER CODE FOR PARSE TABLE QUESTIONS",
+		answer: "y",
+		type: "parse",
+		terminals: ['x','y','z'],
+		non_terminals: ['A','B','C']
 	}
 ]

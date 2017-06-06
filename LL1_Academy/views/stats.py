@@ -20,7 +20,6 @@ def log_complete_grammar(request):
 	gid = request.session['gid']
 	score = request.session['score']
 
-	print(score)
 	grammar_obj = Grammar.objects.filter(gid=gid).first()
 	grammar_obj.nComplete +=1
 	grammar_obj.save()
@@ -47,6 +46,8 @@ def log_skip_grammar(request):
 			})
 		response.status_code = 400
 		return response
+
+	request.session['hide_explainer'] = request.POST.get('hide_explainer')
 
 	gid = request.session['gid']
 	grammar_obj = Grammar.objects.filter(gid=gid).first()

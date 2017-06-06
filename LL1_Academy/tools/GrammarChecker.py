@@ -60,8 +60,10 @@ class GrammarChecker:
         GrammarChecker.buildParsingTable(self)
         
         returnFirstSets = {}
+        returnFollowSets = {}
         for nt in self.nonterminals:
-            returnFirstSets[nt] = self.firstSets[nt]
+            returnFirstSets[nt] = sorted(list(self.firstSets[nt]))
+            returnFollowSets[nt] = sorted(list(self.followSets[nt]))
         
         status = -1 if self.leftRecursionFound else (0 if self.isLL1 else 1)
         if self.verbose:
@@ -72,7 +74,7 @@ class GrammarChecker:
                     print("grammar is LL(1)") 
                 else:
                     print("grammar is NOT LL(1)")
-        return((returnFirstSets,self.followSets,self.parsingTable,status,GrammarChecker.reachability(self),sorted(list(self.terminals))))
+        return((returnFirstSets,returnFollowSets,self.parsingTable,status,GrammarChecker.reachability(self),sorted(list(self.terminals))))
     
     def getSymbols(self, grammar):
         self.grammar = grammar
