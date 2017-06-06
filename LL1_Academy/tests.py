@@ -1,9 +1,15 @@
+from django.http import HttpRequest
+
 from django.test import TestCase, Client
 from django.urls import reverse
 from LL1_Academy.models import Grammar, Question, UserHistory
 
 from django.contrib.sites.models import Site
 from django.contrib.auth.models import User
+
+# sessions
+from django.conf import settings
+from importlib import import_module
 
 # import the functions that we need to test
 import LL1_Academy.views.stats as stats
@@ -147,7 +153,16 @@ class StatsTest(TestData):
         g = Grammar.objects.get(pk=g.pk)
         self.assertEqual(before_nStart + 1, g.nStart)
 
-    def log_complete_grammar_unit_test(self):
-        response = self.client.get('/profile')
-        session = self.client.session
-        session.save()
+    def test_log_complete_grammar_unit_test(self):
+        g = Grammar(prods="{'A': ['xA', 'Bz'],'B': ['yB']}", nonTerminals="AB", terminals="xyz", startSymbol="A")
+        request = HttpRequest()
+        engine = import_module(settings.SESSION_ENGINE)
+        session_key = None
+        request.session = engine.SessionStore(session_key)
+        request.session['gid'] = g.pk
+        request.session['score'] = 5
+        request.user = User.objects.get(username="test")
+        before_nComplete = g.nComplete
+        stats.log_complete_grammar(request)
+        g = Grammar.objects.get(pk=g.pk)
+        self.assertEqual(before_nComplete + 1, g.nComplete)
