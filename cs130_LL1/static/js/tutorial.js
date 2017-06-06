@@ -14,6 +14,19 @@ $(document).ready(function() {
 	// switchSection("first");
 })
 
+function tut_title_click() {
+	if (currentSection) {
+		$("#grammar-container").hide();
+		$("#questions-wrapper").hide();
+		$("#full-explanation-container").hide();
+
+		$("#" + currentSection + "Tutorial").removeClass("active");
+		currentSection = null;
+
+		$("#initialExplainer").fadeIn();
+	}
+}
+
 function switchSection(section) {
 	if (section == currentSection)
 		return;
