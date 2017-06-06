@@ -31,6 +31,7 @@ def practice(request):
 
 	#if 'gid' not in request.session or request.session['gid']==None
 	#print(request.GET.get('gid') )
+
 	if request.GET.get('gid') == None:
 		random_grammar = get_random_grammar(request.user)
 		request.session['gid'] = random_grammar.gid
@@ -40,6 +41,8 @@ def practice(request):
 	stats.log_start_grammar(request.session['gid'])
 	request.session['curQ'] = 0
 	request.session['score'] = 0
+	if not 'hide_explainer' in request.session: 
+		request.session['hide_explainer'] = False;
 
 	grammar_obj = Grammar.objects.filter(gid=request.session['gid']).first()
 	non_terminals = list(grammar_obj.nonTerminals)
@@ -53,13 +56,13 @@ def practice(request):
 	#stringify terminals + non_terminals
 	terminals = ", ".join(terminals)
 	non_terminals = "{" + ", ".join(non_terminals) + "}"
-
 	#prepare all items to be passed into the template
 	context = {
 		"grammar_object": grammar_object,
 		"terminals": terminals,
 		"non_terminals": non_terminals,
 		"start_symbol": 'A',
+		"hide_explainer": request.session['hide_explainer'],
 		"grammar_json": json.dumps({"grammar": grammar_object}),
 	}
 	
@@ -87,12 +90,11 @@ def get_question(request):
 	result = {
 		"category": category,
 		"symbol": symbol,
+		"new_user": False
 	}
 
 	if currentQ == 0 and is_new_user(request):
 		result["new_user"] = True
-	else:
-		result["new_user"] = False
 
 	return JsonResponse(result)
 
@@ -155,6 +157,7 @@ def give_up(request):
 			ret = question.answer
 			request.session['curQ'] = currentQ + 1
 			score = calc_score_log_grammar(request)
+			request.session['hide_explainer'] = request.POST.get('hide_explainer')
 		else:
 			ret = ','.join(question.answer)
 			request.session['curQ'] = currentQ + 1
@@ -188,6 +191,8 @@ def calc_score_log_grammar(request):
 
 def check_answer(request):
 	if request.method == 'POST':
+		request.session['hide_explainer'] = request.POST.get('hide_explainer')
+
 		gid = request.session['gid']
 		currentQ = request.session['curQ']
 		question = Question.objects.filter(gid__gid__exact=gid, qnum=currentQ).first()

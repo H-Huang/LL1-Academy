@@ -247,8 +247,7 @@ function query_for_question() {
 			question_data = results;
 			draw_question();
 			if(results.new_user){
-				setTimeout(function() {start_trip();}, 800);
-				
+				setTimeout(function() {start_trip();}, 800);	
 			}
 		},
 		error: function(error) {
@@ -259,8 +258,12 @@ function query_for_question() {
 
 function give_up() {
 	$.ajax({
-		type: "GET",
+		type: "POST",
 		url: "/give_up",
+		data : { 
+			'csrfmiddlewaretoken': csrfmiddlewaretoken,
+			'hide_explainer': $("#explainer").css('display') === "none"
+		},
 		success: function(results) {
 			//console.log(results)
 			if (results.category == 'PT') {
@@ -326,7 +329,8 @@ function log_skip_grammar(completed){
 		url: "/log_skip_grammar",
 		data : { 
 			'csrfmiddlewaretoken': csrfmiddlewaretoken,
-			'completed': completed
+			'completed': completed,
+			'hide_explainer': $("#explainer").css('display') === "none"
 		},
 		success: function(results) {
 			//console.log(results)
@@ -502,7 +506,8 @@ function draw_question() {
 					'category': question_data.category,
 					'symbol': question_data.symbol,
 					'answer': answer,
-					'll1answer': ll1radio
+					'll1answer': ll1radio,
+					'hide_explainer': $("#explainer").css('display') === "none"
 				},
 				success: function(results) {
 					// console.log(results)
