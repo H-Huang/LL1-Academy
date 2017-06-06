@@ -106,11 +106,24 @@ class PracticeTest(TestData):
         self.assertEqual(g.terminals, sample_g.terminals)
         self.assertEqual(g.startSymbol, sample_g.startSymbol)
 
+# TODO: user profile
 class UserProfileTest(TestData):
 
     def test_hi(self):
         pass
+
+    def test_hi1(self):
+        pass
+
+    def test_hi2(self):
+        pass
+
+    def test_hi3(self):
+        pass
     
+    def test_hi4(self):
+        pass
+
 class StatsTest(TestData):
     
     # we can parse this content with BS4???
