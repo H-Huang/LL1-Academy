@@ -105,7 +105,27 @@
 			|<a href="#" class="tutTitle" id="followTutorial" style="margin: 0 15px 0 15px;">Follow Set Tutorial</a>
 			|<a href="#" class="tutTitle" id="parseTutorial" style="margin: 0 0 0 15px;">Parse Table Tutorial</a>
 		</div>
-		<p id="initialExplainer">Please select from the options above. We recommend starting from the First Set Tutorial.</p>
+		<div id="initialExplainer">
+			<p>Please select from the options above. We recommend starting from the First Set Tutorial.</p>
+			<p><b><p style="font-size:20px;">Vocabulary</p></b>
+				<ul>
+					<li><b>Nonterminal Symbols</b>: These are symbols which can be replaced by combinations of nonterminal and terminal symbols according to production rules. In this tutorial, these are denoted by the upper case letters A, B, C, and D.</li>
+					<li><b>Terminal Symbols</b>: These are symbols which cannot be replaced and make up the strings of the language. In this tutorial, these are denoted by the lower case letters w, x, y, and z.</li>
+					<li><b>Start Symbol</b>: This is a predefined nonterminal symbol from which all strings in the language must be derived from. In other words, if a string cannot be made through a series of productions starting from the Start Symbol, it is not in the language. In the following tutorial, “A” is always going to be the Start Symbol.</li>
+					<li><b>LL(1) Grammars</b>: Subset of grammars that fulfill the condition that parsers only need one nonterminal character of lookahead to parse from a string in the language.</li>
+					<li><b>First Set of a Symbol S</b>: The set of all terminal symbols that begin the strings derived from S.</li>
+					<li><b>Follow Set</b>: The Set of all terminal symbols which immediately follow all the strings derived from S.</li>
+				</ul>
+			</p>
+			<p><b><p style="font-size:20px;">Notation</p></b>
+				<ul>
+					<li>The tutorial may refer to the First Set of A and the Follow Set of A as First(A) and Follow(B) respectively. </li>
+					<li>The character ε refers to the empty string, and when used in a production like A -> ε, means that a nonterminal can be removed entirely. </li>
+					<li>The character $ refers to the end of the input.</li>
+				</ul>
+			</p>
+			
+		</div>
 	</div>
 	<!-- two column content below -->
 	<div class="small-12 medium-6 columns" id="grammar-container" style="display: none">
