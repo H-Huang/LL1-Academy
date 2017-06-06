@@ -130,7 +130,7 @@ var firstQuestions = [
 	},
 	{
 		grammar: first2_grammar,
-		helptext: "When there are multiple productions, we calculate the First Set of each production individually, and add each of them to the First Set. In this case, the First Set of A includes the First Set of “xy” and the First Set of “yz”.",
+		helptext: "When there are multiple productions, we find the First Set of each production individually, and add them to the First Set of the desired nonterminal. In this case, the First Set of A includes the First Set of “xy” and the First Set of “yz”.",
 		question: "What is the first set of symbol A?",
 		answer: "x,y",
 		type: "checkbox",
@@ -138,7 +138,7 @@ var firstQuestions = [
 	},
 	{
 		grammar: first3_grammar,
-		helptext: "When there is a nonterminal as the first symbol of a production, we calculate the First Set of that non terminal first, and then add it to the First Set of that production. In this case, we would want to calculate the First(B), and then add that to the First(A).",
+		helptext: "When there is a nonterminal as the first symbol of a production, we find the First Set of that nonterminal first, and then add it to the First Set of that production. In this case, we would want to first find the First(B), and then add that to the First(A).",
 		question: "What is the first set of symbol B?",
 		answer: "y",
 		type: "checkbox",
@@ -146,7 +146,7 @@ var firstQuestions = [
 	},
 	{
 		grammar: first3_grammar,
-		helptext: "When there is a nonterminal as the first symbol of a production, we calculate the First Set of that non terminal first, and then add it to the First Set of that production. In this case, we would want to calculate the First(B), and then add that to the First(A).",
+		helptext: "When there is a nonterminal as the first symbol of a production, we find the First Set of that nonterminal first, and then add it to the First Set of that production. In this case, we would want to first find the First(B), and then add that to the First(A).",
 		question: "What is the first set of symbol A?",
 		answer: "y,z",
 		type: "checkbox",
@@ -154,7 +154,7 @@ var firstQuestions = [
 	},
 	{
 		grammar: first4_grammar,
-		helptext: "Challenge Problem #1",
+		helptext: "Challenge Problem 1",
 		question: "What is the first set of symbol A?",
 		answer: "x,y,z",
 		type: "checkbox",
@@ -162,15 +162,15 @@ var firstQuestions = [
 	},
 	{
 		grammar: first4_grammar,
-		helptext: "Challenge Problem #1",
+		helptext: "Challenge Problem 1",
 		question: "What is the first set of symbol B?",
-		answer: "x,z",
+		answer: "x,y",
 		type: "checkbox",
 		terminals: ['x','y','z'],
 	},
 	{
 		grammar: first4_grammar,
-		helptext: "Challenge Problem #1",
+		helptext: "Challenge Problem 1",
 		question: "What is the first set of symbol C?",
 		answer: "x",
 		type: "checkbox",
@@ -178,7 +178,7 @@ var firstQuestions = [
 	},
 	{
 		grammar: first5_grammar,
-		helptext: "Challenge Problem #2",
+		helptext: "Challenge Problem 2",
 		question: "What is the first set of symbol A?",
 		answer: "x,y,z",
 		type: "checkbox",
@@ -186,7 +186,7 @@ var firstQuestions = [
 	},
 	{
 		grammar: first5_grammar,
-		helptext: "Challenge Problem #2",
+		helptext: "Challenge Problem 2",
 		question: "What is the first set of symbol B?",
 		answer: "x,y,z",
 		type: "checkbox",
@@ -194,7 +194,7 @@ var firstQuestions = [
 	},
 	{
 		grammar: first5_grammar,
-		helptext: "Challenge Problem #2",
+		helptext: "Challenge Problem 2",
 		question: "What is the first set of symbol C?",
 		answer: "z",
 		type: "checkbox",
@@ -228,7 +228,7 @@ var firstQuestions = [
 		grammar: first8_grammar,
 		helptext: "Expanding on the previous example, now B now has two productions, and does not just go to ε. In this case, we want to first add everything in First(B) except for ε to the First Set of that production, and then calculate the First Set of the rest of the string. In this case, for A = Bx, add First(B) except for ε, and then add “x”.",
 		question: "What is the first set of symbol A?",
-		answer: "x,z",
+		answer: "x,y,z",
 		type: "checkbox",
 		terminals: ['x','y','z','ε'],
 	},
@@ -258,7 +258,7 @@ var firstQuestions = [
 	},
 	{
 		grammar: first10_grammar,
-		helptext: "Challenge Problem #3",
+		helptext: "Challenge Problem 3",
 		question: "What is the first set of symbol A?",
 		answer: "x,y,z,ε",
 		type: "checkbox",
@@ -266,7 +266,7 @@ var firstQuestions = [
 	},
 	{
 		grammar: first10_grammar,
-		helptext: "Challenge Problem #3",
+		helptext: "Challenge Problem 3",
 		question: "What is the first set of symbol B?",
 		answer: "y,ε",
 		type: "checkbox",
@@ -274,7 +274,7 @@ var firstQuestions = [
 	},
 	{
 		grammar: first10_grammar,
-		helptext: "Challenge Problem #3",
+		helptext: "Challenge Problem 3",
 		question: "What is the first set of symbol C?",
 		answer: "x,ε",
 		type: "checkbox",
@@ -550,7 +550,7 @@ var followQuestions = [
 	},
 	{
 		grammar: follow8_grammar,
-		helptext: "Challenge Problem #1",
+		helptext: "Challenge Problem 1",
 		question: "What is the follow set of symbol A?",
 		answer: "$",
 		type: "checkbox",
@@ -558,7 +558,7 @@ var followQuestions = [
 	},
 	{
 		grammar: follow8_grammar,
-		helptext: "Challenge Problem #1",
+		helptext: "Challenge Problem 1",
 		question: "What is the follow set of symbol B?",
 		answer: "y,z,$",
 		type: "checkbox",
@@ -566,7 +566,7 @@ var followQuestions = [
 	},
 	{
 		grammar: follow8_grammar,
-		helptext: "Challenge Problem #1",
+		helptext: "Challenge Problem 1",
 		question: "What is the follow set of symbol C?",
 		answer: "z,$",
 		type: "checkbox",
