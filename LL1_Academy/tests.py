@@ -120,7 +120,6 @@ class RenderingTest(TestData):
         response = c.get('/profile')
         self.assertTemplateUsed(response, 'LL1_Academy/profile.html')
     
-
     def test_practice(self):
         response = self.client.get('/practice')
         self.assertTemplateUsed(response, 'LL1_Academy/practice.html')
@@ -129,4 +128,3 @@ class RenderingTest(TestData):
         response = self.client.get('/get_404_page')
         self.assertTemplateUsed(response, 'LL1_Academy/error.html')
 
-# class GrammarTest(TestData):
