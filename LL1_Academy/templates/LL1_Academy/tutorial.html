@@ -94,20 +94,21 @@
 
 <div class="row">
 	<!-- full width explainer here -->
-	<div class="small-12 columns" style="color: grey;">
+	<div class="small-12 columns">
 		<div id="tutorialOptions" style="text-align:center;margin-bottom:15px;font-size:20px;">
-			<a href="#" class="tutTitle" id="firstTutorial" style="margin: 0 15px 0 0;">First Set Tutorial</a>
+			<a href="#" class="tutTitle active" id="vocabularyTitle" style="margin: 0 15px 0 0;" onclick="tut_title_click()">Vocabulary</a>
+			|<a href="#" class="tutTitle" id="firstTutorial" style="margin: 0 15px 0 15px;">First Set Tutorial</a>
 			|<a href="#" class="tutTitle" id="followTutorial" style="margin: 0 15px 0 15px;">Follow Set Tutorial</a>
 			|<a href="#" class="tutTitle" id="parseTutorial" style="margin: 0 0 0 15px;">Parse Table Tutorial</a>
 		</div>
-		<h3 id="tutorial-title" onclick="tut_title_click()">Welcome to the Tutorial!</h3>
+		<h3 id="tutorial-title">Welcome to the Tutorial!</h3>
 		<p style="font-size:14px">Here you will learn how to calculate the first set, follow set and parse table of a grammar.</p>
 		<p style="font-size:14px">Already an expert? <a href="/practice">Start practicing!</a></p>
 	</div>
 	<div class="small-12 columns">
-		<div id="initialExplainer">
-			<p>Please select from the options above. We recommend starting from the First Set Tutorial.</p>
-			<p><b><p style="font-size:20px;">Vocabulary</p></b>
+		<div style="padding: 40px" class="aboutSection" id="initialExplainer">
+			<!-- <p>Please select from the options above. We recommend starting from the First Set Tutorial.</p> -->
+			<b><p style="font-size:20px;">Vocabulary</p></b>
 				<ul>
 					<li><b>Nonterminal Symbols</b>: These are symbols which can be replaced by combinations of nonterminal and terminal symbols according to production rules. In this tutorial, these are denoted by the upper case letters A, B, C, and D.</li>
 					<li><b>Terminal Symbols</b>: These are symbols which cannot be replaced and make up the strings of the language. In this tutorial, these are denoted by the lower case letters w, x, y, and z.</li>

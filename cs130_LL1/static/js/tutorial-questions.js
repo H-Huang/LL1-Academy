@@ -121,6 +121,10 @@ var first10_grammar = {
 
 var firstQuestions = [
 	{
+		type: "text",
+		text: "<p>Better First Calculations, given some nonterminal X:</p><ol><li>If X is a nonterminal, First(X) is X</li><li>If there is a production X -> ε (in other words, X is nulable), then add ε to First(X)</li><li>If there is a production X->Y_1 Y_2 … Y_k, then add First(Y_1 Y_2...Y_k) to First(X)</li><ol><li>First(Y_1, Y_2 … Y_k) is either:</li><ol><li>If Y_1 is not nullable: First(Y_1)</li><li>If Y_1 is nullable: First(Y_1) except for epsilon and everything in First(Y_2..Y_k)</li><li>If all Y_1, Y_2 … Y_k are nullable, add ε to First(Y_1, Y_2 … Y_k)</li></ol></ol></ol>"
+	},
+	{
 		grammar: first1_grammar,
 		helptext: "To calculate the First Set of the nonterminals for simple grammars, find the first terminal symbol in the production. For this case, to find the First Set of A we just find first terminal symbol of the production “xy”.",
 		question: "What is the first set of A?",
