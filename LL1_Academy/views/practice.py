@@ -42,7 +42,7 @@ def practice(request):
 	request.session['curQ'] = 0
 	request.session['score'] = 0
 	if not 'hide_explainer' in request.session: 
-		request.session['hide_explainer'] = False;
+		request.session['hide_explainer'] = False
 
 	grammar_obj = Grammar.objects.filter(gid=request.session['gid']).first()
 	non_terminals = list(grammar_obj.nonTerminals)
@@ -63,9 +63,10 @@ def practice(request):
 		"non_terminals": non_terminals,
 		"start_symbol": 'A',
 		"hide_explainer": request.session['hide_explainer'],
-		"grammar_json": json.dumps({"grammar": grammar_object}),
+		"user_authenticated": request.user.is_authenticated,
+		"grammar_json": json.dumps({"grammar": grammar_object})
 	}
-	
+
 	return render(request, 'LL1_Academy/practice.html', context)
 
 def get_question(request):

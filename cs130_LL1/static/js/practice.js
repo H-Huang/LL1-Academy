@@ -177,6 +177,12 @@ function skip(){
 }
 
 function start_trip(){
+	var navbar_text = "";
+	if (user_authenticated)
+		navbar_text = "Click here to view your learning history <br> and manage your account.";
+	else 
+		navbar_text = "Login here to unlock the full features.";
+
 	var explainer_text = [
 	  { 
 	    sel : $('#grammar'),
@@ -195,7 +201,7 @@ function start_trip(){
 	  },
 	  {
 	    sel : $('#question-input'),
-	    content : 'Type in your answers here. <br> Click submit to check the anwser.',
+	    content : 'Check the terminals that are <br> parts of the answer. <br> Click submit to check the anwser.',
 	    position : "n"
 	  },
 	  {
@@ -209,8 +215,8 @@ function start_trip(){
 	    position : "s"
 	  },
 	  {
-	    sel : $('#img-circle'),
-	    content : 'Click here to view your learning history <br> and manage your account',
+	    sel : $('#navbarUser'),
+	    content : navbar_text,
 	    position : "s"
 	  },
 	  {
@@ -221,7 +227,6 @@ function start_trip(){
 
 	];
 	if ($("#explainer").css('display') === "none"){
-		//console.log(explainer_text[1]);
 		delete explainer_text[1]['content'];
 	}
 	window.trip = new Trip(explainer_text,{
