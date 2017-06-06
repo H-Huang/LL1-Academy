@@ -154,7 +154,7 @@ var firstQuestions = [
 	},
 	{
 		grammar: first4_grammar,
-		helptext: "Challenge Problem 1",
+		helptext: "Challenge Problem #1",
 		question: "What is the first set of symbol A?",
 		answer: "x,y,z",
 		type: "checkbox",
@@ -162,7 +162,7 @@ var firstQuestions = [
 	},
 	{
 		grammar: first4_grammar,
-		helptext: "Challenge Problem 1",
+		helptext: "Challenge Problem #1",
 		question: "What is the first set of symbol B?",
 		answer: "x,y",
 		type: "checkbox",
@@ -170,7 +170,7 @@ var firstQuestions = [
 	},
 	{
 		grammar: first4_grammar,
-		helptext: "Challenge Problem 1",
+		helptext: "Challenge Problem #1",
 		question: "What is the first set of symbol C?",
 		answer: "x",
 		type: "checkbox",
@@ -178,7 +178,7 @@ var firstQuestions = [
 	},
 	{
 		grammar: first5_grammar,
-		helptext: "Challenge Problem 2",
+		helptext: "Challenge Problem #2",
 		question: "What is the first set of symbol A?",
 		answer: "x,y,z",
 		type: "checkbox",
@@ -186,7 +186,7 @@ var firstQuestions = [
 	},
 	{
 		grammar: first5_grammar,
-		helptext: "Challenge Problem 2",
+		helptext: "Challenge Problem #2",
 		question: "What is the first set of symbol B?",
 		answer: "x,y,z",
 		type: "checkbox",
@@ -194,7 +194,7 @@ var firstQuestions = [
 	},
 	{
 		grammar: first5_grammar,
-		helptext: "Challenge Problem 2",
+		helptext: "Challenge Problem #2",
 		question: "What is the first set of symbol C?",
 		answer: "z",
 		type: "checkbox",
@@ -258,7 +258,7 @@ var firstQuestions = [
 	},
 	{
 		grammar: first10_grammar,
-		helptext: "Challenge Problem 3",
+		helptext: "Challenge Problem #3",
 		question: "What is the first set of symbol A?",
 		answer: "x,y,z,ε",
 		type: "checkbox",
@@ -266,7 +266,7 @@ var firstQuestions = [
 	},
 	{
 		grammar: first10_grammar,
-		helptext: "Challenge Problem 3",
+		helptext: "Challenge Problem #3",
 		question: "What is the first set of symbol B?",
 		answer: "y,ε",
 		type: "checkbox",
@@ -274,7 +274,7 @@ var firstQuestions = [
 	},
 	{
 		grammar: first10_grammar,
-		helptext: "Challenge Problem 3",
+		helptext: "Challenge Problem #3",
 		question: "What is the first set of symbol C?",
 		answer: "x,ε",
 		type: "checkbox",
@@ -550,7 +550,7 @@ var followQuestions = [
 	},
 	{
 		grammar: follow8_grammar,
-		helptext: "Challenge Problem 1",
+		helptext: "Challenge Problem #1",
 		question: "What is the follow set of symbol A?",
 		answer: "$",
 		type: "checkbox",
@@ -558,7 +558,7 @@ var followQuestions = [
 	},
 	{
 		grammar: follow8_grammar,
-		helptext: "Challenge Problem 1",
+		helptext: "Challenge Problem #1",
 		question: "What is the follow set of symbol B?",
 		answer: "y,z,$",
 		type: "checkbox",
@@ -566,7 +566,7 @@ var followQuestions = [
 	},
 	{
 		grammar: follow8_grammar,
-		helptext: "Challenge Problem 1",
+		helptext: "Challenge Problem #1",
 		question: "What is the follow set of symbol C?",
 		answer: "z,$",
 		type: "checkbox",
