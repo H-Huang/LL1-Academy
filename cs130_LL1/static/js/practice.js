@@ -416,7 +416,7 @@ function draw_question() {
 	}
 
 	if (question_data.category == "first") {
-		question_data.terminals.push("Empty")
+		question_data.terminals.push("ε")
 	} else if (question_data.category == "follow") {
 		question_data.terminals.push("$")
 	}
@@ -484,12 +484,7 @@ function draw_question() {
 			var ll1radio = $('input[name=ll1]:checked')[0].value
 		} else {
 			$("input[name=question-check]:checked").each(function() {
-				if ($(this).val() == "Empty") {
-					answer = answer.concat("ε,");
-				} else {
-			    	answer = answer.concat($(this).val() + ",");
-			    }
-			    // console.log($(this).val())()
+				answer = answer.concat($(this).val() + ",");
 			})
 			answer = answer.substring(0, answer.length - 1);
 		}
