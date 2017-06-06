@@ -121,10 +121,6 @@ var first10_grammar = {
 
 var firstQuestions = [
 	{
-		type: "text",
-		text: "<p>Better First Calculations, given some nonterminal X:</p><ol><li>If X is a nonterminal, First(X) is X</li><li>If there is a production X -> ε (in other words, X is nulable), then add ε to First(X)</li><li>If there is a production X->Y_1 Y_2 … Y_k, then add First(Y_1 Y_2...Y_k) to First(X)</li><ol><li>First(Y_1, Y_2 … Y_k) is either:</li><ol><li>If Y_1 is not nullable: First(Y_1)</li><li>If Y_1 is nullable: First(Y_1) except for epsilon and everything in First(Y_2..Y_k)</li><li>If all Y_1, Y_2 … Y_k are nullable, add ε to First(Y_1, Y_2 … Y_k)</li></ol></ol></ol>"
-	},
-	{
 		grammar: first1_grammar,
 		helptext: "To calculate the First Set of the nonterminals for simple grammars, find the first terminal symbol in the production. For this case, to find the First Set of A we just find first terminal symbol of the production “xy”.",
 		question: "What is the first set of A?",
@@ -286,10 +282,7 @@ var firstQuestions = [
 	},
 	{
 		type: "text",
-		text: [
-			"example of a paragraph in a full column text explaine rthing example of a paragraph in a full column text explaine rthing example of a paragraph in a full column text explaine rthing example of a paragraph in a full column text explaine rthing example of a paragraph in a full column text explaine rthing example of a paragraph in a full column text explaine rthing example of a paragraph in a full column text explaine rthing example of a paragraph in a full column text explaine rthing example of a paragraph in a full column text explaine rthing ",
-			"example of a paragraph in a full column text explaine rthing example of a paragraph in a full column text explaine rthing example of a paragraph in a full column text explaine rthing example of a paragraph in a full column text explaine rthing example of a paragraph in a full column text explaine rthing example of a paragraph in a full column text explaine rthing example of a paragraph in a full column text explaine rthing example of a paragraph in a full column text explaine rthing example of a paragraph in a full column text explaine rthing"
-		],
+		text: '<p>Formal algorithm for calculating first sets:</p><ol><li>If X is a nonterminal, First(X) is X</li><li>If there is a production X -> ε (in other words, X is nulable), then add ε to First(X)</li><li>If there is a production X->Y<sub>1</sub> Y<sub>2</sub> … Y<sub>k</sub>, then add First(Y<sub>1</sub> Y<sub>2</sub>...Y<sub>k</sub>) to First(X)</li><ol type="a"><li>First(Y<sub>1</sub>, Y<sub>2</sub> … Y<sub>k</sub>) is either:</li><ol type="i"><li>If Y<sub>1</sub> is not nullable: First(Y<sub>1</sub>)</li><li>If Y<sub>1</sub> is nullable: First(Y<sub>1</sub>) except for epsilon and everything in First(Y<sub>2</sub>..Y<sub>k</sub>)</li><li>If all Y<sub>1</sub>, Y<sub>2</sub> … Y<sub>k</sub> are nullable, add ε to First(Y<sub>1</sub>, Y<sub>2</sub> … Y<sub>k</sub>)</li></ol></ol></ol>'
 	}
 ]
 
@@ -309,6 +302,40 @@ var follow1_grammar = {
 	}]
 }
 
+var parse_challenge_grammar = {
+	grammar: [
+		{
+			nt: 'A',
+			productions: ['Bzxz','zC']
+		},
+		{
+			nt: 'B',
+			productions: ['wxw']
+		},
+		{
+			nt: 'C',
+			productions: ['xxAA','y']
+		}
+	]
+}
+
+var parse_challenge_grammar_2 = {
+	grammar: [
+	{
+		nt: "A" 
+		productions: [ "ε", "yAB"]
+	},
+	{
+		nt: "B" 
+		productions: [ "xC", "ε"]
+	},
+	{
+		nt: "C" 
+		productions: [ "AwB", "ywwz", "Bx" ]
+	}
+]
+}
+
 var followQuestions = [
 	// filler code
 	{
@@ -318,6 +345,10 @@ var followQuestions = [
 		answer: "y,z",
 		type: "checkbox",
 		terminals: ['x','y','z'],
+	},
+	{
+		type: "text",
+		text: '<p>Formal algorithm for calculating follow sets:</p><p>Note: α and β  are shorthand for Y<sub>1</sub> Y<sub>2</sub> … Y<sub>k</sub> and X<sub>1</sub> X<sub>2</sub> … X<sub>i</sub>, used so that the algorithm is more clear</p><ol><li>Put $ in the Follow Set of the Start Symbol (In our case, A)</li><li>For each production:</li><ol type="a"><li>If it is of form A -> α B β , then everything in First(β) except for ε is placed in Follow Set of B</li><li>If it is of form A -> α B, then everything in Follow(A) is in Follow(B)</li><li>If it is of form A -> α B β , where First(β) contains ε, then everything in Follow(A) is in Follow(B)</li></ol></ol>'
 	}
 ]
 
@@ -333,12 +364,21 @@ var parseQuestions = [
 		non_terminals: ['A','B']
 	},
 	{
-		grammar: follow1_grammar,
+		grammar: parse_challenge_grammar,
 		helptext: "THIS IS FILLER CODE FOR PARSE TABLE QUESTIONS",
 		question: "THIS IS FILLER CODE FOR PARSE TABLE QUESTIONS",
-		answer: "y",
+		answer: '{"A":{"w":["Bzxz"],"z":["zC"]},"B":{"w":["wxw"]},"C":{"x":["xxAA"],"y":["y"]}}',
 		type: "parse",
-		terminals: ['x','y','z'],
+		terminals: ['w','x','y','z'],
+		non_terminals: ['A','B','C']
+	},
+	{
+		grammar: parse_challenge_grammar_2,
+		helptext: "THIS IS FILLER CODE FOR PARSE TABLE QUESTIONS",
+		question: "THIS IS FILLER CODE FOR PARSE TABLE QUESTIONS",
+		answer: '{"A":{"w":["ε"],"x":["ε"],"y":["yAB"],"$":["ε"]},"B":{"w":["ε"],"x":["xC","ε"],"$":["ε"]},"C":{"w":["AwB"],"x":["Bx"],"y":["AwB","ywwz"]}}',
+		type: "parse",
+		terminals: ['w','x','y','z'],
 		non_terminals: ['A','B','C']
 	}
 ]
