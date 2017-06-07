@@ -58,6 +58,44 @@ class TestData(TestCase):
             secret="0987654321",
         )
 
+class GrammarChecker(TestData):
+    
+    def test_solve_first_sets(self):
+        checker = grammar_checker.GrammarChecker()
+        result = checker.solve({'A': ['xA', 'Bz'],'B': ['yB']},'A',False)
+        first_sets = result[0]
+        self.assertEqual(first_sets, {'A': ['x', 'y'], 'B': ['y']})
+
+    def test_solve_follow_sets(self):
+        checker = grammar_checker.GrammarChecker()
+        result = checker.solve({'A': ['xA', 'Bz'],'B': ['yB']},'A',False)
+        follow_sets = result[1]
+        self.assertEqual(follow_sets, {'A': ['$'], 'B': ['z']})
+
+    def test_solve_parsing_table(self):
+        checker = grammar_checker.GrammarChecker()
+        result = checker.solve({'A': ['xA', 'Bz'],'B': ['yB']},'A',False)
+        parsing_table = result[2]
+        self.assertEqual(parsing_table, {'A': {'x': ['xA'], 'y': ['Bz']}, 'B': {'y': ['yB']}})
+
+    def test_solve_status(self):
+        checker = grammar_checker.GrammarChecker()
+        result = checker.solve({'A': ['xA', 'Bz'],'B': ['yB']},'A',False)
+        status = result[3]
+        self.assertEqual(status, 0)
+
+    def test_solve_reachability(self):
+        checker = grammar_checker.GrammarChecker()
+        result = checker.solve({'A': ['xA', 'Bz'],'B': ['yB']},'A',False)
+        reachability = result[4]
+        self.assertEqual(reachability, True)
+
+    def test_solve_terminals(self):
+        checker = grammar_checker.GrammarChecker()
+        result = checker.solve({'A': ['xA', 'Bz'],'B': ['yB']},'A',False)
+        terminals = result[5]
+        self.assertEqual(terminals, ['x', 'y', 'z'])
+
 class ModelTest(TestData):
 
     def test_grammar(self):
