@@ -1,9 +1,10 @@
  version: "3"
  services:
    seleniumserver:
-     image: selenium/standalone-chrome:3.4.0
+     image: selenium/standalone-firefox-debug:3.4.0
      ports:
        - "4444:4444"
+       - "5900:5900"
    seleniumclient:
      build:
        context: .
@@ -11,6 +12,7 @@
      command: python test.py
      volumes:
        - .:/code
+       - /dev/shm:/dev/shm
      ports:
        - "8000:8000"
      depends_on:
