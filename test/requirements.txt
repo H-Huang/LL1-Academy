@@ -1,2 +1,2 @@
 selenium==3.4.0
-retrying
+retrying==1.3.3

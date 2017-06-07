@@ -1,24 +1,36 @@
 import argparse
+import unittest
+
 from retrying import retry
+
 from selenium import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
-@retry
-def connect(executor, capabilities):
-    print("hi")
-    driver = webdriver.Remote(command_executor=executor, desired_capabilities=capabilities)
-    return driver
+
+class UITest(unittest.TestCase):
+    driver = None
+    executor = None
+    def setUp(self):
+        global executor
+        host = "test_seleniumserver_1"
+        executor = "http://{}:4444/wd/hub".format(host)
+        capabilities = DesiredCapabilities.CHROME
+        self.driver = self.connect(executor, capabilities)
+
+    def connect(self, executor, capabilities):
+        return webdriver.Remote(command_executor=executor, desired_capabilities=capabilities)
+
+    def test_landingPage(self):
+        global driver
+        driver = self.driver
+        url = 'http://sheltered-sands-11346.herokuapp.com'
+        driver.get(url)
+        self.assertIn('1', driver.title)
+
+
+    def tearDown(self):
+        if driver is not None:
+            driver.quit()
+
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description="Run UI tests on LL1 Academy website")
-    parser.add_argument('host_selenium', metavar='host_selenium', help='hostname of selenium webdriver to connect to')
-    parser.add_argument('host_website', metavar='host_website', help='hostname of website to test against')
-
-    args = parser.parse_args()
-    
-    capabilities = DesiredCapabilities.CHROME
-    executor = "http://" + args.host_selenium + ":4444/wd/hub"
-    
-    driver = connect(executor, capabilities)
-    driver.get(args.host_website)
-    print (driver.title)
-
+    unittest.main()
