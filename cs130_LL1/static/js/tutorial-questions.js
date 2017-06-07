@@ -409,70 +409,59 @@ var followQuestions = [
 	follow7_grammar
 ]
 
-var parse_challenge_grammar = {
+var parse_grammar_1 = {
 	grammar: [
+	{
+		nt: 'A',
+		productions: ['xA', 'B']
+	},
+	{
+		nt: 'B',
+		productions: ['y']
+	}
+	],
+	helptext: 'First, we’ll look at the productions for A. For A = xA, the First(xA) is x, so we add xA to the entry corresponding to column x and row A. Next, for A = B, the First(B) is y, so we add B to the entry corresponding to column y and row A. <br><br>Next, we’ll look at the production for B. For B = y, the First(y) is y, so we add y to the entry corresponding to the column y and row B.',
+	questions: [
 		{
-			nt: 'A',
-			productions: ['Bzxz','zC']
-		},
-		{
-			nt: 'B',
-			productions: ['wxw']
-		},
-		{
-			nt: 'C',
-			productions: ['xxAA','y']
+			answer: '{"A":{"x":["xA"],"y":["B"]},"B":{"y":["y"]}}',
+			type: "parse",
+			terminals: ['x','y'],
+			non_terminals: ['A','B'],
+			first: ['x,y','y'],
+			follow: ['$','$']
 		}
 	]
 }
 
-var parse_challenge_grammar_2 = {
+var parse_grammar_2 = {
 	grammar: [
 	{
-		nt: "A",
-		productions: [ "ε", "yAB"]
+		nt: 'A',
+		productions: ['Bz', 'zC']
 	},
 	{
-		nt: "B", 
-		productions: [ "xC", "ε"]
+		nt: 'B',
+		productions: ['x','y']
 	},
 	{
-		nt: "C", 
-		productions: [ "AwB", "ywwz", "Bx" ]
+		nt: 'C',
+		productions: ['Ax']
 	}
-]
+	],
+	helptext: 'First, we’ll look at the productions for A. For A = Bz, the First(Bz) is x,y, so we add Bz to the entries corresponding to column x and column y in row A. For A = zC, the First(zC) is z, so we add zC to the entries corresponding to column z in row A.<br><br>Next, we’ll look at the productions for B. These productions are trivial; we add x to the entry corresponding to column x and row B, and we add y to the entry corresponding to column y and row B.<br><br>Next, we’ll look at the production for C. For C = Ax, the First(Ax) is x,y,z, so we add Ax to the entries corresponding to column x, y, and z in row C.',
+	questions: [
+		{
+			answer: '',
+			type: "parse",
+			terminals: ['x','y','z'],
+			non_terminals: ['A','B','C'],
+			first: ['x,y,z','x,y','x,y,z'],
+			follow: ['x,$','z','$']
+		}
+	]
 }
 
 var parseQuestions = [
-	{
-		type: "text",
-		text: '<div class="aboutSection" style="padding: 40px;"><p>Note: the following only serves as a brief reminder on how LL(1) parsing works, and is not meant as a comprehensive tutorial</p><p>Parse tables are tables which are used to create an LL(1) parser. There is a column correlated with each terminal symbol, and there is a row correlated with each nonterminal symbol. Each table entry can be empty or they can contain productions.</p><p>The implementation of an LL(1) parser is outside the scope of this tutorial. Briefly, a parser will maintain a FIFO queue of symbols, which consists of nonterminal symbols and terminal symbols. Each iteration of the parser pops the first symbol from the queue. When a nonterminal symbol is encountered, the parse table is consulted to determine which production to add to the syntax tree, based on which terminal symbol the parser is currently examining within the input string.</p><p>In order for a grammar to be LL(1), each cell in a parse table must contain a single production - otherwise the derivation would be ambiguous and backtracking would be required. If a cell contains no productions, this means this cell should never be reached in any parse; if the cell is reached, it indicates that the input string is not in the grammar’s language.</p><p>The algorithm for generating a parse table is as follows:</p><ol><li>Calculate the First and Follow sets for each symbol</li><li>For each nonterminal symbol S:	</li><ol type="a"><li>For each production P</li><ol type="i"><li>Compute the First(P)</li><li>For every terminal in First(P), add P to the corresponding column</li><li>If ε is in First(P), add P to every corresponding column in Follow(S)</li></ol></ol></ol></div>'
-	},
-	{
-		grammar: first3_grammar,
-		helptext: "THIS IS FILLER CODE FOR PARSE TABLE QUESTIONS",
-		question: "THIS IS FILLER CODE FOR PARSE TABLE QUESTIONS",
-		answer: '{"A":{"y":["Bx"],"z":["z"]},"B":{"y":["y"]}}',
-		type: "parse",
-		terminals: ['x','y','z'],
-		non_terminals: ['A','B']
-	},
-	{
-		grammar: parse_challenge_grammar,
-		helptext: "THIS IS FILLER CODE FOR PARSE TABLE QUESTIONS",
-		question: "THIS IS FILLER CODE FOR PARSE TABLE QUESTIONS",
-		answer: '{"A":{"w":["Bzxz"],"z":["zC"]},"B":{"w":["wxw"]},"C":{"x":["xxAA"],"y":["y"]}}',
-		type: "parse",
-		terminals: ['w','x','y','z'],
-		non_terminals: ['A','B','C']
-	},
-	{
-		grammar: parse_challenge_grammar_2,
-		helptext: "THIS IS FILLER CODE FOR PARSE TABLE QUESTIONS",
-		question: "THIS IS FILLER CODE FOR PARSE TABLE QUESTIONS",
-		answer: '{"A":{"w":["ε"],"x":["ε"],"y":["yAB"],"$":["ε"]},"B":{"w":["ε"],"x":["xC","ε"],"$":["ε"]},"C":{"w":["AwB"],"x":["Bx"],"y":["AwB","ywwz"]}}',
-		type: "parse",
-		terminals: ['w','x','y','z'],
-		non_terminals: ['A','B','C']
-	}
+	parse_grammar_1,
+	parse_grammar_2
 ]
