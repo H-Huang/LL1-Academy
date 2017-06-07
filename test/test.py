@@ -17,6 +17,7 @@ class UITest(unittest.TestCase):
         capabilities = DesiredCapabilities.CHROME
         self.driver = self.connect(executor, capabilities)
 
+    @retry(wait_fixed=1000)
     def connect(self, executor, capabilities):
         return webdriver.Remote(command_executor=executor, desired_capabilities=capabilities)
 
