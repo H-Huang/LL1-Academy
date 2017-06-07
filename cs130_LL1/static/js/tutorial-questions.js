@@ -448,7 +448,7 @@ var parse_grammar_2 = {
 	helptext: 'First, we’ll look at the productions for A. For A = Bz, the First(Bz) is x,y, so we add Bz to the entries corresponding to column x and column y in row A. For A = zC, the First(zC) is z, so we add zC to the entries corresponding to column z in row A.<br><br>Next, we’ll look at the productions for B. These productions are trivial; we add x to the entry corresponding to column x and row B, and we add y to the entry corresponding to column y and row B.<br><br>Next, we’ll look at the production for C. For C = Ax, the First(Ax) is x,y,z, so we add Ax to the entries corresponding to column x, y, and z in row C.',
 	questions: [
 		{
-			answer: '',
+			answer: '{"A":{"x":["Bz"],"y":["Bz"],"z":["zC"]},"B":{"x":["x"],"y":["y"]},"C":{"x":["Ax"],"y":["Ax"],"z":["Ax"]}}',
 			type: "parse",
 			terminals: ['x','y','z'],
 			non_terminals: ['A','B','C'],
@@ -458,7 +458,67 @@ var parse_grammar_2 = {
 	]
 }
 
+var parse_grammar_3 = {
+	grammar: [
+	{
+		nt: 'A',
+		productions: ['By']
+	},
+	{
+		nt: 'B',
+		productions: ['xB','ε']
+	}
+	],
+	helptext: 'First we’ll look at the productions for A. For A = By, the First(By) is x,y, so we add By to the entries corresponding to column x and y in row A.<br><br>Next, we’ll look at the productions for row B. For B = xB, the First(xB) is x, so we add xB to the entries corresponding to column x in row B. For B = ε, the First(ε) is ε. Since it is nullable, we consider the Follow Set of the original nonterminal symbol B and we add the production to the entries corresponding to each element in that Follow Set. In this case, the Follow Set of B is y, so we add  ε to the entry corresponding to the column y and the row B.',
+	questions: [
+		{
+			answer: '{"A":{"x":["By"],"y":["By"]},"B":{"x":["xB"],"y":["ε"]}}',
+			type: "parse",
+			terminals: ['x','y'],
+			non_terminals: ['A','B'],
+			first: ['x,y','x,ε'],
+			follow: ['$','y']
+		}
+	]
+}
+
+var parse_grammar_4 = {
+	grammar: [
+	{
+		nt: 'A',
+		productions: ['BC', 'xCy']
+	},
+	{
+		nt: 'B',
+		productions: ['y', 'ε']
+	},
+	{
+		nt: 'C',
+		productions: ['x', 'ε']
+	}
+	],
+	helptext: 'First we’ll look at the productions for A. For A = BC, First(BC) is x,y,ε. We add BC to the entries corresponding to columns x and y in row A. Notice that ε is in the First(BC) as well, so we have to consider the Follow Set of the original nonterminal symbol A, which is just $, so we add BC to the entry corresponding to column $ and row A. For A = xCy, First(xCy) is x. We add xCy to the entry corresponding to column x and row A.<br><br>Next, we’ll look at the productions for row B. For B = y, First(y) is y, so we add y to the entry corresponding to column y in row B. For B = ε, First(ε) is ε, so we have to consider the Follow Set of B, which is x,$. We add ε to the entries corresponding to columns x and $ in row B.<br><br>Next, we’ll look at the productions for row C. For C = x, First(x) is x, so we add x to the entry corresponding to column x in row C. For C = ε, First(ε) is ε, so we have to consider the Follow Set of B, which is y,$. We add ε to the entries corresponding to columns y and $ in row C.<br><br>The process for determining a grammar is LL(1) is straightforward. If there exists some entry in T with multiple entries, then the grammar is not LL(1).',
+	questions: [
+		{
+			answer: '{"A":{"x":["BC","xCy"],"y":["BC"],"$":["BC"]},"B":{"x":["ε"],"y":["y"],"$":["ε"]},"C":{"x":["x"],"y":["ε"],"$":["ε"]}}',
+			type: "parse",
+			terminals: ['x','y'],
+			non_terminals: ['A','B','C'],
+			first: ['x,y,ε', 'y,ε','x,ε'],
+			follow: ['$','x,$','y,$']
+		}
+	]
+}
+
 var parseQuestions = [
 	parse_grammar_1,
-	parse_grammar_2
+	parse_grammar_2,
+	parse_grammar_3,
+	parse_grammar_4
 ]
+
+
+// {
+// 			type: "text",
+// 			text: '<div class="aboutSection" style="padding: 40px;"><p>Note: the following only serves as a brief reminder on how LL(1) parsing works, and is not meant as a comprehensive tutorial</p><p>Parse tables are tables which are used to create an LL(1) parser. There is a column correlated with each terminal symbol, and there is a row correlated with each nonterminal symbol. Each table entry can be empty or they can contain productions.</p><p>The implementation of an LL(1) parser is outside the scope of this tutorial. Briefly, a parser will maintain a FIFO queue of symbols, which consists of nonterminal symbols and terminal symbols. Each iteration of the parser pops the first symbol from the queue. When a nonterminal symbol is encountered, the parse table is consulted to determine which production to add to the syntax tree, based on which terminal symbol the parser is currently examining within the input string.</p><p>In order for a grammar to be LL(1), each cell in a parse table must contain a single production - otherwise the derivation would be ambiguous and backtracking would be required. If a cell contains no productions, this means this cell should never be reached in any parse; if the cell is reached, it indicates that the input string is not in the grammar’s language.</p><p>The algorithm for generating a parse table is as follows:</p><ol><li>Calculate the First and Follow sets for each symbol</li><li>For each nonterminal symbol S:	</li><ol type="a"><li>For each production P</li><ol type="i"><li>Compute the First(P)</li><li>For every terminal in First(P), add P to the corresponding column</li><li>If ε is in First(P), add P to every corresponding column in Follow(S)</li></ol></ol></ol></div>'
+// 		}
