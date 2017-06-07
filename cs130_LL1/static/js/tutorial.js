@@ -184,7 +184,6 @@ function load_next_question() {
 			// answer is right so:
 			if (answer.join(',') === curQ.answer) {
 				$('#question-input').remove()
-				$('#active').removeAttr('id')
 				load_next_question();
 			} else {
 				$('#question-input > .feedback').html("<p>Incorrect answer</p>")
