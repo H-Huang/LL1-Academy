@@ -209,14 +209,24 @@ function load_next_question() {
 			$("#questions-wrapper").fadeIn();
 		}
 
-		if (curQ.grammar)
-			$('#grammar').html(grammar_template(curQ.grammar))
+		$('#grammar').html(grammar_template(curGrammar))
 
 		if ($.inArray('$', curQ.terminals) < 0)
 			curQ.terminals.push('$');
 		$('#questions-container').html(parseTable_template(curQ));	
 
-		// $('#questions-container').html(question_template(curQ));
+		for (var i = 0; i < curQ.non_terminals.length; i++) {
+			var nt = curQ.non_terminals[i];
+			var first_nt = curQ.first[i];
+			var follow_nt = curQ.follow[i];
+
+			$("#pt-first-follow").append(
+				'<tr><td>' + nt + '</td><td>' + first_nt + '</td><td>' + follow_nt + '</td></tr>'
+			)
+		}
+
+		$('.question-help').html(curGrammar.helptext)
+		$('.question-help').show();
 		$('#active').fadeIn({duration:800});
 
 		$('#question-input').on('submit', function() {
@@ -259,8 +269,11 @@ function get_pt_chars(obj){
 	var buttons = ""
 	var actives = $(obj).html().split(',');
 	//console.log(actives);
-	for (var i = curQ.grammar.grammar.length - 1; i >= 0; i--) {
-		var line = curQ.grammar.grammar[i]
+
+	var curGrammar = questions[currentQ]
+
+	for (var i = curGrammar.grammar.length - 1; i >= 0; i--) {
+		var line = curGrammar.grammar[i]
 		if (line.nt == cell_nt) {
 			for (var j = 0; j < line.productions.length; j++){
 				var checked = "";

@@ -51,6 +51,14 @@
 
 <script id="parseTable-template" type="text/x-x-handlebars-template">
 	<div class="question" id="active" style="display: none">
+	<p class="question-help" style="display: none; color: black;"></p>
+	<table class="table" id="pt-first-follow">
+		<tr>
+			<th></th>
+			<th>First</th>
+			<th>Follow</th>
+		</tr>
+	</table>
 	<p class="question-title">What is the LL(1) parsing table of this grammar?</p>
 
 	<table class="table" id="pt">
@@ -157,7 +165,7 @@
 		</div>
 	</div>
 	<!-- two column content below -->
-	<div class="small-12 medium-6 columns" id="grammar-container" style="display: none">
+	<div class="small-12 medium-4 columns" id="grammar-container" style="display: none">
 		<h3>Grammar</h3>
 		<div id="grammar">
 		</div>
@@ -169,7 +177,7 @@
 		</div>
 	</div>
 
-	<div class="small-12 medium-6 columns" id="questions-wrapper" style="display: none">
+	<div class="small-12 medium-8 columns" id="questions-wrapper" style="display: none">
 		<h3>Questions</h3>
 		<div id="questions-container"></div>
 	</div>
