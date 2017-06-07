@@ -7,8 +7,8 @@
    seleniumclient:
      build:
        context: .
-       dockerfile: Dockerfile.testing
-     command: python testing.py testing_seleniumserver_1 https://sheltered-sands-11346.herokuapp.com
+       dockerfile: Dockerfile.test
+     command: python test.py test_seleniumserver_1 https://sheltered-sands-11346.herokuapp.com
      volumes:
        - .:/code
      ports:
