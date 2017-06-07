@@ -39,6 +39,9 @@ class TestData(TestCase):
         q = Question(gid=g, qnum=0, category="FI", symbol="A", answer="xy")
         q.save()
 
+        user_history = UserHistory(user=user, grammar=g)
+        user_history.save()
+
         cls.current_site = Site.objects.get_current()
 
         cls.SocialApp1 = cls.current_site.socialapp_set.create(
@@ -94,7 +97,6 @@ class ModelTest(TestData):
         self.assertEqual(t_user_history.complete, False)
         self.assertEqual(t_user_history.score, -1)
 
-# TODO: add more tests
 class PracticeTest(TestData):
 
     def test_get_random_grammar_unit_test(self):
@@ -106,24 +108,23 @@ class PracticeTest(TestData):
         self.assertEqual(g.terminals, sample_g.terminals)
         self.assertEqual(g.startSymbol, sample_g.startSymbol)
 
-# TODO: user profile
 class UserProfileTest(TestData):
 
-    def test_hi(self):
-        pass
+    def test_get_complete_rate(self):
+        user = User.objects.get(username="test")
+        complete_rate = user_profile.get_complete_rate(user.pk)
+        self.assertEqual(0, complete_rate["complete"])
+        self.assertEqual(1, complete_rate["skip"])
 
-    def test_hi1(self):
-        pass
+    def test_get_user_performance(self):
+        user = User.objects.get(username="test")
+        percentile = user_profile.get_user_performance(user.pk)
+        self.assertEqual(0, percentile)
 
-    def test_hi2(self):
-        pass
-
-    def test_hi3(self):
-        pass
+    def test_login_duplicate(self):
+        response = self.client.get('/accounts/social/signup/')
+        self.assertTemplateUsed(response, 'socialaccount/login_duplicate.html')
     
-    def test_hi4(self):
-        pass
-
 class StatsTest(TestData):
     
     # we can parse this content with BS4???
