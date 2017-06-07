@@ -26,7 +26,7 @@
 
 <script id="question-template" type="text/x-handlebars-template">
   <div class="question" id="active" style="display: none">
-  	<p class="question-help">{{helptext}}</p>
+  	<p class="question-help" style="display: none; color: black;"></p>
 	<p class="question-title">{{question}}</p>
     <form id="question-input" onsubmit="return false;">
 		{{#each terminals}}
@@ -111,7 +111,7 @@
 			<div>
 				<!-- <button class="button prevQ"><< Previous</button> -->
 			</div>
-			<button class="button" onclick="switchSection('first')">Next >></button>
+			<button class="button" onclick="switchSection('first')">Continue >></button>
 		</div>
 		<div style="padding: 40px" class="aboutSection">
 			<!-- <p>Please select from the options above. We recommend starting from the First Set Tutorial.</p> -->
@@ -132,6 +132,25 @@
 					<li>The tutorial may refer to the First Set of A and the Follow Set of A as First(A) and Follow(B) respectively. </li>
 					<li>The character ε refers to the empty string, and when used in a production like A -> ε, means that a nonterminal can be removed entirely. </li>
 					<li>The character $ refers to the end of the input.</li>
+				</ul>
+			</p>
+			<p><b><p style="font-size:20px;">References</p></b>
+				<ul>
+					<li><a href="http://web.cs.ucla.edu/~palsberg/course/cs132/color-lecturenotes.pdf">
+						Professor Palsberg's Slides from course CS 132 (Compiler Construction) at UCLA
+					</a></li>
+					<li><a href="https://en.wikipedia.org/wiki/Compiler">
+						Wikipedia page of compiler
+					</a></li>
+					<li><a href="https://en.wikipedia.org/wiki/LL_parser">
+						Wikipedia page of LL parser
+					</a></li>
+					<li><a href="https://www.cs.uaf.edu/~cs331/notes/FirstFollow.pdf">
+						Notes on First and Follow Set from University of Alaska, Fairbanks
+					</a></li>
+					<li><a href="https://www.jambe.co.nz/UNI/FirstAndFollowSets.html">
+						More Notes on First and Follow Set from James Brunskill
+					</a></li>
 				</ul>
 			</p>
 			
