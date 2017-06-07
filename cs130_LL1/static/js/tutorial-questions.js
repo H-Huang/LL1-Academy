@@ -219,7 +219,7 @@ var follow2_grammar = {
 		nt: 'B',
 		productions: ['z']
 	}],
-	helptext: "In this case, we have added the production A = zByx to the previous grammar. Notice that here, the terminal symbol y follows the nonterminal symbol B, thus we add y to the Follow Set of B. We don’t add x to the Follow Set of B because it does not appear IMMEDIATELY to the right of B in the production zByx, since the terminal symbol y appears first.",
+	helptext: "In this case, we have added the production A = zByx to the previous grammar. Notice that here, the terminal symbol y follows the nonterminal symbol B, thus we add y to the Follow Set of B. We don’t add x to the Follow Set of B because it does not appear <span style='color:#F6781D'>immediately</span> to the right of B in the production zByx, since the terminal symbol y appears first.",
 	questions:[{
 		question: "What is the follow set of symbol A?",
 		answer: "x,$",
@@ -248,7 +248,7 @@ var follow3_grammar = {
 		nt: 'C',
 		productions: ['z']
 	}],
-	helptext: "Whenever a nonterminal symbol S can be entirely replaced by another nonterminal symbol T, add the Follow Set of S to the Follow Set of T. In this example, we’ve added the B = C production, so B can be entirely replaced by a C symbol. Therefore, the Follow Set of C must contain the entire Follow Set of B, plus any additional symbols which would otherwise be in the Follow Set of C, such as y from the production B = Cy.",
+	helptext: "Whenever a nonterminal symbol S can be entirely replaced by another nonterminal symbol T, add the Follow Set of S to the Follow Set of T. In this example, we’ve added the B = C production, so B can be entirely replaced by a C symbol. <br><br> Therefore, the Follow Set of C must contain the entire Follow Set of B, plus any additional symbols which would otherwise be in the Follow Set of C, such as y from the production B = Cy.",
 	questions:[{
 		question: "What is the follow set of symbol B?",
 		answer: "x",
@@ -277,7 +277,7 @@ var follow4_grammar = {
 		nt: 'C',
 		productions: ['z']
 	}],
-	helptext: "This is a similar concept to the previous example, except we have replaced the B = C production with B = yxC. Notice that C appears as the last symbol in a production of B. As a result, anything that follows B could also follow C, if we were to replace B with yxC. Therefore, we must include the Follow Set of B in the Follow Set of C, plus any additional symbols which would otherwise be in the Follow Set of C, such as y from the production B = Cy. ",
+	helptext: "This is a similar concept to the previous example, except we have replaced the B = C production with B = yxC. Notice that C appears as the last symbol in a production of B. As a result, anything that follows B could also follow C, if we were to replace B with yxC. <br><br> Therefore, we must include the Follow Set of B in the Follow Set of C, plus any additional symbols which would otherwise be in the Follow Set of C, such as y from the production B = Cy. ",
 	questions:[{
 		question: "What is the follow set of symbol B?",
 		answer: "x",
@@ -335,18 +335,18 @@ var follow6_grammar = {
 		nt: 'C',
 		productions: ['z','ε']
 	}],
-	helptext: "Now we introduce ε when computing Follow Sets. First, let’s examine the production A = BCx. C appears immediately to the right of B; thus, we add the First Set of C to the Follow Set of B. The First Set of C consists of z and ε, so we add z to the Follow Set of B. However, ε cannot be in a Follow Set. Instead, trying to add ε to a Follow Set indicates that we should look at the next rightmost symbol of the production A = BCx, which is x. Thus, we add x to the Follow Set of B. Finally, add any additional symbols which would otherwise be in the Follow Set of B, such as w from the production A = wBw.",
+	helptext: "Now we introduce ε when computing Follow Sets. First, let’s examine the production A = BCx. C appears immediately to the right of B; thus, we add the First Set of C to the Follow Set of B. The First Set of C consists of z and ε, so we add z to the Follow Set of B. <br><br>However, ε cannot be in a Follow Set. Instead, trying to add ε to a Follow Set indicates that we should look at the next rightmost symbol of the production A = BCx, which is x. Thus, we add x to the Follow Set of B. Finally, add any additional symbols which would otherwise be in the Follow Set of B, such as w from the production A = wBw.",
 	questions:[{
 		question: "What is the first set of symbol C?",
 		answer: "z,ε",
 		type: "checkbox",
-		terminals: ['x','y','z','ε'],
+		terminals: ['w','x','y','z','ε'],
 	},
 	{
 		question: "What is the follow set of symbol B?",
 		answer: "w,x,z",
 		type: "checkbox",
-		terminals: ['x','y','z','$'],
+		terminals: ['w','x','y','z','$'],
 	}]
 }
 
