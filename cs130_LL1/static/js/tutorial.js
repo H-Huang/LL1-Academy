@@ -5,6 +5,7 @@ var question_template = Handlebars.compile(question_template_src);
 
 var questions;
 var currentQ;
+var grammarQIndex;
 var curQ;
 
 var currentSection; // "first", "follow", "parse"
@@ -56,6 +57,7 @@ function switchSection(section) {
 	currentSection = section;
 	$("#" + currentSection + "Tutorial").addClass("active");
 	currentQ = 0;
+	grammarQIndex = -1;
 	load_next_question();
 }
 
@@ -70,7 +72,8 @@ $('#parseTutorial').click(function() {
 });
 
 $('.button.prevQ').click(function() {
-	currentQ -= 2;
+	currentQ -= 1
+	grammarQIndex = -1;
 	load_next_question(); 
 });
 $('.button.nextQ').click(function() {
@@ -78,46 +81,60 @@ $('.button.nextQ').click(function() {
 });
 
 function load_next_question() {
-	if (currentQ < 0){
-		currentQ = 0;
-	}
+	// if (currentQ < 0){
+	// 	currentQ = 0;
+	// }
+	var newGrammar
+	if (grammarQIndex == -1)
+		newGrammar = true;
+	else
+		newGrammar = false;
+	
+	grammarQIndex += 1;
+	//  currentQ now refers to current grammar
+	//  if last question in grammar reached AND last grammar in questions reached:
+	if (grammarQIndex == questions[currentQ].questions.length) { // last Q in this grammar reached;
+		currentQ += 1;
+		grammarQIndex = 0;
+		newGrammar = true;
 
-	if (currentQ == questions.length) {
-		if (questions[0] == firstQuestions[0]){
-			swal({
-				title: "Tutorial Complete!",
-				text: "Congratuations on completing the First Set tutorial!",
-				type: "success",
-				html:true,
-				confirmButtonText: "Continue to Follow Set Tutorial"
-			},
-			function() {
-				switchSection("follow");
-			});
-		} else if (questions[0] == followQuestions[0]){
-			swal({
-				title: "Tutorial Complete!",
-				text: "Congratuations on completing the Follow Set tutorial!",
-				type: "success",
-				html:true,
-				confirmButtonText: "Continue to Parse Table Tutorial"
-			}, 
-			function() {
-				switchSection("parse");
-			});
-		} else if (questions[0] == parseQuestions[0]){
-			swal({
-				title: "Tutorial Complete!",
-				text: "Congratuations on completing the Parse Table tutorial!",
-				type: "success",
-				html:true,
-				confirmButtonText: "Start Practicing"
-			},
-			function() {
-				window.location.href = '/practice';
-			});
+		if (currentQ == questions.length) {
+			if (questions[0] == firstQuestions[0]){
+				swal({
+					title: "Tutorial Complete!",
+					text: "Congratuations on completing the First Set tutorial!",
+					type: "success",
+					html:true,
+					confirmButtonText: "Continue to Follow Set Tutorial"
+				},
+				function() {
+					switchSection("follow");
+				});
+			} else if (questions[0] == followQuestions[0]){
+				swal({
+					title: "Tutorial Complete!",
+					text: "Congratuations on completing the Follow Set tutorial!",
+					type: "success",
+					html:true,
+					confirmButtonText: "Continue to Parse Table Tutorial"
+				}, 
+				function() {
+					switchSection("parse");
+				});
+			} else if (questions[0] == parseQuestions[0]){
+				swal({
+					title: "Tutorial Complete!",
+					text: "Congratuations on completing the Parse Table tutorial!",
+					type: "success",
+					html:true,
+					confirmButtonText: "Start Practicing"
+				},
+				function() {
+					window.location.href = '/practice';
+				});
+			}
+			return
 		}
-		return
 	}
 
 	if (currentQ == 0) {
@@ -126,8 +143,12 @@ function load_next_question() {
 		$('.button.prevQ').show();
 	}
 
-	curQ = questions[currentQ];
-	currentQ++;
+	// var prevQ = curQ
+	// curQ = questions[currentQ];
+	// currentQ++;
+
+	var curGrammar = questions[currentQ]
+	curQ = curGrammar.questions[grammarQIndex];
 	
 	if (curQ.type == "checkbox") {
 		if (!$("#grammar-container").is(':visible')) {
@@ -136,11 +157,23 @@ function load_next_question() {
 			$("#questions-wrapper").fadeIn();
 		}
 
-		if (curQ.grammar)
-			$('#grammar').html(grammar_template(curQ.grammar))
-
-		$('#questions-container').html(question_template(curQ));
-		$('#active').fadeIn({duration:800});
+		// console.log(curQ.grammar)
+		if (newGrammar) {
+			// console.log("hi new grammar here")
+			// console.log(questions[currentQ])
+			$('#grammar').html(grammar_template(curGrammar))
+			$('#questions-container').html(question_template(curQ));
+			$('.question-help').html(curGrammar.helptext)
+			$('.question-help').show();
+			$('#active').fadeIn({duration:800});
+		} else {
+			$('#question-input').remove()
+			var prevAnswer = curGrammar.questions[grammarQIndex - 1].answer;
+			$('#active > .question-title').after('<div id="answer-panel"><p class="answer">' + prevAnswer + '</p></div><div style="clear:both;">')
+			$('#active').removeAttr('id')
+			$('#questions-container').append(question_template(curQ));
+			$('#active').fadeIn({duration:800});
+		}
 
 		// submit handler:
 		$('#question-input').on('submit', function() {
