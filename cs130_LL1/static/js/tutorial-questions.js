@@ -391,7 +391,7 @@ var follow7_grammar = {
 	},
 	{
 		type: "text",
-		text: '<div class="aboutSection" style="padding: 40px;"><p>Formal algorithm for calculating follow sets:</p><p>Note: α and β  are shorthand for Y<sub>1</sub> Y<sub>2</sub> … Y<sub>k</sub> and X<sub>1</sub> X<sub>2</sub> … X<sub>i</sub>, used so that the algorithm is more clear</p><ol><li>Put $ in the Follow Set of the Start Symbol (In our case, A)</li><li>For each production:</li><ol type="a"><li>If it is of form A -> α B β , then everything in First(β) except for ε is placed in Follow Set of B</li><li>If it is of form A -> α B, then everything in Follow(A) is in Follow(B)</li><li>If it is of form A -> α B β , where First(β) contains ε, then everything in Follow(A) is in Follow(B)</li></ol></ol></div>'
+		text: '<div class="aboutSection" style="padding: 40px;"><p>Formal algorithm for calculating follow sets:</p><p>Note: α and β  are shorthand for Y<sub>1</sub> Y<sub>2</sub> … Y<sub>k</sub> and X<sub>1</sub> X<sub>2</sub> … X<sub>i</sub>, used so that the algorithm is more clear.</p><ol><li>Put $ in the Follow Set of the Start Symbol (In our case, A)</li><li>For each production:</li><ol type="a"><li>If it is of form A -> α B β , then everything in First(β) except for ε is placed in Follow Set of B</li><li>If it is of form A -> α B, then everything in Follow(A) is in Follow(B)</li><li>If it is of form A -> α B β , where First(β) contains ε, then everything in Follow(A) is in Follow(B)</li></ol></ol></div>'
 	}]
 }
 
