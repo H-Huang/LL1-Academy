@@ -1,0 +1,154 @@
+{% extends "LL1_Academy/_navbarPages.html" %}
+
+{% load static %}
+
+{% block title %}Practice{% endblock %}
+
+{% block templates %}
+{% verbatim %}
+
+<script id="question-template" type="text/x-handlebars-template">
+  <div class="question" id="active" style="display: none">
+	{{#if symbol}}
+    	<p class="question-title">What is the {{category}} set of symbol {{symbol}}?</p>
+	{{else}}
+		<p class="question-title">Is the grammar LL(1)?</p>
+	{{/if}}
+    <form id="question-input" onsubmit="return false;">
+		{{#if symbol}}
+    		<!-- <input type="text" id="question-answer" placeholder="example: x,y,z" required> -->
+    		{{#each terminals}}
+	    		<div class="pretty info smooth">
+				  <input type="checkbox" name="question-check" id="{{this}}-check" value="{{this}}"> 
+				  <label for="{{this}}-check"><i class="im im-check-mark"></i>{{this}}</label>
+				</div>
+	    	{{/each}}
+    	{{else}}
+    		<div class="pretty circle info">
+			  <input type="radio" name="ll1" value="True" id="input1" style="display:inline;"> 
+			  <label><i class="im im-radio-button-circle"></i> True</label>
+			</div>
+			<div class="pretty circle info">
+			  <input type="radio" name="ll1" value="False" id="input2" style="display:inline; margin-left:10px;"> 
+			  <label><i class="im im-radio-button-circle" ></i> False</label>
+			</div>
+		{{/if}}
+		<div class="feedback"></div>
+		<div id="buttons-container">
+	    	<button type="button" class="button" id="giveup">Give Up</button>
+	    	<button type="submit" class="button" >Submit</button>
+	    </div>
+    </form>
+  </div>  
+</script>
+
+<script id="parseTable-template" type="text/x-x-handlebars-template">
+	<div class="question" id="active" style="display: none">
+	<p class="question-title">What is the LL(1) parsing table of this grammar?</p>
+
+	<table class="table" id="pt">
+		<tr>
+			<th></th>
+			{{#each terminals}}
+				<th>{{this}}</th>
+			{{/each}}
+		</tr>
+
+		{{#each non_terminals}}
+		<tr>
+			<td>{{this}}</td>
+			{{printParseTableCells this}}
+		</tr>
+		{{/each}}
+	</table>
+
+    <form id="question-input" onsubmit="return false;">
+		<div class="feedback"></div>
+		<div id="buttons-container">
+			<div id="production-options"> </div>
+			<!-- {{#if opt}}
+	    		<button class="button" type="button" id="opt-char-pt">{{opt}}</button>
+		    {{/if}} -->
+		    <div id="right-buttons" style="float: right;">
+	    	<button type="button" class="button" id="giveup">Give Up</button>
+	    	<button type="submit" class="button" >Submit</button>
+	    	</div>
+	    </div>
+    </form>
+  </div>  
+</script>
+
+{% endverbatim %}
+{% endblock %}
+
+{% block content %}
+	<div class="row">
+		<!-- grammar here -->
+		<div class="small-12 medium-6 columns" id="grammar-container">
+			<div id="grammarTitle">
+				<h3 id="grammarHeader">Consider the grammar</h3>
+				<div id="grammarButtons">
+					<button type="button" class="button" onclick="start_trip()">Help</button>
+					<button type="button" class="button" id="skip">Skip</button>
+				</div>
+			</div>
+			<div id="grammar">
+				{% for grammar in grammar_object %}
+					<div class="productions">
+						<p class="nt">{{ grammar.nt }}</p>
+						<p>:==</p>
+						{% for t in grammar.productions %}
+							{% if not forloop.last %}
+								<p class="t">{{ t }}</p>
+								<p>|</p>
+							{% else %}
+								<p class="t">{{ t }}</p>
+							{% endif %}
+						{% endfor %}
+					</div>
+				{% endfor %}
+			</div>
+
+				<div id="explainer" {% if hide_explainer == "true" %} style="display:none" {% endif %}>
+				<div id="explainer-flex">
+					<div id="explainer-text">
+						<p> {{ non_terminals }} is the set of nonterminal symbols</p>
+						<p>{{ start_symbol }} is the start symbol</p>
+						<p>&#123;{{ terminals }}&#125; is the set of terminal symbols</p>
+						<p>&epsilon; denotes the empty string</p>
+						<p>$ denotes end of string</p>
+					</div>
+					<div>
+						<button class="button" id="hideexplainer" onclick="hideexplainer()">Hide</button>
+					</div>
+				</div>
+				
+			</div>
+			<div id="explainer-hidden" {% if not hide_explainer == "true" %} style="display:none" {% endif %} onclick="showexplainer()">
+			<a style="color:black;"><p>Show explainer</p></a>
+			</div>
+		</div>
+
+		<!-- questions here -->
+		<div class="small-12 medium-6 columns" id="questions-container">
+			<h3>Questions</h3>
+		</div>
+	</div>
+
+{% endblock %}
+
+
+{% block pagescripts %}
+	<script> var csrfmiddlewaretoken = "{{ csrf_token }}"; </script>
+	<script src="{% static 'js/practice.js' %}"></script>
+	<link rel="stylesheet" type="text/css" href="https://oss.maxcdn.com/jquery.trip.js/3.3.3/trip.min.css"/>
+	<script src="https://oss.maxcdn.com/jquery.trip.js/3.3.3/trip.min.js"></script>
+	<script>
+		var terminals = "{{terminals}}".split(', ');
+		var grammar = JSON.parse('{{ grammar_json|safe }}');
+		var user_authenticated = false;
+		{% if user_authenticated %}
+			user_authenticated = true;
+		{% endif %}
+	</script>
+{% endblock %}

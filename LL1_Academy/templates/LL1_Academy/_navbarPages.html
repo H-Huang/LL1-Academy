@@ -23,13 +23,19 @@
                 <div id="navbarUser">
                     {% if user.is_authenticated %}
                         <p style="color:white;font-size:20px;">Welcome back <a href="/profile" style="font-weight: bold;text-transform: capitalize;">{{ user.username }}</a>! <a href="/profile"><img src="{{user.socialaccount_set.all.0.get_avatar_url}}" class="img-circle"></a></p>
-                        {% if request.path != '/learn' %}
-                            <a href="/learn"><button class="button indexButtons navbarButton">Learn</button></a>
+                        {% if request.path != '/tutorial' %}
+                            <a href="/tutorial"><button class="button indexButtons navbarButton">Tutorial</button></a>
+                        {% endif %}
+                        {% if request.path != '/practice' %}
+                            <a href="/practice"><button class="button indexButtons navbarButton">Practice</button></a>
                         {% endif %}
                         <a href="/accounts/logout" style="justify-content:center;"><button class="button indexButtons navbarButton">Logout</button></a>
                     {% else %}
-                        {% if request.path != '/learn' %}
-                            <a href="/learn"><button class="button indexButtons navbarButton">Learn</button></a>
+                        {% if request.path != '/tutorial' %}
+                            <a href="/tutorial"><button class="button indexButtons navbarButton">Tutorial</button></a>
+                        {% endif %}
+                        {% if request.path != '/practice' %}
+                            <a href="/practice"><button class="button indexButtons navbarButton">Practice</button></a>
                         {% endif %}
                         <a href="/index"><button class="button indexButtons navbarButton">Login</button></a>
                     {% endif %}

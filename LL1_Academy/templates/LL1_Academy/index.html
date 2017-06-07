@@ -10,27 +10,36 @@
     <h1 id="siteTitle">LL(1) Academy</h1>
     <div id="loginActions">
         {% if user.is_authenticated %}
-            <p style="color:white;font-size:30px;">Welcome back <a href="profile" style="font-weight: bold;text-transform: capitalize;">{{ user.username }}</a>!</p>
-            <a href="accounts/logout"><button class="button indexButtons">Logout</button></a>
-            <p style="display:inline;color: white;margin-left:10px; margin-right:10px;">or</p>
-            <a href="/learn"><button class="button indexButtons">Start Learning</button></a>
+            {% if messages %}
+                {% for message in messages %}
+                <p class="message" style="color:white;font-size:15px; display: none;">
+                    {{ message }}
+                </p>
+                {% endfor %}
+            {% endif %}            <p style="color:white;font-size:30px;">Welcome back <a href="profile" style="font-weight: bold;text-transform: capitalize;">{{ user.username }}</a>!</p>
+            <div style="margin-bottom:20px;">
+                <div class="loginOption" style="margin:0 15px 15px 0;"><a href="/tutorial"><button class="button indexButtons" style="width:125px;">Tutorial</button></a></div>
+                <div class="loginOption"><a href="/practice"><button class="button indexButtons" style="width:125px;">Practice</button></a></div>
+            </div>
+            <a href="accounts/logout"class="footerLinks index" style="font-size:20px;">or logout</a>
+
         {% else %}
             {% block login_error %}
             {% endblock %}
             {% if messages %}
                 {% for message in messages %}
                 <p class="message" style="color:white;font-size:15px;">
-                {{ message }}
+                    {{ message }}
                 </p>
                 {% endfor %}
             {% endif %}
             {% load socialaccount %}
             {% providers_media_js %}
-            <div id="socialMediaLogin" style="margin-bottom:20px;">
+            <div style="margin-bottom:20px;">
                 <div class="loginOption" style="margin:0 15px 15px 0;"><a href="{% provider_login_url "facebook" method="js_sdk" %}"><button class="button indexButtons" style="width:225px;">Login with Facebook</button></a></div>
                 <div class="loginOption"><a href="{% provider_login_url "google" method="oauth2" %}"><button class="button indexButtons" style="width:225px;">Login with Google</button></a></div>
             </div>
-            <a href="/learn" class="footerLinks index" style="font-size:20px;">or learn without an account</a>
+            <a href="/tutorial" class="footerLinks index" style="font-size:20px;">or begin without an account</a>
         {% endif %}
     </div>
     <div id="indexFooter">

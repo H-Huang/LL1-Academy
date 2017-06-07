@@ -1,0 +1,206 @@
+{% extends "LL1_Academy/_navbarPages.html" %}
+{% load static %}
+{% block title %}Tutorial{% endblock %}
+
+<!--  -->
+
+{% block templates %}
+{% verbatim %}
+<script id="grammar-template" type="text/x-handlebars-template">
+	
+		{{#each grammar}}
+		<div class="productions">
+			<p class="nt">{{ this.nt }}</p>
+			<p>:==</p>
+			{{#each this.productions}}
+				{{#if @last }}
+					<p class="t">{{ this }}</p>
+				{{else}}
+					<p class="t">{{ this }}</p>
+					<p>|</p>
+				{{/if}}
+			{{/each}}
+		</div>
+		{{/each}}
+</script>
+
+<script id="question-template" type="text/x-handlebars-template">
+  <div class="question" id="active" style="display: none">
+  	<p class="question-help" style="display: none; color: black;"></p>
+	<p class="question-title">{{question}}</p>
+    <form id="question-input" onsubmit="return false;">
+		{{#each terminals}}
+			<div class="pretty info smooth">
+				  <input type="checkbox" name="question-check" id="{{this}}-check" value="{{this}}"> 
+				  <label for="{{this}}-check"><i class="im im-check-mark"></i>{{this}}</label>
+				</div>
+    	{{/each}}
+    	<!-- TODO: make radio button question -->
+    	<!--
+			<input type="radio" name="ll1" value="True" id="input1" style="display:inline;" required> True
+  			<input type="radio" name="ll1" value="False" id="input2" style="display:inline;margin-left:10px;"> False
+		 -->
+		<div class="feedback"></div>
+		<div id="buttons-container">
+	    	<!-- <button type="button" class="button" id="giveup">Give Up</button> -->
+	    	<button type="submit" class="button" >Submit</button>
+	    </div>
+    </form>
+  </div>  
+</script>
+
+<script id="parseTable-template" type="text/x-x-handlebars-template">
+	<div class="question" id="active" style="display: none">
+	<p class="question-help" style="display: none; color: black;"></p>
+	<table class="table" id="pt-first-follow">
+		<tr>
+			<th></th>
+			<th>First</th>
+			<th>Follow</th>
+		</tr>
+	</table>
+	<p class="question-title">What is the LL(1) parsing table of this grammar?</p>
+
+	<table class="table" id="pt">
+		<tr>
+			<th></th>
+			{{#each terminals}}
+				<th>{{this}}</th>
+			{{/each}}
+		</tr>
+
+		{{#each non_terminals}}
+		<tr>
+			<td>{{this}}</td>
+			{{printParseTableCells this}}
+		</tr>
+		{{/each}}
+	</table>
+
+    <form id="question-input" onsubmit="return false;">
+		<div class="feedback"></div>
+		<div id="buttons-container">
+			<div id="production-options"> </div>
+			<!-- {{#if opt}}
+	    		<button class="button" type="button" id="opt-char-pt">{{opt}}</button>
+		    {{/if}} -->
+		    <div id="right-buttons" style="float: right;">
+	    	<!-- <button type="button" class="button" id="giveup">Give Up</button> -->
+	    	<button type="submit" class="button" >Submit</button>
+	    	</div>
+	    </div>
+    </form>
+  </div>  
+</script>
+
+{% endverbatim %}
+{% endblock %}
+
+<!--  -->
+
+{% block content %}
+
+<div class="row">
+	<!-- full width explainer here -->
+	<div class="small-12 columns">
+		<div id="tutorialOptions" style="text-align:center;margin-bottom:15px;font-size:20px;">
+			<a href="#" class="tutTitle active" id="vocabularyTitle" style="margin: 0 15px 0 0;" onclick="tut_title_click()">Vocabulary</a>
+			|<a href="#" class="tutTitle" id="firstTutorial" style="margin: 0 15px 0 15px;">First Set Tutorial</a>
+			|<a href="#" class="tutTitle" id="followTutorial" style="margin: 0 15px 0 15px;">Follow Set Tutorial</a>
+			|<a href="#" class="tutTitle" id="parseTutorial" style="margin: 0 0 0 15px;">Parse Table Tutorial</a>
+		</div>
+		<h3 id="tutorial-title">How to solve LL(1) Grammars</h3>
+		<p>Here you will learn how to calculate the first set, follow set and parse table of a grammar.</p>
+		<p>Already an expert?
+		<a href="/practice"> Start practicing</a></p> 
+	</div>
+	<div class="small-12 columns" id="initialExplainer">
+		<div style="display:flex; justify-content:space-between; margin-bottom: 20px;">
+			<div>
+				<!-- <button class="button prevQ"><< Previous</button> -->
+			</div>
+			<button class="button" onclick="switchSection('first')">Continue >></button>
+		</div>
+		<div style="padding: 40px" class="aboutSection">
+			<!-- <p>Please select from the options above. We recommend starting from the First Set Tutorial.</p> -->
+			<b><p style="font-size:20px;">Vocabulary</p></b>
+				<ul>
+					<li><b>Nonterminal Symbols</b>: These are symbols which can be replaced by combinations of nonterminal and terminal symbols according to production rules. In this tutorial, these are denoted by the upper case letters A, B, C, and D.</li>
+					<li><b>Terminal Symbols</b>: These are symbols which cannot be replaced and make up the strings of the language. In this tutorial, these are denoted by the lower case letters w, x, y, and z.</li>
+					<li><b>Start Symbol</b>: This is a predefined nonterminal symbol from which all strings in the language must be derived from. In other words, if a string cannot be made through a series of productions starting from the Start Symbol, it is not in the language. In the following tutorial, “A” is always going to be the Start Symbol.</li>
+					<li><b>LL(1) Grammars</b>: Subset of grammars that fulfill the condition that parsers only need one nonterminal character of lookahead to parse from a string in the language.</li>
+					<li><b>First Set of a Symbol S</b>: The set of all terminal symbols that begin the strings derived from S.</li>
+					<li><b>Follow Set</b>: The set of all terminal symbols which immediately follow all the strings derived from S.</li>
+					<li><b>Production or Production Rule</b>: A rewrite rule specifying a symbol substitution that can be recursively performed to generate new symbol sequences.</li>
+					<li><b>Production</b>: A rewrite rule which specifies a symbol substitution to generate new symbol sequences. A nonterminal can have one or more productions. Terminal symbols do not have any productions.</li>
+				</ul>
+			</p>
+			<p><b><p style="font-size:20px;">Notation</p></b>
+				<ul>
+					<li>The tutorial may refer to the First Set of A and the Follow Set of A as First(A) and Follow(B) respectively. </li>
+					<li>The character ε refers to the empty string, and when used in a production like A -> ε, means that a nonterminal can be removed entirely. </li>
+					<li>The character $ refers to the end of the input.</li>
+				</ul>
+			</p>
+			<p><b><p style="font-size:20px;">References</p></b>
+				<ul>
+					<li><a href="http://web.cs.ucla.edu/~palsberg/course/cs132/color-lecturenotes.pdf">
+						Professor Palsberg's Slides from course CS 132 (Compiler Construction) at UCLA
+					</a></li>
+					<li><a href="https://en.wikipedia.org/wiki/Compiler">
+						Wikipedia page of compiler
+					</a></li>
+					<li><a href="https://en.wikipedia.org/wiki/LL_parser">
+						Wikipedia page of LL parser
+					</a></li>
+					<li><a href="https://www.cs.uaf.edu/~cs331/notes/FirstFollow.pdf">
+						Notes on First and Follow Set from University of Alaska, Fairbanks
+					</a></li>
+					<li><a href="https://www.jambe.co.nz/UNI/FirstAndFollowSets.html">
+						More Notes on First and Follow Set from James Brunskill
+					</a></li>
+				</ul>
+			</p>
+			
+		</div>
+	</div>
+	<!-- two column content below -->
+	<div class="small-12 medium-4 columns" id="grammar-container" style="display: none">
+		<h3>Grammar</h3>
+		<div id="grammar">
+		</div>
+		<div style="display:flex; justify-content:space-between;">
+			<div>
+				<button class="button prevQ"><< Previous</button>
+			</div>
+			<button class="button nextQ">Next >></button>
+		</div>
+	</div>
+
+	<div class="small-12 medium-8 columns" id="questions-wrapper" style="display: none">
+		<h3>Questions</h3>
+		<div id="questions-container"></div>
+	</div>
+
+	<!-- single column explainer content -->
+	<div class="small-12 columns" id="full-explanation-container" style="display: none">
+		<div style="display:flex; justify-content:space-between; margin-bottom: 20px;">
+			<div>
+				<button class="button" onclick="grammarQIndex=-1; load_next_question();"><< Previous</button>
+			</div>
+			<button class="button nextQ">Next >></button>
+		</div>
+		<div id="full-explanation-text">
+			
+		</div>
+	</div>
+</div>
+
+{% endblock %}
+
+<!--  -->
+
+{% block pagescripts %}
+<script src="{% static 'js/tutorial-questions.js' %}"></script>
+<script src="{% static 'js/tutorial.js' %}"></script>
+{% endblock %}

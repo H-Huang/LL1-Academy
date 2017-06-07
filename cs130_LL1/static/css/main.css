@@ -11,17 +11,72 @@ button {
 	margin-bottom: 0 !important;
 }
 
-	button:hover {
-		background-color: #30A7C1 !important;
-	}
+button:hover {
+	background-color: #30A7C1 !important;
+}
 
 a {
 	color: #F6781D;
 }
 
-	a:hover {
-		color: #CC6318;
-	}
+a:hover {
+	color: #CC6318;
+}
+
+#tutorial-title {
+	color: #37BCDA; 
+	font-family: 'Lato', sans-serif;
+}
+
+/* Practice page styling lol */
+#sectionTitle {
+	font-family: 'Lato', sans-serif;
+}
+
+.tutTitle.active {
+	color: black;
+}
+
+/* Parse table styling */
+
+.prod-button {
+	margin-right: 0.5rem;
+	/*background-color: white;
+	border: 2px solid #37BCDA;
+	color: #37BCDA;	*/
+}
+.prod-button:hover {
+	/*border: 2px solid #F6781D;*/
+}
+
+#buttons-container{
+	margin-top: 0.5rem;
+}
+
+.button-inactive {
+	background-color: white !important;
+	border: 2px solid #37BCDA !important;
+	color: #37BCDA !important;
+}
+
+.button-inactive:hover {
+	background-color: white !important;
+	color: #37BCDA !important;
+}
+
+.im-check-mark{
+	padding: 2px 0px 0px 2px !important;
+	margin-right: 0.5rem !important;
+}
+
+.im-radio-button-circle{
+	padding: 3px 0px 0px 2px !important;
+	margin-right: 0.5rem !important;
+}
+
+label{
+	font-size: 15px;
+}
 
 /* Landing Page styling */
 #siteTitle {
@@ -208,8 +263,23 @@ a {
 	font-family: 'Lato', sans-serif;
 }
 
-#explainer > p {
+div#explainer-text > p {
 	margin-bottom: 0.3rem;
+}
+
+div#explainer {
+    padding: 0.5rem 0.5rem 0.5rem 0.5rem;
+    border: 3px solid #37BCDA;
+}
+
+div#explainer-flex {
+    display: flex;
+    align-items: top;
+    justify-content: space-between;
+}
+
+#hideexplainer {
+	padding: 6px 8px 6px 8px;
 }
 
 .productions > p {
@@ -318,33 +388,6 @@ h3 {
 }
 
 /* media screen styling */
-@media screen and (max-width:640px) {
-	#siteTitle {
-		font-size:10vw;
-	}
-
-	#siteBanner {
-		font-size:50px;
-	}
-
-	.button.navbarButton {
-		width:100% !important;
-	}
-	
-	#aboutContent {
-		padding: 15px;
-	}
-
-	.aboutSection {
-		padding: 20px;
-	}
-
-	#profileIcon {
-		width:50%;
-		margin: 0 auto 10px auto;
-	}
-}
-
 @media screen and (max-width:945px) {
 	#grammarTitle {
 		flex-wrap:wrap;
@@ -365,7 +408,7 @@ h3 {
 	}
 
 	.button.navbarButton {
-		width:250px;
+		width:150px;
 		margin-top:10px;
 		font-size:16px;
 	}
@@ -377,6 +420,37 @@ h3 {
 
 	#navbarUser p {
 		font-size:20px;
+	}
+}
+
+@media screen and (max-width:640px) {
+	#siteTitle {
+		font-size:10vw;
+	}
+
+	#siteBanner {
+		font-size: 2.3rem;
+	}
+
+	.button.navbarButton {
+		width: 49%;
+	}
+	
+	#aboutContent {
+		padding: 15px;
+	}
+
+	.aboutSection {
+		padding: 20px;
+	}
+
+	#profileIcon {
+		width:50%;
+		margin: 0 auto 10px auto;
+	}
+
+	h3 {
+		font-size: 1.4rem;
 	}
 }
 

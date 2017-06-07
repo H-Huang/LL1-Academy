@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/H-Huang/LL1-Academy.svg?branch=master)](https://travis-ci.org/H-Huang/LL1-Academy) [![GitHub releases](https://img.shields.io/badge/releases-2-brightgreen.svg)](https://github.com/H-Huang/LL1-Academy/releases) [![GitHub issues](https://img.shields.io/github/issues/H-Huang/LL1-Academy.svg)](https://github.com/H-Huang/LL1-Academy/issues) [![GitHub stars](https://img.shields.io/github/stars/H-Huang/LL1-Academy.svg)](https://github.com/H-Huang/LL1-Academy/stargazers) [![GitHub forks](https://img.shields.io/github/forks/H-Huang/LL1-Academy.svg)](https://github.com/H-Huang/LL1-Academy/network) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/H-Huang/LL1-Academy/master/LICENSE)
+[![Build Status](https://travis-ci.org/H-Huang/LL1-Academy.svg?branch=master)](https://travis-ci.org/H-Huang/LL1-Academy) [![GitHub releases](https://img.shields.io/badge/releases-4-brightgreen.svg)](https://github.com/H-Huang/LL1-Academy/releases) [![GitHub issues](https://img.shields.io/github/issues/H-Huang/LL1-Academy.svg)](https://github.com/H-Huang/LL1-Academy/issues) [![GitHub stars](https://img.shields.io/github/stars/H-Huang/LL1-Academy.svg)](https://github.com/H-Huang/LL1-Academy/stargazers) [![GitHub forks](https://img.shields.io/github/forks/H-Huang/LL1-Academy.svg)](https://github.com/H-Huang/LL1-Academy/network) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/H-Huang/LL1-Academy/master/LICENSE)
 # LL1-Academy
 
 ### Team :fire: :
@@ -29,16 +29,16 @@ The commands above will use Docker Compose to run the Django/PostgreSQL app. You
 
 __cs130_LL1/settings.py__:  Modify project-wide settings (type of database, static folder location, etc.)
 
-__cs130_LL1/urls.py__:  Routing for different urls.
+__cs130_LL1/urls.py__:  Routing for the multiple url and pages for the application.
 
-__cs130_LL1/static/__:  Where we will store all of our static assets.
+__cs130_LL1/static/__:  Where the static assets are stored for development.
 
 __LL1_Academy/migrations/__:  Contains all the database migrations.
 
-__LL1_Academy/admin.py__:  Add models here to be detected in the admin panel.
+__LL1_Academy/admin.py__:  Models here are detected in the admin panel.
 
-__LL1_Academy/models.py__:  Database models using ORM.
+__LL1_Academy/models.py__:  Database models through Django's ORM.
 
-__LL1_Academy/tests.py__:  Test cases for features in the app.
+__LL1_Academy/tests.py__:  Test cases for features in the application.
 
-__LL1_Academy/views.py__:  Where the majority of the web application logic will be
+__LL1_Academy/views/__:  Where the majority of the web application logic is

@@ -60,7 +60,7 @@
         {% for grammar in completed_grammars %}
           <tr>
             <td>
-            	<a href="/learn/?gid={{grammar.gid}}">
+            	<a href="/practice/?gid={{grammar.gid}}">
                 {{grammar.prods}}
               </a>
             </td>
@@ -87,7 +87,7 @@
         {% for grammar in skipped_grammars %}
           <tr>
             <td>
-            	<a href="/learn/?gid={{grammar.gid}}">{{grammar.prods}}</a>
+            	<a href="/practice/?gid={{grammar.gid}}">{{grammar.prods}}</a>
             </td>
           </tr>
         {% endfor %}
@@ -109,6 +109,7 @@
   <script> $(window).onload = create_chart( {{chart_stats|safe}} )</script>
   {% if messages %}
     {% for message in messages %}
+      {% if not message.tags == "success" %}
       <script>
         swal({
           title: "{% if message.tags == "info" %}Success{% else %}Oops{% endif %}",
@@ -119,6 +120,7 @@
         function() {
         });
       </script>
+      {% endif %}
     {% endfor %}
   {% endif %}
 {% endblock %}
