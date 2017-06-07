@@ -60,7 +60,7 @@ var first6_grammar = {
 		nt: 'A',
 		productions: ['xy', 'ε']
     }],
-    helptext: "Here, we introduce the concept of ε, which is our symbol which denotes an empty string. In other words, the production A = ε converts the nonterminal symbol to nothing. <br> If there exists such a production, we add ε to the First Set of A, and A is now considered a “nullable” nonterminal. In general, if A is nullable, then A can be replaced by the empty string. Don’t forget to include A = xy in your calculation of the First Set of A.",
+    helptext: "Here, we introduce the concept of ε, which is our symbol which denotes an empty string. In other words, the production A = ε converts the nonterminal symbol to nothing. <br><br> If there exists such a production, we add ε to the First Set of A, and A is now considered a “nullable” nonterminal. In general, if A is nullable, then A can be replaced by the empty string. Don’t forget to include A = xy in your calculation of the First Set of A.",
 	questions:[{
 		question: "What is the first set of symbol A?",
 		answer: "x,ε",
@@ -79,7 +79,7 @@ var first7_grammar = {
 		nt: 'B',
 		productions: ['y','ε']
     }],
-    helptext: "In a production such as A = Bx, notice that the leftmost symbol B is nullable (includes ε in its First Set). In this case, the First Set of A includes y from the First Set of B. Instead of adding ε from the First Set of B to the First Set of A, look at the next leftmost symbol in the production, in this case x. Thus, we add x to the First Set of A. <br> While not needed in our example, consider how this could be a recursive procedure: if multiple of the leftmost symbols in a production are nullable, we would need to add the First Set of each of those nullable symbols, stopping only when we reach the First Set of a symbol which is not nullable. This will be explained further in a later example.",
+    helptext: "In a production such as A = Bx, notice that the leftmost symbol B is nullable (includes ε in its First Set). In this case, the First Set of A includes y from the First Set of B. Instead of adding ε from the First Set of B to the First Set of A, look at the next leftmost symbol in the production, in this case x. Thus, we add x to the First Set of A. <br><br> While not needed in our example, consider how this could be a recursive procedure: if multiple of the leftmost symbols in a production are nullable, we would need to add the First Set of each of those nullable symbols, stopping only when we reach the First Set of a symbol which is not nullable. This will be explained further in a later example.",
 	questions:[{
 		question: "What is the first set of symbol B?",
 		answer: "y,ε",
@@ -138,7 +138,7 @@ var first10_grammar = {
 		nt: 'D',
 		productions: ['z']
     }],
-    helptext: "A = BC is an example of a production in which several of the leftmost production symbols are nullable. In calculating the First Set of A, we consider the First Set of B and the First Set of C; since both B and C are nullable, that means A is also nullable, so we add ε to the First Set of A. <br> Furthermore, in the production A = BCDw, notice that both B and C are nullable, so we add the First Set of B, First Set of C, and First Set of D to the First Set of A. We do NOT add w to the First Set of A because D is NOT nullable, and therefore we do not look at any symbols to the right of D when calculating the First Set of A.",
+    helptext: "A = BC is an example of a production in which several of the leftmost production symbols are nullable. In calculating the First Set of A, we consider the First Set of B and the First Set of C; since both B and C are nullable, that means A is also nullable, so we add ε to the First Set of A. <br><br> Furthermore, in the production A = BCDw, notice that both B and C are nullable, so we add the First Set of B, First Set of C, and First Set of D to the First Set of A. We do NOT add w to the First Set of A because D is NOT nullable, and therefore we do not look at any symbols to the right of D when calculating the First Set of A.",
 	questions:[
 	{
 		question: "What is the first set of symbol B?",
@@ -185,7 +185,7 @@ var follow1_grammar = {
 		nt: 'A',
 		productions: ['x']
     }],
-    helptext: "The Follow Set represents the set of symbols which could immediately follow strings that can replace a nonterminal symbol. When the symbol is the start symbol, its Follow Set will always include a special reserved symbol, $, representing the end of string. For our questions, the Start Symbol will always be A, so we will always add $ to the Follow Set of A. We don’t include x in the Follow Set of A because x replaces the nonterminal A. The Follow Set consists only of symbols that come AFTER the replacement of the symbol A.",
+    helptext: "The Follow Set represents the set of symbols which could immediately follow strings that can replace a nonterminal symbol. When the symbol is the start symbol, its Follow Set will always include a special reserved symbol, $, representing the end of string. <br><br> For our questions, the Start Symbol will always be A, so we will always add $ to the Follow Set of A. We don’t include x in the Follow Set of A because x replaces the nonterminal A. The Follow Set consists only of symbols that come AFTER the replacement of the symbol A.",
 	questions:[{
 		question: "What is the follow set of symbol A?",
 		answer: "$",
