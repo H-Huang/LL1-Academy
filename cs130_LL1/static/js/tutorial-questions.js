@@ -219,7 +219,7 @@ var follow2_grammar = {
 		nt: 'B',
 		productions: ['z']
 	}],
-	helptext: "In this case, we have added the production A = zByx to the previous grammar. Notice that here, the terminal symbol y follows the nonterminal symbol B, thus we add y to the Follow Set of B. We don’t add x to the Follow Set of B because it does not appear IMMEDIATELY to the right of B in the production zByx, since the terminal symbol y appears first.",
+	helptext: "In this case, we have added the production A = zByx to the previous grammar. Notice that here, the terminal symbol y follows the nonterminal symbol B, thus we add y to the Follow Set of B. We don’t add x to the Follow Set of B because it does not appear <span style='color:#F6781D'>immediately</span> to the right of B in the production zByx, since the terminal symbol y appears first.",
 	questions:[{
 		question: "What is the follow set of symbol A?",
 		answer: "x,$",
@@ -248,7 +248,7 @@ var follow3_grammar = {
 		nt: 'C',
 		productions: ['z']
 	}],
-	helptext: "Whenever a nonterminal symbol S can be entirely replaced by another nonterminal symbol T, add the Follow Set of S to the Follow Set of T. In this example, we’ve added the B = C production, so B can be entirely replaced by a C symbol. Therefore, the Follow Set of C must contain the entire Follow Set of B, plus any additional symbols which would otherwise be in the Follow Set of C, such as y from the production B = Cy.",
+	helptext: "Whenever a nonterminal symbol S can be entirely replaced by another nonterminal symbol T, add the Follow Set of S to the Follow Set of T. In this example, we’ve added the B = C production, so B can be entirely replaced by a C symbol. <br><br> Therefore, the Follow Set of C must contain the entire Follow Set of B, plus any additional symbols which would otherwise be in the Follow Set of C, such as y from the production B = Cy.",
 	questions:[{
 		question: "What is the follow set of symbol B?",
 		answer: "x",
@@ -277,7 +277,7 @@ var follow4_grammar = {
 		nt: 'C',
 		productions: ['z']
 	}],
-	helptext: "This is a similar concept to the previous example, except we have replaced the B = C production with B = yxC. Notice that C appears as the last symbol in a production of B. As a result, anything that follows B could also follow C, if we were to replace B with yxC. Therefore, we must include the Follow Set of B in the Follow Set of C, plus any additional symbols which would otherwise be in the Follow Set of C, such as y from the production B = Cy. ",
+	helptext: "This is a similar concept to the previous example, except we have replaced the B = C production with B = yxC. Notice that C appears as the last symbol in a production of B. As a result, anything that follows B could also follow C, if we were to replace B with yxC. <br><br> Therefore, we must include the Follow Set of B in the Follow Set of C, plus any additional symbols which would otherwise be in the Follow Set of C, such as y from the production B = Cy. ",
 	questions:[{
 		question: "What is the follow set of symbol B?",
 		answer: "x",
@@ -335,18 +335,18 @@ var follow6_grammar = {
 		nt: 'C',
 		productions: ['z','ε']
 	}],
-	helptext: "Now we introduce ε when computing Follow Sets. First, let’s examine the production A = BCx. C appears immediately to the right of B; thus, we add the First Set of C to the Follow Set of B. The First Set of C consists of z and ε, so we add z to the Follow Set of B. However, ε cannot be in a Follow Set. Instead, trying to add ε to a Follow Set indicates that we should look at the next rightmost symbol of the production A = BCx, which is x. Thus, we add x to the Follow Set of B. Finally, add any additional symbols which would otherwise be in the Follow Set of B, such as w from the production A = wBw.",
+	helptext: "Now we introduce ε when computing Follow Sets. First, let’s examine the production A = BCx. C appears immediately to the right of B; thus, we add the First Set of C to the Follow Set of B. The First Set of C consists of z and ε, so we add z to the Follow Set of B. <br><br>However, ε cannot be in a Follow Set. Instead, trying to add ε to a Follow Set indicates that we should look at the next rightmost symbol of the production A = BCx, which is x. Thus, we add x to the Follow Set of B. Finally, add any additional symbols which would otherwise be in the Follow Set of B, such as w from the production A = wBw.",
 	questions:[{
 		question: "What is the first set of symbol C?",
 		answer: "z,ε",
 		type: "checkbox",
-		terminals: ['x','y','z','ε'],
+		terminals: ['w','x','y','z','ε'],
 	},
 	{
 		question: "What is the follow set of symbol B?",
 		answer: "w,x,z",
 		type: "checkbox",
-		terminals: ['x','y','z','$'],
+		terminals: ['w','x','y','z','$'],
 	}]
 }
 
@@ -364,7 +364,7 @@ var follow7_grammar = {
 		nt: 'C',
 		productions: ['z','ε']
 	}],
-	helptext: "In this grammar, we have removed x from the production A = BCx. Now, we have A = BC. C appears immediately to the right of B; thus, we add the First Set of C to the Follow Set of B. The First Set of C consists of z and ε, so we add z to the Follow Set of B. However, ε cannot be in a Follow Set. Instead, trying to add ε to a Follow Set indicates that we should look at the next rightmost symbol of the production A = BC. However, now there are no symbols to the right of C. Thus, it is possible that B could be the last symbol of a production of A if we were to replace the C in A = BC with ε. As a result, we must include the Follow Set of A in the Follow Set of B since anything that follows A can follow B in this case. Since A does not appear in any production, the only symbol in its follow set is $. Thus, we add $ from the Follow Set of A to the Follow Set of B.",
+	helptext: "In this grammar, we have removed x from the production A = BCx. Now, we have A = BC. C appears immediately to the right of B; thus, we add the First Set of C to the Follow Set of B. The First Set of C consists of z and ε, so we add z to the Follow Set of B. However, ε cannot be in a Follow Set. Instead, trying to add ε to a Follow Set indicates that we should look at the next rightmost symbol of the production A = BC. <br><br>However, now there are no symbols to the right of C. Thus, it is possible that B could be the last symbol of a production of A if we were to replace the C in A = BC with ε. As a result, we must include the Follow Set of A in the Follow Set of B since anything that follows A can follow B in this case. Since A does not appear in any production, the only symbol in its follow set is $. Thus, we add $ from the Follow Set of A to the Follow Set of B.",
 	questions:[{
 		question: "What is the first set of symbol C?",
 		answer: "z,ε",
@@ -391,7 +391,7 @@ var follow7_grammar = {
 	},
 	{
 		type: "text",
-		text: '<div class="aboutSection" style="padding: 40px;"><p>Formal algorithm for calculating follow sets:</p><p>Note: α and β  are shorthand for Y<sub>1</sub> Y<sub>2</sub> … Y<sub>k</sub> and X<sub>1</sub> X<sub>2</sub> … X<sub>i</sub>, used so that the algorithm is more clear</p><ol><li>Put $ in the Follow Set of the Start Symbol (In our case, A)</li><li>For each production:</li><ol type="a"><li>If it is of form A -> α B β , then everything in First(β) except for ε is placed in Follow Set of B</li><li>If it is of form A -> α B, then everything in Follow(A) is in Follow(B)</li><li>If it is of form A -> α B β , where First(β) contains ε, then everything in Follow(A) is in Follow(B)</li></ol></ol></div>'
+		text: '<div class="aboutSection" style="padding: 40px;"><p>Formal algorithm for calculating follow sets:</p><p>Note: α and β  are shorthand for Y<sub>1</sub> Y<sub>2</sub> … Y<sub>k</sub> and X<sub>1</sub> X<sub>2</sub> … X<sub>i</sub>, used so that the algorithm is more clear.</p><ol><li>Put $ in the Follow Set of the Start Symbol (In our case, A)</li><li>For each production:</li><ol type="a"><li>If it is of form A -> α B β , then everything in First(β) except for ε is placed in Follow Set of B</li><li>If it is of form A -> α B, then everything in Follow(A) is in Follow(B)</li><li>If it is of form A -> α B β , where First(β) contains ε, then everything in Follow(A) is in Follow(B)</li></ol></ol></div>'
 	}]
 }
 
@@ -448,7 +448,7 @@ var parse_grammar_2 = {
 	helptext: 'First, we’ll look at the productions for A. For A = Bz, the First(Bz) is x,y, so we add Bz to the entries corresponding to column x and column y in row A. For A = zC, the First(zC) is z, so we add zC to the entries corresponding to column z in row A.<br><br>Next, we’ll look at the productions for B. These productions are trivial; we add x to the entry corresponding to column x and row B, and we add y to the entry corresponding to column y and row B.<br><br>Next, we’ll look at the production for C. For C = Ax, the First(Ax) is x,y,z, so we add Ax to the entries corresponding to column x, y, and z in row C.',
 	questions: [
 		{
-			answer: '',
+			answer: '{"A":{"x":["Bz"],"y":["Bz"],"z":["zC"]},"B":{"x":["x"],"y":["y"]},"C":{"x":["Ax"],"y":["Ax"],"z":["Ax"]}}',
 			type: "parse",
 			terminals: ['x','y','z'],
 			non_terminals: ['A','B','C'],
@@ -458,7 +458,67 @@ var parse_grammar_2 = {
 	]
 }
 
+var parse_grammar_3 = {
+	grammar: [
+	{
+		nt: 'A',
+		productions: ['By']
+	},
+	{
+		nt: 'B',
+		productions: ['xB','ε']
+	}
+	],
+	helptext: 'First we’ll look at the productions for A. For A = By, the First(By) is x,y, so we add By to the entries corresponding to column x and y in row A.<br><br>Next, we’ll look at the productions for row B. For B = xB, the First(xB) is x, so we add xB to the entries corresponding to column x in row B. For B = ε, the First(ε) is ε. Since it is nullable, we consider the Follow Set of the original nonterminal symbol B and we add the production to the entries corresponding to each element in that Follow Set. In this case, the Follow Set of B is y, so we add  ε to the entry corresponding to the column y and the row B.',
+	questions: [
+		{
+			answer: '{"A":{"x":["By"],"y":["By"]},"B":{"x":["xB"],"y":["ε"]}}',
+			type: "parse",
+			terminals: ['x','y'],
+			non_terminals: ['A','B'],
+			first: ['x,y','x,ε'],
+			follow: ['$','y']
+		}
+	]
+}
+
+var parse_grammar_4 = {
+	grammar: [
+	{
+		nt: 'A',
+		productions: ['BC', 'xCy']
+	},
+	{
+		nt: 'B',
+		productions: ['y', 'ε']
+	},
+	{
+		nt: 'C',
+		productions: ['x', 'ε']
+	}
+	],
+	helptext: 'First we’ll look at the productions for A. For A = BC, First(BC) is x,y,ε. We add BC to the entries corresponding to columns x and y in row A. Notice that ε is in the First(BC) as well, so we have to consider the Follow Set of the original nonterminal symbol A, which is just $, so we add BC to the entry corresponding to column $ and row A. For A = xCy, First(xCy) is x. We add xCy to the entry corresponding to column x and row A.<br><br>Next, we’ll look at the productions for row B. For B = y, First(y) is y, so we add y to the entry corresponding to column y in row B. For B = ε, First(ε) is ε, so we have to consider the Follow Set of B, which is x,$. We add ε to the entries corresponding to columns x and $ in row B.<br><br>Next, we’ll look at the productions for row C. For C = x, First(x) is x, so we add x to the entry corresponding to column x in row C. For C = ε, First(ε) is ε, so we have to consider the Follow Set of B, which is y,$. We add ε to the entries corresponding to columns y and $ in row C.<br><br>The process for determining a grammar is LL(1) is straightforward. If there exists some entry in T with multiple entries, then the grammar is not LL(1).',
+	questions: [
+		{
+			answer: '{"A":{"x":["BC","xCy"],"y":["BC"],"$":["BC"]},"B":{"x":["ε"],"y":["y"],"$":["ε"]},"C":{"x":["x"],"y":["ε"],"$":["ε"]}}',
+			type: "parse",
+			terminals: ['x','y'],
+			non_terminals: ['A','B','C'],
+			first: ['x,y,ε', 'y,ε','x,ε'],
+			follow: ['$','x,$','y,$']
+		},
+		{
+			type: "text",
+			text: '<div class="aboutSection" style="padding: 40px;"><p>Note: the following only serves as a brief reminder on how LL(1) parsing works, and is not meant as a comprehensive tutorial</p><p>Parse tables are tables which are used to create an LL(1) parser. There is a column correlated with each terminal symbol, and there is a row correlated with each nonterminal symbol. Each table entry can be empty or they can contain productions.</p><p>The implementation of an LL(1) parser is outside the scope of this tutorial. Briefly, a parser will maintain a FIFO queue of symbols, which consists of nonterminal symbols and terminal symbols. Each iteration of the parser pops the first symbol from the queue. When a nonterminal symbol is encountered, the parse table is consulted to determine which production to add to the syntax tree, based on which terminal symbol the parser is currently examining within the input string.</p><p>In order for a grammar to be LL(1), each cell in a parse table must contain a single production - otherwise the derivation would be ambiguous and backtracking would be required. If a cell contains no productions, this means this cell should never be reached in any parse; if the cell is reached, it indicates that the input string is not in the grammar’s language.</p><p>The algorithm for generating a parse table is as follows:</p><ol><li>Calculate the First and Follow sets for each symbol</li><li>For each nonterminal symbol S:	</li><ol type="a"><li>For each production P</li><ol type="i"><li>Compute the First(P)</li><li>For every terminal in First(P), add P to the corresponding column</li><li>If ε is in First(P), add P to every corresponding column in Follow(S)</li></ol></ol></ol></div>'
+		}
+	]
+}
+
 var parseQuestions = [
 	parse_grammar_1,
-	parse_grammar_2
+	parse_grammar_2,
+	parse_grammar_3,
+	parse_grammar_4
 ]
+
+

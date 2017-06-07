@@ -10,19 +10,26 @@
     <h1 id="siteTitle">LL(1) Academy</h1>
     <div id="loginActions">
         {% if user.is_authenticated %}
-            <p style="color:white;font-size:30px;">Welcome back <a href="profile" style="font-weight: bold;text-transform: capitalize;">{{ user.username }}</a>!</p>
+            {% if messages %}
+                {% for message in messages %}
+                <p class="message" style="color:white;font-size:15px; display: none;">
+                    {{ message }}
+                </p>
+                {% endfor %}
+            {% endif %}            <p style="color:white;font-size:30px;">Welcome back <a href="profile" style="font-weight: bold;text-transform: capitalize;">{{ user.username }}</a>!</p>
             <div style="margin-bottom:20px;">
                 <div class="loginOption" style="margin:0 15px 15px 0;"><a href="/tutorial"><button class="button indexButtons" style="width:125px;">Tutorial</button></a></div>
                 <div class="loginOption"><a href="/practice"><button class="button indexButtons" style="width:125px;">Practice</button></a></div>
             </div>
             <a href="accounts/logout"class="footerLinks index" style="font-size:20px;">or logout</a>
+
         {% else %}
             {% block login_error %}
             {% endblock %}
             {% if messages %}
                 {% for message in messages %}
                 <p class="message" style="color:white;font-size:15px;">
-                {{ message }}
+                    {{ message }}
                 </p>
                 {% endfor %}
             {% endif %}
