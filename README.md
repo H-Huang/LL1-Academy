@@ -29,16 +29,16 @@ The commands above will use Docker Compose to run the Django/PostgreSQL app. You
 
 __cs130_LL1/settings.py__:  Modify project-wide settings (type of database, static folder location, etc.)
 
-__cs130_LL1/urls.py__:  Routing for different urls.
+__cs130_LL1/urls.py__:  Routing for the multiple url and pages for the application.
 
-__cs130_LL1/static/__:  Where we will store all of our static assets.
+__cs130_LL1/static/__:  Where the static assets are stored for development.
 
 __LL1_Academy/migrations/__:  Contains all the database migrations.
 
-__LL1_Academy/admin.py__:  Add models here to be detected in the admin panel.
+__LL1_Academy/admin.py__:  Models here are detected in the admin panel.
 
-__LL1_Academy/models.py__:  Database models using ORM.
+__LL1_Academy/models.py__:  Database models through Django's ORM.
 
-__LL1_Academy/tests.py__:  Test cases for features in the app.
+__LL1_Academy/tests.py__:  Test cases for features in the application.
 
-__LL1_Academy/views.py__:  Where the majority of the web application logic will be
+__LL1_Academy/views/__:  Where the majority of the web application logic is
