@@ -11,3 +11,11 @@
        - "8000:8000"
      depends_on:
        - db
+     environment:
+       - POSTGRES_NAME
+       - POSTGRES_HOST
+       - POSTGRES_PORT
+       - POSTGRES_USER
+       - POSTGRES_PASSWORD
+       - DJANGO_PROD
+       - DJANGO_SECRETKEY

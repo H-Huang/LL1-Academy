@@ -20,12 +20,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'sc**kkwq+#zb)s-0duj-k-j^92l-cj6x^7*-*eyba#6+obwftf'
+SECRET_KEY = os.environ['DJANGO_SECRETKEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+if (os.environ['DJANGO_PROD'] == "1"):
+    DEBUG = False
+else:
+    DEBUG = True
 
-ALLOWED_HOSTS = ['localhost',"127.0.0.1", "ll1academy.com"]
+ALLOWED_HOSTS = ["localhost","127.0.0.1", "ll1academy.com", "sheltered-sands-11346.herokuapp.com"]
 
 
 # Application definition
@@ -48,6 +51,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -76,17 +80,18 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'cs130_LL1.wsgi.application'
 
-
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'HOST': 'db',
-        'PORT': 5432,
+        'NAME': os.environ['POSTGRES_NAME'],
+        'USER': os.environ['POSTGRES_USER'],
+        'HOST': os.environ['POSTGRES_HOST'],
+        'PORT': os.environ['POSTGRES_PORT'],
+        'PASSWORD' : os.environ['POSTGRES_PASSWORD'],
     }
 }
 
@@ -168,8 +173,10 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
+#PROJECT_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'cs130_LL1/')
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "cs130_LL1/static"),)
-STATIC_ROOT = ""
-STATIC_URL = '/static/'
 SITE_ID=1
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
+STATIC_URL = '/static/'
