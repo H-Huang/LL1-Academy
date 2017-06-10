@@ -10,6 +10,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 
+
 class UITest(unittest.TestCase):
     driver = None
     executor = None
@@ -17,10 +18,10 @@ class UITest(unittest.TestCase):
         global executor
         host = "test_seleniumserver_1"
         executor = "http://{}:4444/wd/hub".format(host)
-        url = 'http://sheltered-sands-11346.herokuapp.com'
+        application_url = 'http://sheltered-sands-11346.herokuapp.com'
         capabilities = DesiredCapabilities.FIREFOX
         self.driver = self.connect(executor, capabilities)
-        self.driver.get(url)
+        self.driver.get(application_url)
 
     @retry(wait_fixed=1000)
     def connect(self, executor, capabilities):
