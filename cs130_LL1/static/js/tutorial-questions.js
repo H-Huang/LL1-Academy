@@ -88,7 +88,7 @@ var first7_grammar = {
 	},
 	{
 		question: "What is the first set of symbol A?",
-		answer: "x,y, z",
+		answer: "x,y,z",
 		type: "checkbox",
 		terminals: ['x','y','z','ε'],
 	}
