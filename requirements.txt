@@ -6,7 +6,7 @@ defusedxml==0.5.0
 Django==1.11.1
 django-allauth==0.32.0
 Flask==0.12.1
-html5lib==0.999
+html5lib==0.999999999
 itsdangerous==0.24
 Jinja2==2.9.6
 Mako==1.0.0
