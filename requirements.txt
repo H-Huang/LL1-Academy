@@ -9,7 +9,7 @@ Flask==0.12.1
 html5lib==0.999
 itsdangerous==0.24
 Jinja2==2.9.6
-Mako==1.0.0
+Mako==1.2.2
 MarkupSafe==1.0
 numpy==1.12.1
 oauthlib==2.0.2
